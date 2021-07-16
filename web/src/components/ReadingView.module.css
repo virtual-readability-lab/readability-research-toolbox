@@ -1,0 +1,12 @@
+.ReadingView {
+    width: 100%;
+    overflow: auto;
+}
+
+.ContentPane {
+    width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 50px;
+    align-self: center;
+}
