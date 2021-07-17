@@ -1,12 +1,14 @@
 .ReadingView {
     width: 100%;
     overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ContentPane {
-    width: 800px;
-    margin: 0 auto;
     background-color: white;
     padding: 50px;
-    align-self: center;
+    line-height: normal;
+    column-count: 1;
 }
