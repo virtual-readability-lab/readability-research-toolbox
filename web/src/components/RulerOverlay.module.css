@@ -1,0 +1,10 @@
+.RulerOverlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,.5) 45%, rgba(1, 1, 1,0) 47%, rgba(1, 1, 1,0) 53%, rgba(0,0,0,.5) 55%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}

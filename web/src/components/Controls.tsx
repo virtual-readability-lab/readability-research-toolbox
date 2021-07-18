@@ -8,7 +8,7 @@ const Controls = (props: {
 }) => {
   const controls = useControls();
   const fonts = [
-    'Courier New', 'Verdana', 'Trebuchet MS', 'Georgia', 'Tahoma', 'Impact', 'Arial Black', 'Arial', 'Comic Sans MS', 'Times New Roman', 'Microsoft Sans Serif'
+    'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Georgia', 'Impact', 'Microsoft Sans Serif', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana'
   ] // this is the intersection of standard font sets for Windows and Mac
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
   return (
@@ -20,19 +20,19 @@ const Controls = (props: {
       }} labelPosition="side">
         {fontItems}
       </Picker>
-      <Slider label="Font size" value={controls.fontSize} onChange={(val) => {
+      <Slider label="Font size (px)" value={controls.fontSize} onChange={(val) => {
         props.updateControlValue('fontSize', val)
       }} minValue={10} maxValue={64} labelPosition="side"/>
       <Slider label="Line height" value={controls.lineHeight} onChange={(val) => {
         props.updateControlValue('lineHeight', val)
       }} minValue={1} maxValue={5} step={0.1} labelPosition="side"/>
-      <Slider label="Character spacing" value={controls.characterSpacing} onChange={(val) => {
+      <Slider label="Character spacing (px)" value={controls.characterSpacing} onChange={(val) => {
         props.updateControlValue('characterSpacing', val)
       }} minValue={0} maxValue={10} labelPosition="side"/>
-      <Slider label="Word spacing" value={controls.wordSpacing} onChange={(val) => {
+      <Slider label="Word spacing (px)" value={controls.wordSpacing} onChange={(val) => {
         props.updateControlValue('wordSpacing', val)
       }} minValue={0} maxValue={10} labelPosition="side"/>
-      <Slider label="Column width" value={controls.columnWidth} onChange={(val) => {
+      <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
       <TextField label="Background color" value={controls.backgroundColor} onChange={(val) => {

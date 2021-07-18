@@ -1,14 +1,18 @@
 .ReadingView {
     width: 100%;
     overflow: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+}
+
+.ScrollContainer {
+    overflow: auto;
+    position: relative;
+    height: 100%;
 }
 
 .ContentPane {
-    background-color: white;
-    padding: 50px;
-    line-height: normal;
+    padding: 0.5in;
     column-count: 1;
+    margin: 0 auto;
+
 }
