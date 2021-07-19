@@ -12,6 +12,9 @@ interface IControls {
   columnWidth: number,
   backgroundColor: string,
   foregroundColor: string,
+  showRuler: boolean,
+  rulerHeight: number,
+  rulerOpacity: number,
 
   [key: string]: boolean | number | string // so we can do state[name]
 }
@@ -33,7 +36,11 @@ const Main = () => {
     columnWidth: 6,
     foregroundColor: '#000',
     backgroundColor: '#fff',
+    showRuler: false,
+    rulerHeight: 20,
+    rulerOpacity: 0.5,
   }
+
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
     const newState = Object.assign({}, state)
     newState[action.name] = action.value;

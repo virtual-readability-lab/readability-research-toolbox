@@ -1,0 +1,40 @@
+version: "3.4"
+services:
+#  flask:
+#    build:
+#      context: app
+#      dockerfile: Dockerfile
+#      args:
+#        - ARTIFACTORY_USER
+#        - ARTIFACTORY_API_TOKEN
+#        - PDFTOOLS_BRANCH=develop
+#        - PDFTOOLS_ARTIFACT=latest
+#        - TAGGEDPDF_VERSION=2.4.0.dev2339+eaa24ad6
+#    container_name: vz2-flask
+#    image: vz2/flask
+#    restart: unless-stopped
+#    environment:
+#      APP_ENV: prod
+#    ports:
+#      - 5000:5000
+
+
+  web:
+    build:
+      context: web
+      dockerfile: Dockerfile
+    image: readingcontrols/web
+    container_name: readingcontrols-web
+    restart: unless-stopped
+    environment:
+      APP_ENV: prod
+      APP_NAME: web
+      SERVICE_NAME: web
+    ports:
+      - 8081:8080
+#      - 443:443
+#    depends_on:
+#      - flask
+
+
+

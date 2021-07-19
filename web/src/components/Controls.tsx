@@ -1,6 +1,5 @@
-import styles from "./Controls.module.css"
-import {Flex, Slider, TextField, Picker, Item} from "@adobe/react-spectrum";
-import {ColorWheel} from '@react-spectrum/color'
+// import styles from "./Controls.module.css"
+import {Flex, Slider, TextField, Picker, Item, Switch, View} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 
 const Controls = (props: {
@@ -40,7 +39,18 @@ const Controls = (props: {
       }} labelPosition="side" width="200px"/>
       <TextField label="Foreground color" value={controls.foregroundColor} onChange={(val) => {
         props.updateControlValue('foregroundColor', val)
-      }} labelPosition="side"  width="200px"/>
+      }} labelPosition="side" width="200px"/>
+      <Switch isSelected={controls.showRuler} onChange={(val) => {
+        props.updateControlValue('showRuler', val)
+      }}>Show reading ruler</Switch>
+      <View paddingStart="25px" isHidden={!controls.showRuler} width="300px">
+        <Slider label="Ruler height (px)" value={controls.rulerHeight} onChange={(val) => {
+          props.updateControlValue('rulerHeight', val)
+        }} minValue={10} maxValue={100} step={1} labelPosition="side"/>
+        <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {
+          props.updateControlValue('rulerOpacity', val)
+        }} minValue={0} maxValue={1} step={0.01} labelPosition="side"/>
+      </View>
     </Flex>
   )
 }
