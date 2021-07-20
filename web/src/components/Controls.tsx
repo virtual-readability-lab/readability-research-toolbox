@@ -40,16 +40,31 @@ const Controls = (props: {
       <TextField label="Foreground color" value={controls.foregroundColor} onChange={(val) => {
         props.updateControlValue('foregroundColor', val)
       }} labelPosition="side" width="200px"/>
-      <Switch isSelected={controls.showRuler} onChange={(val) => {
+      <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
-      <View paddingStart="25px" isHidden={!controls.showRuler} width="300px">
+      <Switch isSelected={controls.rulerUnderline} isHidden={!controls.showRuler} onChange={(val) => {
+        props.updateControlValue('rulerUnderline', val)
+      }}>Underline ruler</Switch></div>
+      <View paddingStart="25px" isHidden={!controls.showRuler || controls.rulerUnderline} width="300px">
+        <Switch isSelected={controls.rulerInvert} onChange={(val) => {
+          props.updateControlValue('rulerInvert', val)
+        }}>Invert ruler (gray-box)</Switch>
+        <Switch isSelected={controls.rulerDisableMouse} onChange={(val) => {
+          props.updateControlValue('rulerDisableMouse', val)
+        }}>Disable mouse</Switch>
         <Slider label="Ruler height (px)" value={controls.rulerHeight} onChange={(val) => {
           props.updateControlValue('rulerHeight', val)
         }} minValue={10} maxValue={100} step={1} labelPosition="side"/>
         <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {
           props.updateControlValue('rulerOpacity', val)
         }} minValue={0} maxValue={1} step={0.01} labelPosition="side"/>
+        <Slider label="Ruler transition height" value={controls.rulerTransitionHeight} onChange={(val) => {
+          props.updateControlValue('rulerTransitionHeight', val)
+        }} minValue={0} maxValue={10} step={1} labelPosition="side"/>
+        <TextField label="Ruler background color" value={controls.rulerBackgroundColor} onChange={(val) => {
+          props.updateControlValue('rulerBackgroundColor', val)
+        }} labelPosition="side" width="200px"/>
       </View>
     </Flex>
   )

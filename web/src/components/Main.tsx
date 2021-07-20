@@ -15,9 +15,15 @@ interface IControls {
   showRuler: boolean,
   rulerHeight: number,
   rulerOpacity: number,
+  rulerInvert: boolean,
+  rulerBackgroundColor: string,
+  rulerUnderline: boolean,
+  rulerDisableMouse: boolean,
+  rulerTransitionHeight: number,
 
   [key: string]: boolean | number | string // so we can do state[name]
 }
+
 type ControlStateChange = {
   name: string;
   value: boolean | number | string;
@@ -39,6 +45,11 @@ const Main = () => {
     showRuler: false,
     rulerHeight: 20,
     rulerOpacity: 0.5,
+    rulerInvert: false,
+    rulerBackgroundColor: '#000',
+    rulerUnderline: false,
+    rulerDisableMouse: false,
+    rulerTransitionHeight: 8,
   }
 
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {

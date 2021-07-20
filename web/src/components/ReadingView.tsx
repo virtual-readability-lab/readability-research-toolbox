@@ -19,6 +19,7 @@ const ReadingView = () => {
                width: `${controlValues.columnWidth}in`,
                backgroundColor: controlValues.backgroundColor,
                color: controlValues.foregroundColor,
+               padding: controlValues.showRuler ? '50% 0' : '0'
              }}/>
       </div>
     </div>
