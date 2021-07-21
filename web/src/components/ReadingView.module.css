@@ -11,8 +11,6 @@
 }
 
 .ContentPane {
-    padding: 0.5in;
     column-count: 1;
     margin: 0 auto;
-
 }
