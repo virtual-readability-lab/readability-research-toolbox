@@ -1,6 +1,7 @@
 // import styles from "./Controls.module.css"
 import {Flex, Slider, TextField, Picker, Item, Switch, View} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
+import FileChooser from "./FileChooser";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
@@ -12,8 +13,7 @@ const Controls = (props: {
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
   return (
     <Flex direction="column" gap="10px" margin="10px">
-      <TextField width="350px" type="file" id="fileChooser"
-                 aria-label="Choose file" isDisabled={true} label="Input file" labelPosition="side"/>
+      <FileChooser updateControlValue={props.updateControlValue}/>
       <Picker label="Font name" selectedKey={controls.fontName} onSelectionChange={(val) => {
         props.updateControlValue('fontName', val)
       }} labelPosition="side">

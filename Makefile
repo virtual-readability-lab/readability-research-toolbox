@@ -6,6 +6,12 @@ SERVER_DIR := /app/readingcontrols
 # TODO: generate the IMAGE list dynamically in the save recipe
 IMAGES := readingcontrols/web
 
+ifeq ($(OS),Windows_NT)
+	CMD_SEP := &
+else
+	CMD_SEP := ;
+endif
+
 .PHONY: deploy-server build up up-no-build down save load load-server sync up-server update-phony
 
 # deploy the workflow docker images to a server
@@ -29,15 +35,15 @@ down:
 
 # save all images
 save:
-	$(foreach i, $(IMAGES), docker save $(i):latest | gzip >docker-images/$(subst /,-,$(i)).img.gz)
+	$(foreach i, $(IMAGES), docker save $(i):latest | gzip >docker-images/$(subst /,-,$(i)).img.gz $(CMD_SEP) )
 
 # load all images
 load:
-	$(foreach i, $(wildcard docker-images/*.img.gz), docker load --input $(i))
+	$(foreach i, $(wildcard docker-images/*.img.gz), docker load --input $(i) $(CMD_SEP) )
 
 # load all images on server - docker files not in a sub-folder
 load-server:
-	$(foreach i, $(wildcard *.img.gz), docker load --input $(i))
+	$(foreach i, $(wildcard *.img.gz), docker load --input $(i) $(CMD_SEP) )
 
 # copy all files needed to run app to server
 sync:

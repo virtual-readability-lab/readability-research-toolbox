@@ -10,8 +10,8 @@ services:
 #        - PDFTOOLS_BRANCH=develop
 #        - PDFTOOLS_ARTIFACT=latest
 #        - TAGGEDPDF_VERSION=2.4.0.dev2339+eaa24ad6
-#    container_name: vz2-flask
-#    image: vz2/flask
+#    container_name: readingcontrols-flask
+#    image: readingcontrols/flask
 #    restart: unless-stopped
 #    environment:
 #      APP_ENV: prod
