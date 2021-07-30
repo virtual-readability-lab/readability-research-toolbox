@@ -1,0 +1,9 @@
+ - justify vs. ragged right
+ - paragraph indent
+ - adjust the position of the ruler
+ - color selector widget
+ - need a separate folder for each HTML conversion, so we can keep the generated files separate
+ - add the api to fetch the images from the generated folder
+ - "loading..." indicator
+ - Makefile
+ - readme
