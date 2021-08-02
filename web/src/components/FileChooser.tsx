@@ -34,8 +34,18 @@ const FileChooser = (props: {
   const [errorMsg, setErrorMsg] = useState('')
 
   const postProcessHTML = (rawHTML: string) => {
-    return rawHTML;
+    // find the name of the file
+    const reSubFolder = /<stem>([^<]*)<\/stem>/
+    const m = rawHTML.match(reSubFolder)
+    if (!m) {
+      throw new Error('stem element not found')
+    }
+    const subFolder = m[1]
+    const reSrc = /(src|href)="(js|css|images|fonts)/g
+    return rawHTML.replace(reSrc, `$1="${API_BASE_URI}file/${subFolder}/$2`)
   }
+
+  //move this to server - and prefix the file name/subfolder
 
   const fetchHTML = async (file: File) => {
     if (file) {
