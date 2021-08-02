@@ -2,6 +2,8 @@
 import {Flex, Slider, TextField, Picker, Item, Switch, View} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
+import ColorPicker from "./ColorPicker";
+import {ColorResult} from "react-color";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
@@ -25,12 +27,12 @@ const Controls = (props: {
       <Slider label="Line height" value={controls.lineHeight} onChange={(val) => {
         props.updateControlValue('lineHeight', val)
       }} minValue={1} maxValue={5} step={0.1} labelPosition="side"/>
-      <Slider label="Character spacing (px)" value={controls.characterSpacing} onChange={(val) => {
+      <Slider label="Character spacing (em)" value={controls.characterSpacing} onChange={(val) => {
         props.updateControlValue('characterSpacing', val)
-      }} minValue={0} maxValue={10} labelPosition="side"/>
-      <Slider label="Word spacing (px)" value={controls.wordSpacing} onChange={(val) => {
+      }} minValue={-1} maxValue={4} step={0.1} labelPosition="side"/>
+      <Slider label="Word spacing (em)" value={controls.wordSpacing} onChange={(val) => {
         props.updateControlValue('wordSpacing', val)
-      }} minValue={0} maxValue={10} labelPosition="side"/>
+      }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
       <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
@@ -40,6 +42,7 @@ const Controls = (props: {
       <TextField label="Foreground color" value={controls.foregroundColor} onChange={(val) => {
         props.updateControlValue('foregroundColor', val)
       }} labelPosition="side" width="200px"/>
+
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
@@ -53,9 +56,9 @@ const Controls = (props: {
         <Switch isSelected={controls.rulerDisableMouse} onChange={(val) => {
           props.updateControlValue('rulerDisableMouse', val)
         }}>Disable mouse</Switch>
-        <Slider label="Ruler height (px)" value={controls.rulerHeight} onChange={(val) => {
+        <Slider label="Ruler height (em)" value={controls.rulerHeight} onChange={(val) => {
           props.updateControlValue('rulerHeight', val)
-        }} minValue={10} maxValue={100} step={1} labelPosition="side"/>
+        }} minValue={1} maxValue={10} step={0.1} labelPosition="side"/>
         <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {
           props.updateControlValue('rulerOpacity', val)
         }} minValue={0} maxValue={1} step={0.01} labelPosition="side"/>
@@ -71,3 +74,11 @@ const Controls = (props: {
 }
 
 export default Controls;
+
+/*
+<ColorPicker currentColor={controls.foregroundColor}
+                   setColor={(c: ColorResult) => {
+                     console.log(c)
+                     props.updateControlValue('foregroundColor', c.hex)
+                   }}/>
+ */

@@ -1,10 +1,8 @@
-# Makefile for building little-react-engine workflow
-
 SHELL := /bin/bash
 SERVER := colorado-mfk3
-SERVER_DIR := /app/readingcontrols
+SERVER_DIR := /backend/readingcontrols
 # TODO: generate the IMAGE list dynamically in the save recipe
-IMAGES := readingcontrols/web
+IMAGES := readingcontrols/web readingcontrols/backend
 
 ifeq ($(OS),Windows_NT)
 	CMD_SEP := &
@@ -36,6 +34,8 @@ down:
 # save all images
 save:
 	$(foreach i, $(IMAGES), docker save $(i):latest | gzip >docker-images/$(subst /,-,$(i)).img.gz $(CMD_SEP) )
+	copy Makefile docker-images
+	copy docker-compose.yaml docker-images
 
 # load all images
 load:
@@ -49,7 +49,8 @@ load-server:
 sync:
 ifeq ($(OS),Windows_NT)
 	winscp.com -command "open $(SERVER)" "lcd $(CURDIR)" "call mkdir -p $(SERVER_DIR)" "cd $(SERVER_DIR)" \
-	"put docker-images\\* Makefile docker-compose.yaml ./" "ls" "exit"
+	"synchronize remote docker-images ." "ls" "exit"
+#	"put docker-images\\* Makefile docker-compose.yaml ./" "ls" "exit"
 else
 	@ssh $(SERVER) mkdir -p $(SERVER_DIR)
 	$(info in sync SERVER $(SERVER))

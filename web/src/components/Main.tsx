@@ -45,7 +45,7 @@ const Main = () => {
     foregroundColor: '#000',
     backgroundColor: '#fff',
     showRuler: false,
-    rulerHeight: 20,
+    rulerHeight: 2,
     rulerOpacity: 0.5,
     rulerInvert: false,
     rulerBackgroundColor: '#000',

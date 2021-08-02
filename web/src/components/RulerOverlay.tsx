@@ -7,7 +7,7 @@ const RulerOverlay = () => {
   const [edgeColor, setEdgeColor] = useState('#0008')
   const [centerColor, setCenterColor] = useState('transparent')
   const controlValues = useControls();
-  const halfRulerOpening = `${controlValues.rulerHeight / 2}px`
+  const halfRulerOpening = `${controlValues.rulerHeight / 2}em`
   useEffect(() => {
     try {
       const parsedBackroundColor = parseColor(controlValues.rulerBackgroundColor)

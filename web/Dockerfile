@@ -8,7 +8,7 @@ COPY . /app/
 RUN npm run build
 
 FROM nginx:1.21-alpine
-ARG PORT=8080
+ARG PORT=8081
 ENV PORT=$PORT
 
 COPY nginx.conf /etc/nginx/templates/default.conf.template
