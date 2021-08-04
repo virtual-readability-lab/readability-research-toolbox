@@ -4,13 +4,14 @@ import ReadingView from "./ReadingView";
 import {createContext, useContext, useReducer} from "react";
 
 interface IControls {
-  html: string,
+  htmlPath: string,
   fontSize: number,
   fontName: string,
   lineHeight: number,
   characterSpacing: number,
   wordSpacing: number,
   columnWidth: number,
+  textAlignment: string,
   backgroundColor: string,
   foregroundColor: string,
   showRuler: boolean,
@@ -35,13 +36,14 @@ export const useControls = () => useContext(ControlsContext);
 const Main = () => {
   /* Controls context and state */
   const controlsInitialState = {
-    html: '',
+    htmlPath: '',
     fontSize: 14,
     fontName: 'Times',
     lineHeight: 1,
     characterSpacing: 0,
     wordSpacing: 0,
     columnWidth: 6,
+    textAlignment: 'start',
     foregroundColor: '#000',
     backgroundColor: '#fff',
     showRuler: false,

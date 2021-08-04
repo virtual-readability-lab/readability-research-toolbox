@@ -4,7 +4,8 @@
  - color selector widget
  x need a separate folder for each HTML conversion, so we can keep the generated files separate
  x add the api to fetch the images from the generated folder
- - "loading..." indicator
+ x "loading..." indicator
  x add backend to Makefile
  - readme
  x use ems (vs. px) where appropriate
+ - clean temp folder

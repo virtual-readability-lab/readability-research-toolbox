@@ -33,6 +33,14 @@ const Controls = (props: {
       <Slider label="Word spacing (em)" value={controls.wordSpacing} onChange={(val) => {
         props.updateControlValue('wordSpacing', val)
       }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
+      <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
+        props.updateControlValue('textAlignment', key)
+      }} labelPosition="side">
+        <Item key="start">Left</Item>
+        <Item key="end">Right</Item>
+        <Item key="center">Center</Item>
+        <Item key="justify">Justify</Item>
+      </Picker>
       <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
@@ -46,9 +54,9 @@ const Controls = (props: {
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
-      <Switch isSelected={controls.rulerUnderline} isHidden={!controls.showRuler} onChange={(val) => {
-        props.updateControlValue('rulerUnderline', val)
-      }}>Underline ruler</Switch></div>
+        <Switch isSelected={controls.rulerUnderline} isHidden={!controls.showRuler} onChange={(val) => {
+          props.updateControlValue('rulerUnderline', val)
+        }}>Underline ruler</Switch></div>
       <View paddingStart="25px" isHidden={!controls.showRuler || controls.rulerUnderline} width="300px">
         <Switch isSelected={controls.rulerInvert} onChange={(val) => {
           props.updateControlValue('rulerInvert', val)

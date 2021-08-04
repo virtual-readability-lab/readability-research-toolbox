@@ -45,10 +45,9 @@ const FileChooser = (props: {
     return rawHTML.replace(reSrc, `$1="${API_BASE_URI}file/${subFolder}/$2`)
   }
 
-  //move this to server - and prefix the file name/subfolder
-
   const fetchHTML = async (file: File) => {
     if (file) {
+      props.updateControlValue('htmlPath', 'loading');
       const form = new FormData()
       form.append('file', file);
       let error_received = false;
@@ -63,16 +62,17 @@ const FileChooser = (props: {
             error_received = true;
             return response.text();
           }
-          return response.text()
+          return response.json()
         })
         .then(data => {
           if (error_received) {
             throw Error(data)
           }
-          props.updateControlValue('html', postProcessHTML(data));
+          props.updateControlValue('htmlPath', data.file_path);
         })
         .catch(error => {
           setErrorMsg('Error fetching content: ' + error.message)
+          props.updateControlValue('htmlPath', '');
         })
     }
   }
