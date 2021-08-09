@@ -4,7 +4,7 @@ import ReadingView from "./ReadingView";
 import {createContext, useContext, useReducer} from "react";
 
 interface IControls {
-  htmlPath: string,
+  html: string,
   fontSize: number,
   fontName: string,
   lineHeight: number,
@@ -36,7 +36,7 @@ export const useControls = () => useContext(ControlsContext);
 const Main = () => {
   /* Controls context and state */
   const controlsInitialState = {
-    htmlPath: '',
+    html: '',
     fontSize: 14,
     fontName: 'Times',
     lineHeight: 1,

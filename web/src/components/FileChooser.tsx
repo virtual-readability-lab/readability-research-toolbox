@@ -47,7 +47,7 @@ const FileChooser = (props: {
 
   const fetchHTML = async (file: File) => {
     if (file) {
-      props.updateControlValue('htmlPath', 'loading');
+      props.updateControlValue('html', 'loading');
       const form = new FormData()
       form.append('file', file);
       let error_received = false;
@@ -62,17 +62,17 @@ const FileChooser = (props: {
             error_received = true;
             return response.text();
           }
-          return response.json()
+          return response.text()
         })
         .then(data => {
           if (error_received) {
             throw Error(data)
           }
-          props.updateControlValue('htmlPath', data.file_path);
+          props.updateControlValue('html', postProcessHTML(data));
         })
         .catch(error => {
           setErrorMsg('Error fetching content: ' + error.message)
-          props.updateControlValue('htmlPath', '');
+          props.updateControlValue('html', '');
         })
     }
   }
