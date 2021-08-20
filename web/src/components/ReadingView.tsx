@@ -57,6 +57,7 @@ const ReadingView = () => {
                      letterSpacing: `${controlValues.characterSpacing}em`,
                      textAlign: controlValues.textAlignment as CSS.Property.TextAlign,
                      wordSpacing: `${controlValues.wordSpacing}em`, // Not working - because of !important in LM CSS
+                     textIndent: `${controlValues.paragraphIndent}em`,
                      width: `${controlValues.columnWidth}in`,
                      backgroundColor: controlValues.backgroundColor,
                      color: controlValues.foregroundColor,

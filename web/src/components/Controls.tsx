@@ -33,6 +33,9 @@ const Controls = (props: {
       <Slider label="Word spacing (em)" value={controls.wordSpacing} onChange={(val) => {
         props.updateControlValue('wordSpacing', val)
       }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
+      <Slider label="Paragraph indent (em)" value={controls.paragraphIndent} onChange={(val) => {
+        props.updateControlValue('paragraphIndent', val)
+      }} minValue={-5} maxValue={5} step={0.1} labelPosition="side"/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
         props.updateControlValue('textAlignment', key)
       }} labelPosition="side">
@@ -44,13 +47,16 @@ const Controls = (props: {
       <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
-      <TextField label="Background color" value={controls.backgroundColor} onChange={(val) => {
-        props.updateControlValue('backgroundColor', val)
-      }} labelPosition="side" width="200px"/>
-      <TextField label="Foreground color" value={controls.foregroundColor} onChange={(val) => {
-        props.updateControlValue('foregroundColor', val)
-      }} labelPosition="side" width="200px"/>
-
+      <ColorPicker label="Background color" currentColor={controls.backgroundColor}
+                   setColor={(c: ColorResult) => {
+                     console.log(c)
+                     props.updateControlValue('backgroundColor', c.hex)
+                   }}/>
+      <ColorPicker label="Foreground color" currentColor={controls.foregroundColor}
+                   setColor={(c: ColorResult) => {
+                     console.log(c)
+                     props.updateControlValue('foregroundColor', c.hex)
+                   }}/>
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
@@ -73,9 +79,11 @@ const Controls = (props: {
         <Slider label="Ruler transition height" value={controls.rulerTransitionHeight} onChange={(val) => {
           props.updateControlValue('rulerTransitionHeight', val)
         }} minValue={0} maxValue={10} step={1} labelPosition="side"/>
-        <TextField label="Ruler background color" value={controls.rulerBackgroundColor} onChange={(val) => {
-          props.updateControlValue('rulerBackgroundColor', val)
-        }} labelPosition="side" width="200px"/>
+        <ColorPicker label="Ruler background color" currentColor={controls.rulerBackgroundColor}
+                     setColor={(c: ColorResult) => {
+                       console.log(c)
+                       props.updateControlValue('rulerBackgroundColor', c.hex)
+                     }}/>
       </View>
     </Flex>
   )

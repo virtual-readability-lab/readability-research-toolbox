@@ -10,6 +10,7 @@ interface IControls {
   lineHeight: number,
   characterSpacing: number,
   wordSpacing: number,
+  paragraphIndent: number,
   columnWidth: number,
   textAlignment: string,
   backgroundColor: string,
@@ -37,11 +38,12 @@ const Main = () => {
   /* Controls context and state */
   const controlsInitialState = {
     html: '',
-    fontSize: 14,
-    fontName: 'Times',
-    lineHeight: 1,
+    fontSize: 16,
+    fontName: 'Arial',
+    lineHeight: 1.2,
     characterSpacing: 0,
     wordSpacing: 0,
+    paragraphIndent: 0,
     columnWidth: 6,
     textAlignment: 'start',
     foregroundColor: '#000',
