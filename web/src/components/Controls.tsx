@@ -1,9 +1,11 @@
 // import styles from "./Controls.module.css"
-import {Flex, Slider, TextField, Picker, Item, Switch, View} from "@adobe/react-spectrum";
+import {Flex, Slider, TextField, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
 import {ColorResult} from "react-color";
+import {clearLogRecords, downloadAllLogRecords} from "./logging";
+import styles from "./Controls.module.css"
 
 const Controls = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
@@ -85,16 +87,13 @@ const Controls = (props: {
                        props.updateControlValue('rulerBackgroundColor', c.hex)
                      }}/>
       </View>
+      <div className={styles.ButtonRow}>
+        <ActionButton onPress={downloadAllLogRecords}>Download log</ActionButton>
+        <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
+        <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset controls</ActionButton>
+      </div>
     </Flex>
   )
 }
 
 export default Controls;
-
-/*
-<ColorPicker currentColor={controls.foregroundColor}
-                   setColor={(c: ColorResult) => {
-                     console.log(c)
-                     props.updateControlValue('foregroundColor', c.hex)
-                   }}/>
- */

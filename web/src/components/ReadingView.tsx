@@ -33,8 +33,6 @@ const ReadingView = () => {
       parent.innerHTML = ''
     }
     attachShadow(contentPane.current)
-    const x = contentPane.current
-    console.log(x)
   }, [controlValues.html])
 
   return (

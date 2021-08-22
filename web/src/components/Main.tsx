@@ -1,7 +1,8 @@
 import styles from "./Main.module.css"
 import Controls from "./Controls";
 import ReadingView from "./ReadingView";
-import {createContext, useContext, useReducer} from "react";
+import {createContext, useContext, useEffect, useReducer} from "react";
+import {addLogRecord, clearLogRecords} from "./logging";
 
 interface IControls {
   html: string,
@@ -59,14 +60,33 @@ const Main = () => {
   }
 
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
-    const newState = Object.assign({}, state)
+    if (action.name === 'reset') {
+      addLogRecord({
+        datetime: new Date(),
+        controlName: 'reset',
+        oldValue: 0,
+        newValue: 0
+      })
+      return {...controlsInitialState, html: state.html}  // don't reset html
+    }
+    const newState = {...state}
     newState[action.name] = action.value;
+    // save it to log
+    addLogRecord({
+      datetime: new Date(),
+      controlName: action.name,
+      oldValue: state[action.name],
+      newValue: action.value
+    })
     return newState;
   }
   const [controlsState, setControlDispatch] = useReducer(changeControlReducer, controlsInitialState)
   const updateControlValue = (name: string, value: boolean | number | string) => {
     setControlDispatch({name, value})
   }
+  useEffect(() => {
+    clearLogRecords();
+  }, [])
 
   return (
     <ControlsContext.Provider value={controlsState}>

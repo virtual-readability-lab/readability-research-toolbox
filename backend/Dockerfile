@@ -19,9 +19,9 @@ ENV ARTIFACTORY_API_TOKEN=$ARTIFACTORY_API_TOKEN
 ARG PDFTOOLS_BRANCH=develop
 ARG PDFTOOLS_ARTIFACT=latest
 
-ARG TAGGEDPDF_VERSION=2.4.*
+# ARG TAGGEDPDF_VERSION=2.4.*
 
-RUN pip --no-cache-dir install --upgrade --pre -i https://$ARTIFACTORY_USER:$ARTIFACTORY_API_TOKEN@artifactory.corp.adobe.com/artifactory/api/pypi/pypi-colorado-tools-snapshot/simple taggedpdf==$TAGGEDPDF_VERSION
+# RUN pip --no-cache-dir install --upgrade --pre -i https://$ARTIFACTORY_USER:$ARTIFACTORY_API_TOKEN@artifactory.corp.adobe.com/artifactory/api/pypi/pypi-colorado-tools-snapshot/simple taggedpdf==$TAGGEDPDF_VERSION
 
 COPY get-pdftools.sh /backend/python/get-pdftools.sh
 COPY install-pdftools.sh /backend/python/install-pdftools.sh

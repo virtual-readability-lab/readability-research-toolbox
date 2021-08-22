@@ -35,7 +35,7 @@ const FileChooser = (props: {
 
   const postProcessHTML = (rawHTML: string) => {
     // find the name of the file
-    const reSubFolder = /<stem>([^<]*)<\/stem>/
+    const reSubFolder = /<stem.*>([^<]*)<\/stem>/
     const m = rawHTML.match(reSubFolder)
     if (!m) {
       throw new Error('stem element not found')
