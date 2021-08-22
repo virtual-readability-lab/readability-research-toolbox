@@ -19,9 +19,9 @@
  *
  */
 
-import React, {useState} from "react";
 import styles from "./FileChooser.module.css";
 import {TextField} from "@adobe/react-spectrum";
+import {useState} from "react";
 
 // if we are being called in the dev environment, it will be on port 3000, so change it to 5001
 // but in production, we call on the same port as the front end, and nginx proxies the request on to port 5001

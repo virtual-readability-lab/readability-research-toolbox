@@ -28,7 +28,9 @@ const ReadingView = () => {
       if (!parent) {
         return;
       }
-      parent.attachShadow({mode: 'open'});
+      if (!parent.shadowRoot) {
+        parent.attachShadow({mode: 'open'});
+      }
       parent.shadowRoot!.innerHTML = controlValues.html;
       parent.innerHTML = ''
     }
@@ -64,7 +66,7 @@ const ReadingView = () => {
             </div>
           </>)
         :
-        <h2 className={styles.PleaseChoose}>&lt;= Please choose input PDF file</h2>
+        <h2 className={styles.PleaseChoose}>&lt;= Please choose input file</h2>
       }
     </div>
   )

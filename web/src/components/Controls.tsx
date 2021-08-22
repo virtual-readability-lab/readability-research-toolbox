@@ -6,10 +6,13 @@ import ColorPicker from "./ColorPicker";
 import {ColorResult} from "react-color";
 import {clearLogRecords, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
+import {useState} from "react";
+import SimpleFileChooser from "./SimpleFileChooser";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
 }) => {
+  const [showFullFileChooser, setShowFullFileChooser] = useState(false);
   const controls = useControls();
   const fonts = [
     'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Georgia', 'Impact', 'Microsoft Sans Serif', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana'
@@ -17,7 +20,13 @@ const Controls = (props: {
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
   return (
     <Flex direction="column" gap="10px" margin="10px">
-      <FileChooser updateControlValue={props.updateControlValue}/>
+      <div onDoubleClick={() => setShowFullFileChooser(true)}>
+      {showFullFileChooser ?
+        <FileChooser updateControlValue={props.updateControlValue}/>
+        :
+        <SimpleFileChooser updateControlValue={props.updateControlValue}/>
+      }
+      </div>
       <Picker label="Font name" selectedKey={controls.fontName} onSelectionChange={(val) => {
         props.updateControlValue('fontName', val)
       }} labelPosition="side">
