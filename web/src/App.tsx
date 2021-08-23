@@ -13,7 +13,7 @@ function App() {
       <Main />
       <footer className={styles.Footer}>
         <span className={styles.Left}>Copyright &copy; 2021 Adobe, Inc.</span>
-        <span className={styles.Center}>Release: 2021/08/20</span>
+        <span className={styles.Center}>Release: 2021/08/23</span>
         <span />
       </footer>
     </Provider>
