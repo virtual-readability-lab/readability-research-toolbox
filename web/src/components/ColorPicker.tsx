@@ -23,20 +23,44 @@ import React from "react";
 import {ColorResult, CompactPicker} from 'react-color'
 import {Label} from '@react-spectrum/label';
 import styles from './ColorPicker.module.css'
+import TextColor from "./TextColor";
 
-const colors = ['#4D4D4D', '#999999', '#FFFFFF', '#F44E3B', '#FE9200', '#FCDC00', '#DBDF00', '#A4DD00', '#68CCCA', '#73D8FF', '#AEA1FF', '#FDA1FF', '#333333', '#808080', '#cccccc', '#D33115', '#E27300', '#FCC400', '#B0BC00', '#68BC00', '#16A5A5', '#009CE0', '#7B64FF', '#FA28FF', '#000000', '#666666', '#B3B3B3', '#9F0500', '#C45100', '#FB9E00', '#808900', '#194D33', '#0C797D', '#0062B1', '#653294', '#AB149E']
+/*
+from https://www.cs.cmu.edu/~jbigham/pubs/pdfs/2017/colors.pdf
+- Blue: RGB(150, 173, 252); #96ADFC; 9.68:1.
+- Blue Grey: RGB(219, 225, 241) #DBE1F1; 16.05:1.
+- Green: RGB(219, 225, 241) #A8F29A; 15.83:1.
+- Grey: RGB(168, 242, 154) #D8D3D6; 14.21:1.
+- Orange: RGB(216, 211, 214) #EDDD6E; 15.17:1.
+- Peach: RGB(237, 221, 110) #EDD1B0; 14.35:1.
+- Purple: RGB(237, 209, 176) #B987DC; 7.56:1.
+- Red: RGB(185, 135, 220) #E0A6AA; 10.2:1.
+- Turquoise: RGB(224, 166, 170) #A5F7E1; 16.99:1.
+- Yellow: RGB(248, 253, 137) #F8FD89; 19.4:1
+ */
+const colors = ['#FFFFFF', '#FFFDD0', '#96ADFC', '#DBE1F1', '#A8F29A', '#D8D3D6',
+  '#EDDD6E', '#EDD1B0', '#B987DC', '#E0A6AA', '#A5F7E1', '#F8FD89']
 const ColorPicker = (props: {
   label: string,
-  currentColor: string,
-  setColor: (newColor: ColorResult) => void,
+  currentColor: {text: string, back: string},
+  setColor: (newText: string, newBack: string) => void,
 }) => {
   return (
     <div style={{display: 'flex'}}>
       <Label className={styles.Label} labelPosition="side">{props.label}</Label>
-      <CompactPicker colors={colors} color={props.currentColor}
-                      onChangeComplete={props.setColor} className={styles.Picker + " _spectrum-Field--positionSide_36b9b"}/>
+      <div className={styles.Picker}>
+        {colors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
+                                      currentColor={props.currentColor} setColor={props.setColor} />)}
+        {colors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
+                                      currentColor={props.currentColor} setColor={props.setColor} />)}
+      </div>
     </div>
   )
 }
 
 export default ColorPicker;
+
+/*
+      <CompactPicker colors={colors} color={props.currentColor}
+                      onChangeComplete={props.setColor} className={styles.Picker + " _spectrum-Field--positionSide_36b9b"}/>
+ */

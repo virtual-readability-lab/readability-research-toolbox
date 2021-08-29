@@ -58,15 +58,10 @@ const Controls = (props: {
       <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
-      <ColorPicker label="Background color" currentColor={controls.backgroundColor}
-                   setColor={(c: ColorResult) => {
-                     console.log(c)
-                     props.updateControlValue('backgroundColor', c.hex)
-                   }}/>
-      <ColorPicker label="Foreground color" currentColor={controls.foregroundColor}
-                   setColor={(c: ColorResult) => {
-                     console.log(c)
-                     props.updateControlValue('foregroundColor', c.hex)
+      <ColorPicker label="Text colors" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
+                   setColor={(newText: string, newBack: string) => {
+                     props.updateControlValue('foregroundColor', newText);
+                     props.updateControlValue('backgroundColor', newBack);
                    }}/>
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
@@ -90,11 +85,7 @@ const Controls = (props: {
         <Slider label="Ruler transition height" value={controls.rulerTransitionHeight} onChange={(val) => {
           props.updateControlValue('rulerTransitionHeight', val)
         }} minValue={0} maxValue={10} step={1} labelPosition="side"/>
-        <ColorPicker label="Ruler background color" currentColor={controls.rulerBackgroundColor}
-                     setColor={(c: ColorResult) => {
-                       console.log(c)
-                       props.updateControlValue('rulerBackgroundColor', c.hex)
-                     }}/>
+
       </View>
       <div className={styles.ButtonRow}>
         <ActionButton onPress={downloadAllLogRecords}>Download log</ActionButton>
@@ -106,3 +97,10 @@ const Controls = (props: {
 }
 
 export default Controls;
+/*
+        <ColorPicker label="Ruler background color" currentColor={controls.rulerBackgroundColor}
+                     setColor={(c: ColorResult) => {
+                       console.log(c)
+                       props.updateControlValue('rulerBackgroundColor', c.hex)
+                     }}/>
+ */
