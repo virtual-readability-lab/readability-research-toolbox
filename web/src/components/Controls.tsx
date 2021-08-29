@@ -1,5 +1,5 @@
 // import styles from "./Controls.module.css"
-import {Flex, Slider, TextField, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
+import {Flex, Slider, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
@@ -15,8 +15,8 @@ const Controls = (props: {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
   const controls = useControls();
   const fonts = [
-    'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Georgia', 'Impact', 'Microsoft Sans Serif', 'Tahoma', 'Times New Roman', 'Trebuchet MS', 'Verdana'
-  ] // this is the intersection of standard font sets for Windows and Mac
+    'Arial', 'Georgia', 'Merriweather', 'OpenSans', 'Poppins', 'Roboto', 'SourceSerifPro', 'Times'
+  ]
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
   return (
     <Flex direction="column" gap="10px" margin="10px">
