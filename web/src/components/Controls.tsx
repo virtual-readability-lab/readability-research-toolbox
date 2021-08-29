@@ -32,19 +32,19 @@ const Controls = (props: {
       }} labelPosition="side">
         {fontItems}
       </Picker>
-      <Slider label="Font size (px)" value={controls.fontSize} onChange={(val) => {
+      <Slider label="Font size" value={controls.fontSize} onChange={(val) => {
         props.updateControlValue('fontSize', val)
       }} minValue={10} maxValue={64} labelPosition="side"/>
       <Slider label="Line height" value={controls.lineHeight} onChange={(val) => {
         props.updateControlValue('lineHeight', val)
       }} minValue={1} maxValue={5} step={0.1} labelPosition="side"/>
-      <Slider label="Character spacing (em)" value={controls.characterSpacing} onChange={(val) => {
+      <Slider label="Character spacing" value={controls.characterSpacing} onChange={(val) => {
         props.updateControlValue('characterSpacing', val)
       }} minValue={-1} maxValue={4} step={0.1} labelPosition="side"/>
-      <Slider label="Word spacing (em)" value={controls.wordSpacing} onChange={(val) => {
+      <Slider label="Word spacing" value={controls.wordSpacing} onChange={(val) => {
         props.updateControlValue('wordSpacing', val)
       }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
-      <Slider label="Paragraph indent (em)" value={controls.paragraphIndent} onChange={(val) => {
+      <Slider label="Paragraph indent" value={controls.paragraphIndent} onChange={(val) => {
         props.updateControlValue('paragraphIndent', val)
       }} minValue={-5} maxValue={5} step={0.1} labelPosition="side"/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
@@ -55,7 +55,7 @@ const Controls = (props: {
         <Item key="center">Center</Item>
         <Item key="justify">Justify</Item>
       </Picker>
-      <Slider label="Column width (in)" value={controls.columnWidth} onChange={(val) => {
+      <Slider label="Column width" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
       <ColorPicker label="Text colors" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
@@ -76,7 +76,7 @@ const Controls = (props: {
         <Switch isSelected={controls.rulerDisableMouse} onChange={(val) => {
           props.updateControlValue('rulerDisableMouse', val)
         }}>Disable mouse</Switch>
-        <Slider label="Ruler height (em)" value={controls.rulerHeight} onChange={(val) => {
+        <Slider label="Ruler height" value={controls.rulerHeight} onChange={(val) => {
           props.updateControlValue('rulerHeight', val)
         }} minValue={1} maxValue={10} step={0.1} labelPosition="side"/>
         <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {

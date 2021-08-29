@@ -50,7 +50,7 @@ const Main = () => {
     foregroundColor: '#000000',
     backgroundColor: '#FFFFFF',
     showRuler: false,
-    rulerHeight: 2,
+    rulerHeight: 1,
     rulerOpacity: 0.5,
     rulerInvert: false,
     rulerBackgroundColor: '#000',
