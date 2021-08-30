@@ -3,9 +3,7 @@
     height: 100%;
     position: absolute;
     z-index: 10;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    margin-left: 0.5in
 }
 
 .UnderlineRuler {
@@ -13,9 +11,7 @@
     height: 1px;
     position: absolute;
     z-index: 10;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    margin-left: 0.5in;
     top: 50%;
-    border-top: black 1px solid;
+    border-top: black 2px solid;
 }

@@ -7,7 +7,9 @@ const RulerOverlay = () => {
   const [edgeColor, setEdgeColor] = useState('#0008')
   const [centerColor, setCenterColor] = useState('transparent')
   const controlValues = useControls();
-  const halfRulerOpening = `${controlValues.rulerHeight / 2}em`
+  // we want the ruler height to be proportional to the text default size
+  const rulerHeight = controlValues.fontSize * controlValues.lineHeight * controlValues.rulerHeight;
+  const halfRulerOpening = `${rulerHeight / 2}px`
   useEffect(() => {
     try {
       const parsedBackroundColor = parseColor(controlValues.rulerBackgroundColor)
@@ -38,7 +40,7 @@ const RulerOverlay = () => {
       <div className={styles.UnderlineRuler} style={{
         display: controlValues.rulerUnderline ? 'block' : 'none',
         width: rulerWidth,
-
+        borderTopColor: controlValues.backgroundColor === '#000000' ? 'white' : 'black'
       }}/>
     </>
   )

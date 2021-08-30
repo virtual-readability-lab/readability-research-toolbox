@@ -8,6 +8,7 @@
     overflow: auto;
     position: relative;
     height: 100%;
+    margin-left: 0.5in;
 }
 
 .ContentPane {

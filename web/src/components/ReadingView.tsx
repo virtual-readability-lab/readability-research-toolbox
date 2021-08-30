@@ -34,7 +34,7 @@ const ReadingView = () => {
           :
           <>
             <RulerOverlay/>
-            <div className={styles.ScrollContainer}>
+            <div className={styles.ScrollContainer} style={{width: `${controlValues.columnWidth + 1.2}in`}}>
               <div className={styles.ContentPane} dangerouslySetInnerHTML={{__html: controlValues.html}}
                    style={{
                      fontSize: controlValues.fontSize,
