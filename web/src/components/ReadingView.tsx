@@ -43,7 +43,7 @@ const ReadingView = () => {
                      letterSpacing: `${controlValues.characterSpacing}em`,
                      textAlign: controlValues.textAlignment as CSS.Property.TextAlign,
                      wordSpacing: `${controlValues.wordSpacing}em`,
-                     ['--text_indent' as any]: `${controlValues.paragraphIndent}em`,
+                     ['--text_indent' as any]: `${controlValues.paragraphIndent}in`,
                      width: `${controlValues.columnWidth}in`,
                      backgroundColor: controlValues.backgroundColor,
                      color: controlValues.foregroundColor,

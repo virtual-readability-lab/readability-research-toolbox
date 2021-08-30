@@ -19,11 +19,11 @@
  *
  */
 
-import React from "react";
-import {ColorResult, CompactPicker} from 'react-color'
+import React, {useEffect, useState} from "react";
 import {Label} from '@react-spectrum/label';
 import styles from './ColorPicker.module.css'
 import TextColor from "./TextColor";
+import {randomizeArray} from "../utils";
 
 /*
 from https://www.cs.cmu.edu/~jbigham/pubs/pdfs/2017/colors.pdf
@@ -37,22 +37,34 @@ from https://www.cs.cmu.edu/~jbigham/pubs/pdfs/2017/colors.pdf
 - Red: RGB(185, 135, 220) #E0A6AA; 10.2:1.
 - Turquoise: RGB(224, 166, 170) #A5F7E1; 16.99:1.
 - Yellow: RGB(248, 253, 137) #F8FD89; 19.4:1
+
+added white and cream #FFFDD0
  */
-const colors = ['#FFFFFF', '#FFFDD0', '#96ADFC', '#DBE1F1', '#A8F29A', '#D8D3D6',
+const colors = ['#FFFDD0', '#96ADFC', '#DBE1F1', '#A8F29A', '#D8D3D6',
   '#EDDD6E', '#EDD1B0', '#B987DC', '#E0A6AA', '#A5F7E1', '#F8FD89']
+
+
 const ColorPicker = (props: {
   label: string,
-  currentColor: {text: string, back: string},
+  currentColor: { text: string, back: string },
   setColor: (newText: string, newBack: string) => void,
 }) => {
+  const [randomizedColors, setRandomizedColors] = useState(colors)
+  useEffect(() => {
+    // we want to randomize the color ordering for each new session
+    const newOrder = randomizeArray(colors)
+    // but always have white first
+    newOrder.unshift('#FFFFFF')
+    setRandomizedColors(newOrder)
+  }, [])
   return (
     <div style={{display: 'flex'}}>
       <Label className={styles.Label} labelPosition="side">{props.label}</Label>
       <div className={styles.Picker}>
-        {colors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
-                                      currentColor={props.currentColor} setColor={props.setColor} />)}
-        {colors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
-                                      currentColor={props.currentColor} setColor={props.setColor} />)}
+        {randomizedColors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
+                                                currentColor={props.currentColor} setColor={props.setColor}/>)}
+        {randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
+                                      currentColor={props.currentColor} setColor={props.setColor}/>)}
       </div>
     </div>
   )
