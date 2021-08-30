@@ -20,8 +20,9 @@
  */
 
 import {Picker, Item} from '@adobe/react-spectrum'
+import {addLogRecord} from "./logging";
 
-const Rapunzel = `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
+const fileHTML: {[key: string]: string} = {Rapunzel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Rapunzel-tagged.pdf</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
@@ -53,9 +54,9 @@ const Rapunzel = `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 </section>
 </div>
 </body>
-</html>`
+</html>`,
 
-const Rumpelstiltskin = `
+Rumpelstiltskin: `
 <html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Rumpelstiltskin-tagged.pdf</title>
@@ -94,9 +95,9 @@ const Rumpelstiltskin = `
 </section>
 </div>
 </body>
-</html>`
+</html>`,
 
-const Hansel_and_Gretel = `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
+Hansel_and_Gretel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Hansel_and_Gretel-tagged.pdf</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
@@ -135,18 +136,25 @@ const Hansel_and_Gretel = `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtm
 </div>
 </body>
 </html>
-`
+`}
 
 const SimpleFileChooser = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
 }) => {
   return (<Picker label="File name" labelPosition="side" placeholder="Select file..."
-                  onSelectionChange={(key) => props.updateControlValue('html', key)}>
-    <Item key={Rapunzel}>Rapunzel</Item>
-    <Item key={Rumpelstiltskin}>Rumpelstiltskin</Item>
-    <Item key={Hansel_and_Gretel}>Hansel and Gretel</Item>
+                  onSelectionChange={(key) => {
+                    props.updateControlValue('html', fileHTML[key])
+                    addLogRecord({
+                      datetime: new Date(),
+                      controlName: 'fileName',
+                      oldValue: '',
+                      newValue: key
+                    })
+                  }}>
+    <Item key="Rapunzel">Rapunzel</Item>
+    <Item key="Rumpelstiltskin">Rumpelstiltskin</Item>
+    <Item key="Hansel_and_Gretel">Hansel and Gretel</Item>
   </Picker>)
 }
-
 
 export default SimpleFileChooser;
