@@ -22,20 +22,6 @@ attached HTML, but the loaded CSS does not affect the "outside" parts of the web
 
 const ReadingView = () => {
   const controlValues = useControls();
-  const contentPane = useRef(null);
-  useEffect(() => {
-    const attachShadow = (parent: any) => {
-      if (!parent) {
-        return;
-      }
-      if (!parent.shadowRoot) {
-        parent.attachShadow({mode: 'open'});
-      }
-      parent.shadowRoot!.innerHTML = controlValues.html;
-      parent.innerHTML = ''
-    }
-    attachShadow(contentPane.current)
-  }, [controlValues.html])
 
   return (
     <div className={styles.ReadingView}>
@@ -49,15 +35,15 @@ const ReadingView = () => {
           <>
             <RulerOverlay/>
             <div className={styles.ScrollContainer}>
-              <div className={styles.ContentPane} ref={contentPane}
+              <div className={styles.ContentPane} dangerouslySetInnerHTML={{__html: controlValues.html}}
                    style={{
                      fontSize: controlValues.fontSize,
                      fontFamily: controlValues.fontName,
                      lineHeight: controlValues.lineHeight,
                      letterSpacing: `${controlValues.characterSpacing}em`,
                      textAlign: controlValues.textAlignment as CSS.Property.TextAlign,
-                     wordSpacing: `${controlValues.wordSpacing}em`, // Not working - because of !important in LM CSS
-                     textIndent: `${controlValues.paragraphIndent}em`,
+                     wordSpacing: `${controlValues.wordSpacing}em`,
+                     ['--text_indent' as any]: `${controlValues.paragraphIndent}em`,
                      width: `${controlValues.columnWidth}in`,
                      backgroundColor: controlValues.backgroundColor,
                      color: controlValues.foregroundColor,

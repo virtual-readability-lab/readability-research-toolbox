@@ -45,4 +45,9 @@ code {
   src: local("Times"), url("./fonts/times.ttf")
 }
 
-
+:root {
+  --text_indent: 0;
+}
+p {
+  text-indent: var(--text_indent);
+}
