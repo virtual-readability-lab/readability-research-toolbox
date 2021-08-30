@@ -46,7 +46,7 @@ const Controls = (props: {
       }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
       <Slider label="Paragraph indent" value={controls.paragraphIndent} onChange={(val) => {
         props.updateControlValue('paragraphIndent', val)
-      }} minValue={-5} maxValue={5} step={0.1} labelPosition="side"/>
+      }} minValue={-0.5} maxValue={0.5} step={0.005} labelPosition="side"/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
         props.updateControlValue('textAlignment', key)
       }} labelPosition="side">
