@@ -24,6 +24,7 @@ import {Label} from '@react-spectrum/label';
 import styles from './ColorPicker.module.css'
 import TextColor from "./TextColor";
 import {randomizeArray} from "../utils";
+import {addLogRecord} from "./logging";
 
 /*
 from https://www.cs.cmu.edu/~jbigham/pubs/pdfs/2017/colors.pdf
@@ -57,6 +58,14 @@ const ColorPicker = (props: {
     // but always have white first
     newOrder.unshift('#FFFFFF')
     setRandomizedColors(newOrder)
+    setTimeout(() => {
+      addLogRecord({
+        datetime: new Date(),
+        controlName: 'colors',
+        oldValue: 'na',
+        newValue: newOrder.join(',')
+      })
+    }, 500) // HACK: this has to run after Main has cleared the records, but I don't see a good way to interlock
   }, [])
   return (
     <div style={{display: 'flex'}}>
