@@ -3,7 +3,6 @@ import {Flex, Slider, Picker, Item, Switch, View, ActionButton} from "@adobe/rea
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
-import {ColorResult} from "react-color";
 import {clearLogRecords, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
 import {useState} from "react";
@@ -21,11 +20,11 @@ const Controls = (props: {
   return (
     <Flex direction="column" gap="10px" margin="10px">
       <div onDoubleClick={() => setShowFullFileChooser(true)}>
-      {showFullFileChooser ?
-        <FileChooser updateControlValue={props.updateControlValue}/>
-        :
-        <SimpleFileChooser updateControlValue={props.updateControlValue}/>
-      }
+        {showFullFileChooser ?
+          <FileChooser updateControlValue={props.updateControlValue}/>
+          :
+          <SimpleFileChooser updateControlValue={props.updateControlValue}/>
+        }
       </div>
       <Picker label="Font name" selectedKey={controls.fontName} onSelectionChange={(val) => {
         props.updateControlValue('fontName', val)
@@ -47,6 +46,9 @@ const Controls = (props: {
       <Slider label="Paragraph indent" value={controls.paragraphIndent} onChange={(val) => {
         props.updateControlValue('paragraphIndent', val)
       }} minValue={-0.5} maxValue={0.5} step={0.005} labelPosition="side"/>
+      <Slider label="Paragraph spacing" value={controls.paragraphSpacing} onChange={(val) => {
+        props.updateControlValue('paragraphSpacing', val)
+      }} minValue={-1} maxValue={20} step={0.5} labelPosition="side"/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
         props.updateControlValue('textAlignment', key)
       }} labelPosition="side">
@@ -58,11 +60,17 @@ const Controls = (props: {
       <Slider label="Column width" value={controls.columnWidth} onChange={(val) => {
         props.updateControlValue('columnWidth', val)
       }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
+      <Switch isSelected={controls.darkMode} onChange={(val) => {
+        props.updateControlValue('darkMode', val)
+      }}>Dark mode</Switch>
       <ColorPicker label="Text colors" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
                    setColor={(newText: string, newBack: string) => {
                      props.updateControlValue('foregroundColor', newText);
                      props.updateControlValue('backgroundColor', newBack);
-                   }}/>
+                   }} darkMode={controls.darkMode}/>
+      <Slider label="Contrast" value={controls.backgroundSaturation} onChange={(val) => {
+        props.updateControlValue('backgroundSaturation', val)
+      }} minValue={0} maxValue={100} step={1} labelPosition="side"/>
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
@@ -97,10 +105,3 @@ const Controls = (props: {
 }
 
 export default Controls;
-/*
-        <ColorPicker label="Ruler background color" currentColor={controls.rulerBackgroundColor}
-                     setColor={(c: ColorResult) => {
-                       console.log(c)
-                       props.updateControlValue('rulerBackgroundColor', c.hex)
-                     }}/>
- */

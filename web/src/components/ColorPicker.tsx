@@ -48,6 +48,7 @@ const ColorPicker = (props: {
   label: string,
   currentColor: { text: string, back: string },
   setColor: (newText: string, newBack: string) => void,
+  darkMode: boolean,
 }) => {
   const [randomizedColors, setRandomizedColors] = useState(colors)
   useEffect(() => {
@@ -61,10 +62,13 @@ const ColorPicker = (props: {
     <div style={{display: 'flex'}}>
       <Label className={styles.Label} labelPosition="side">{props.label}</Label>
       <div className={styles.Picker}>
-        {randomizedColors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
-                                                currentColor={props.currentColor} setColor={props.setColor}/>)}
-        {randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
-                                      currentColor={props.currentColor} setColor={props.setColor}/>)}
+        {props.darkMode ?
+          randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
+                                                 currentColor={props.currentColor} setColor={props.setColor}/>)
+          :
+          randomizedColors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
+                                                 currentColor={props.currentColor} setColor={props.setColor}/>)
+        }
       </div>
     </div>
   )

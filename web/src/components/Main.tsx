@@ -12,10 +12,13 @@ interface IControls {
   characterSpacing: number,
   wordSpacing: number,
   paragraphIndent: number,
+  paragraphSpacing: number,
   columnWidth: number,
   textAlignment: string,
+  darkMode: boolean,
   backgroundColor: string,
   foregroundColor: string,
+  backgroundSaturation: number,
   showRuler: boolean,
   rulerHeight: number,
   rulerOpacity: number,
@@ -35,7 +38,9 @@ type ControlStateChange = {
 const ControlsContext = createContext<IControls>(undefined!);
 export const useControls = () => useContext(ControlsContext);
 
-const Main = () => {
+const Main = (props: {
+  setTheme: (dark: boolean) => void
+}) => {
   /* Controls context and state */
   const controlsInitialState = {
     html: '',
@@ -45,10 +50,13 @@ const Main = () => {
     characterSpacing: 0,
     wordSpacing: 0,
     paragraphIndent: 0,
+    paragraphSpacing: 0,
     columnWidth: 6,
     textAlignment: 'start',
+    darkMode: false,
     foregroundColor: '#000000',
     backgroundColor: '#FFFFFF',
+    backgroundSaturation: 90,
     showRuler: false,
     rulerHeight: 1,
     rulerOpacity: 0.5,
@@ -60,6 +68,7 @@ const Main = () => {
   }
 
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
+    let newState;
     if (action.name === 'reset') {
       addLogRecord({
         datetime: new Date(),
@@ -67,19 +76,29 @@ const Main = () => {
         oldValue: 0,
         newValue: 0
       })
-      return {...controlsInitialState, html: state.html}  // don't reset html
+      newState = {...controlsInitialState, html: state.html}  // don't reset html
+      props.setTheme(false);
+    } else {
+      newState = {...state}
+      newState[action.name] = action.value;
+      // save it to log
+      addLogRecord({
+        datetime: new Date(),
+        controlName: action.name,
+        oldValue: state[action.name],
+        newValue: action.value
+      })
     }
-    const newState = {...state}
-    newState[action.name] = action.value;
-    // save it to log
-    addLogRecord({
-      datetime: new Date(),
-      controlName: action.name,
-      oldValue: state[action.name],
-      newValue: action.value
-    })
+    if (action.name === 'darkMode') {
+      props.setTheme(action.value as boolean)
+      if (state.darkMode !== action.value) {
+        // swap colors
+        [newState.backgroundColor, newState.foregroundColor] = [state.foregroundColor, state.backgroundColor]
+      }
+    }
     return newState;
   }
+
   const [controlsState, setControlDispatch] = useReducer(changeControlReducer, controlsInitialState)
   const updateControlValue = (name: string, value: boolean | number | string) => {
     setControlDispatch({name, value})
@@ -87,7 +106,6 @@ const Main = () => {
   useEffect(() => {
     clearLogRecords();
   }, [])
-
   return (
     <ControlsContext.Provider value={controlsState}>
       <div className={styles.Main}>

@@ -4,6 +4,7 @@ import RulerOverlay from "./RulerOverlay";
 import {ProgressCircle} from "@adobe/react-spectrum";
 import CSS from 'csstype'
 import {useEffect, useRef} from "react";
+import {colord} from "colord";
 
 /*
 Originally I just read the HTML content from the server and rendered it in an unsafe innerHTML, adjusting the
@@ -22,6 +23,12 @@ attached HTML, but the loaded CSS does not affect the "outside" parts of the web
 
 const ReadingView = () => {
   const controlValues = useControls();
+  const backHSL = colord(controlValues.backgroundColor).toHsl();
+  controlValues.darkMode ?
+    backHSL.l = 100 - controlValues.backgroundSaturation
+    :
+    backHSL.s = controlValues.backgroundSaturation;
+  const backgroundColor = colord(backHSL).toHex().toUpperCase()
 
   return (
     <div className={styles.ReadingView}>
@@ -44,8 +51,9 @@ const ReadingView = () => {
                      textAlign: controlValues.textAlignment as CSS.Property.TextAlign,
                      wordSpacing: `${controlValues.wordSpacing}em`,
                      ['--text_indent' as any]: `${controlValues.paragraphIndent}in`,
+                     ['--paragraph_spacing' as any]: `${controlValues.paragraphSpacing}em`,
                      width: `${controlValues.columnWidth}in`,
-                     backgroundColor: controlValues.backgroundColor,
+                     backgroundColor: backgroundColor,
                      color: controlValues.foregroundColor,
                      padding: controlValues.showRuler ? '400px 0.5in' : '0.5in' // the 400px is a hack-must be a better way
                    }}/>

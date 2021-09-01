@@ -47,7 +47,9 @@ code {
 
 :root {
   --text_indent: 0;
+  --paragraph_spacing: 0;
 }
 p {
   text-indent: var(--text_indent);
+  margin-bottom: var(--paragraph_spacing);
 }
