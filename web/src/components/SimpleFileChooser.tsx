@@ -22,7 +22,45 @@
 import {Picker, Item} from '@adobe/react-spectrum'
 import {addLogRecord} from "./logging";
 
-const fileHTML: {[key: string]: string} = {Rapunzel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
+const fileHTML: {[key: string]: string} = {
+Learning_from_History: `<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Learning_from_History-tagged.pdf</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="pdfStructure" name="generator"/>
+</head>
+<body>
+<div class="ADBE_E_Document" id="ADBE_Obj_181">
+<section class="ADBE_E_Sect" id="ADBE_Obj_228">
+<h1 class="ADBE_E_Title" data-page="1" id="ADBE_Obj_223" lang="en">Learning from History </h1>
+<p class="ADBE_E_P" data-page="1" id="ADBE_Obj_224" lang="en">Andy Nash </p>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="1" id="ADBE_Obj_225" lang="en">Many people are worried that the information they provide to the Census Bureau in 2020 will be shared with other government agencies. Here’s how that happened in the past and what’s differ<span class="ADBE_E_HyphenSpan" data-page="1" id="ADBE_Obj_226">­</span>ent now. </p>
+</section>
+<section class="ADBE_E_Sect" id="ADBE_Obj_209">
+<h1 class="ADBE_E_H1" data-page="1" id="ADBE_Obj_210" lang="en">How Census Data Was Misused in the Past </h1>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="1" id="ADBE_Obj_211" lang="en">In 1941, Japan attacked Pearl Harbor in Hawaii. The attack raised Americans’ fear of war and intensified racial prejudices against Japanese Americans. In the days after the bombing, the U.S. government arrested more than 1,200 Japanese community leaders and froze all bank accounts in U.S. branches of Japanese banks. The government also imposed nighttime curfews for all Japanese Americans. </p>
+<p class="ADBE_E_P ADBE_CM_CM2" id="ADBE_Obj_212" lang="en">
+<span class="ADBE_E_ParagraphSpan" data-page="1" id="ADBE_Obj_220">Within months, President Roosevelt signed an order that allowed the military to round up 120,000 Americans of Japanese descent (who were mostly native-born U.S. citizens). The government gave Japanese-Americans on the West Coast only days </span><span class="ADBE_E_ParagraphSpan" data-page="1" id="ADBE_Obj_221">to decide what to do with their houses, farms, businesses, and possessions. According to the Manzanar National Historic Site webpage, “Most families sold their property and belongings for much less than they were worth. Some rented their properties to neighbors. Others left possessions with friends or religious groups. Some abandoned their property. They did not know where they were going or for how long. Each family was assigned an identification number and loaded into cars, buses, trucks, and trains, taking only what they could carry.” The military transported Japanese Americans to temporary centers at racetracks and fairgrounds, and then took them to internment camps until the end of the war. </span></p>
+<p class="ADBE_E_P ADBE_CM_CM2" id="ADBE_Obj_213" lang="en">
+<span class="ADBE_E_ParagraphSpan" data-page="1" id="ADBE_Obj_214">To make this round-up go more quickly, Con<span class="ADBE_E_HyphenSpan" data-page="1" id="ADBE_Obj_219">­</span>gress passed a law that allowed the military to see confidential census information about individuals. Although the Census Bureau denied it for decades, researchers Margo Anderson and William Seltzer discovered that census officials had released block-by-block information about where Japanese-</span><span class="ADBE_E_ParagraphSpan" data-page="2" id="ADBE_Obj_184">Americans were living in California, Arizona, Wyoming, Colorado, Utah, Idaho, and Arkansas. </span></p>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="2" id="ADBE_Obj_185" lang="en">World War II is not the only time that the Census Bureau has shared information about individuals or communities. During World War I, the Draft Board got information from the Census Bureau to check the age of citizens they believed were lying about their age to avoid the draft. And after the 9/11 terrorist attacks, the Census Bureau gave the U.S. Deptartment of Homeland Security information about neighborhoods that were home to large numbers of Arab Americans, sorted by their country of origin. In this case, the informa<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_186">­</span>tion was publicly available, but not useful until the Census Bureau organized and shared it. The government claimed that the requests were made to help identify which airports required signs and pamphlets in Arabic to explain U.S. laws and regu<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_187">­</span>lations to travelers. </p>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="2" id="ADBE_Obj_188" lang="en">In response to concerns about this misuse of data, the Census Bureau implemented additional procedures to protect information requested by federal, state, or local law enforcement agencies or that involves a “sensitive population.” </p>
+</section>
+<section class="ADBE_E_Sect" id="ADBE_Obj_205">
+<h1 class="ADBE_E_H1" data-page="2" id="ADBE_Obj_189" lang="en">Strategies for Making Data Safe in 2020 </h1>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="2" id="ADBE_Obj_190" lang="en">There are three important ways that our data is being protected this year. First, current law (see p. 7 for more information about Title 13) ensures that individual information cannot be shared with any other agencies, including Immigration and Cus<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_191">­</span>toms Enforcement (ICE), the FBI, the CIA or any other government agency. And no private compa<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_192">­</span>ny, landlord, or employer can get any household’s census information, even with a court order. </p>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="2" id="ADBE_Obj_193" lang="en">Second, the Census Bureau is using some strategies to protect against hackers. For example, the Census Bureau will scramble the data by swap<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_194">­</span>ping the information from two similar households in different neighborhoods. Mixing up individual information in this way ensures the aggregate data is accurate, while individual data is not traceable. </p>
+<p class="ADBE_E_P ADBE_CM_CM2" id="ADBE_Obj_206" lang="en">
+<span class="ADBE_E_ParagraphSpan" data-page="2" id="ADBE_Obj_195">And finally, civil liberties groups such as the ACLU and Asian-Americans Advancing Justice are preparing to respond quickly in the courts if </span><span class="ADBE_E_ParagraphSpan" data-page="2" id="ADBE_Obj_196">any data are used improperly. </span></p>
+<p class="ADBE_E_P ADBE_CM_CM2" data-page="2" id="ADBE_Obj_197" lang="en">The fact is, there is never a way to be 100% sure that our civil rights and personal information are safe, especially during times of war. And this is not unique to the census. We need to constantly work to safeguard our rights and our personal data. We also have a responsibility to contribute to a full, accurate count of our population so that our communities get our fair share of the tax dol<span class="ADBE_E_HyphenSpan" data-page="2" id="ADBE_Obj_198">­</span>lars we have paid. We can’t let anyone steal those resources by frightening us away from the census. </p>
+</section>
+</div>
+</body>
+</html>
+`,
+Rapunzel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Rapunzel-tagged.pdf</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
@@ -151,6 +189,7 @@ const SimpleFileChooser = (props: {
                       newValue: key
                     })
                   }}>
+    <Item key="Learning_from_History">Learning from History</Item>
     <Item key="Rapunzel">Rapunzel</Item>
     <Item key="Rumpelstiltskin">Rumpelstiltskin</Item>
     <Item key="Hansel_and_Gretel">Hansel and Gretel</Item>
