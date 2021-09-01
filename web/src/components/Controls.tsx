@@ -1,5 +1,5 @@
 // import styles from "./Controls.module.css"
-import {Flex, Slider, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
+import {Slider, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
@@ -18,7 +18,7 @@ const Controls = (props: {
   ]
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
   return (
-    <Flex direction="column" gap="10px" margin="10px">
+    <div className={styles.Controls}>
       <div onDoubleClick={() => setShowFullFileChooser(true)}>
         {showFullFileChooser ?
           <FileChooser updateControlValue={props.updateControlValue}/>
@@ -49,9 +49,10 @@ const Controls = (props: {
       <Slider label="Paragraph spacing" value={controls.paragraphSpacing} onChange={(val) => {
         props.updateControlValue('paragraphSpacing', val)
       }} minValue={-1} maxValue={20} step={0.5} labelPosition="side"/>
-      <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string} onSelectionChange={(key) => {
-        props.updateControlValue('textAlignment', key)
-      }} labelPosition="side">
+      <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string}
+              onSelectionChange={(key) => {
+                props.updateControlValue('textAlignment', key)
+              }} labelPosition="side">
         <Item key="start">Left</Item>
         <Item key="end">Right</Item>
         <Item key="center">Center</Item>
@@ -100,7 +101,7 @@ const Controls = (props: {
         <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
         <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset controls</ActionButton>
       </div>
-    </Flex>
+    </div>
   )
 }
 

@@ -3,7 +3,6 @@ import {useControls} from "./Main";
 import RulerOverlay from "./RulerOverlay";
 import {ProgressCircle} from "@adobe/react-spectrum";
 import CSS from 'csstype'
-import {useEffect, useRef} from "react";
 import {colord} from "colord";
 
 /*

@@ -38,7 +38,7 @@ const RulerOverlay = () => {
         cursor: controlValues.rulerDisableMouse ? 'none' : 'normal',
       }}/>
       <div className={styles.UnderlineRuler} style={{
-        display: controlValues.rulerUnderline ? 'block' : 'none',
+        display: controlValues.showRuler && controlValues.rulerUnderline ? 'block' : 'none',
         width: rulerWidth,
         borderTopColor: controlValues.backgroundColor === '#000000' ? 'white' : 'black'
       }}/>
