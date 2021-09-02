@@ -10,7 +10,7 @@ function App() {
     <Provider theme={isDarkMode ? darkTheme : lightTheme}>
       <header className={styles.Header}>
         <div style={{flexDirection: 'column'}}>
-          <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Test</Heading>
+          <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Panel</Heading>
         </div>
       </header>
       <Main setTheme={setIsDarkMode}/>
