@@ -22,11 +22,12 @@ const RulerOverlay = () => {
     }
   }, [controlValues.rulerBackgroundColor, controlValues.rulerOpacity, controlValues.rulerInvert])
 
+  const rulerPosition = '25%'
   const backgroundCss = `linear-gradient(to bottom, 
-  ${edgeColor} calc(50% - ${halfRulerOpening} - ${controlValues.rulerTransitionHeight}px), 
-  ${centerColor} calc(50% - ${halfRulerOpening}), 
-  ${centerColor} calc(50% + ${halfRulerOpening}), 
-  ${edgeColor} calc(50% + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`
+  ${edgeColor} calc(${rulerPosition} - ${halfRulerOpening} - ${controlValues.rulerTransitionHeight}px), 
+  ${centerColor} calc(${rulerPosition} - ${halfRulerOpening}), 
+  ${centerColor} calc(${rulerPosition} + ${halfRulerOpening}), 
+  ${edgeColor} calc(${rulerPosition} + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`
 
   const rulerWidth = `${controlValues.columnWidth + 1}in`;  // add an inch to cover the left and right padding
   return (
@@ -35,7 +36,6 @@ const RulerOverlay = () => {
         display: controlValues.showRuler && !controlValues.rulerUnderline ? 'block' : 'none',
         width: rulerWidth,
         background: backgroundCss,
-        cursor: controlValues.rulerDisableMouse ? 'none' : 'normal',
       }}/>
       <div className={styles.UnderlineRuler} style={{
         display: controlValues.showRuler && controlValues.rulerUnderline ? 'block' : 'none',

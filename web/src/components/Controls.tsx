@@ -45,7 +45,7 @@ const Controls = (props: {
       }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
       <Slider label="Paragraph indent" value={controls.paragraphIndent} onChange={(val) => {
         props.updateControlValue('paragraphIndent', val)
-      }} minValue={-0.5} maxValue={0.5} step={0.005} labelPosition="side"/>
+      }} minValue={-0.5} maxValue={0.5} step={0.05} labelPosition="side"/>
       <Slider label="Paragraph spacing" value={controls.paragraphSpacing} onChange={(val) => {
         props.updateControlValue('paragraphSpacing', val)
       }} minValue={-1} maxValue={20} step={0.5} labelPosition="side"/>
@@ -64,14 +64,14 @@ const Controls = (props: {
       <Switch isSelected={controls.darkMode} onChange={(val) => {
         props.updateControlValue('darkMode', val)
       }}>Dark mode</Switch>
-      <ColorPicker label="Text colors" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
+      <ColorPicker label="Color theme" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
                    setColor={(newText: string, newBack: string) => {
                      props.updateControlValue('foregroundColor', newText);
                      props.updateControlValue('backgroundColor', newBack);
                    }} darkMode={controls.darkMode}/>
       <Slider label="Contrast" value={controls.backgroundSaturation} onChange={(val) => {
         props.updateControlValue('backgroundSaturation', val)
-      }} minValue={0} maxValue={100} step={1} labelPosition="side"/>
+      }} minValue={0} maxValue={100} step={1} labelPosition="side" isDisabled={controls.backgroundColor === '#FFFFFF'}/>
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
@@ -91,7 +91,7 @@ const Controls = (props: {
         <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {
           props.updateControlValue('rulerOpacity', val)
         }} minValue={0} maxValue={1} step={0.01} labelPosition="side"/>
-        <Slider label="Ruler transition height" value={controls.rulerTransitionHeight} onChange={(val) => {
+        <Slider label="Ruler fuzzy border" value={controls.rulerTransitionHeight} onChange={(val) => {
           props.updateControlValue('rulerTransitionHeight', val)
         }} minValue={0} maxValue={10} step={1} labelPosition="side"/>
 

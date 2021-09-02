@@ -28,7 +28,8 @@ const ReadingView = () => {
     :
     backHSL.s = controlValues.backgroundSaturation;
   const backgroundColor = colord(backHSL).toHex().toUpperCase()
-
+  const showCursor = (controlValues.showRuler && controlValues.rulerDisableMouse) ? 'none' : 'default';
+  console.log(showCursor)
   return (
     <div className={styles.ReadingView}>
       {controlValues.html ?
@@ -54,7 +55,9 @@ const ReadingView = () => {
                      width: `${controlValues.columnWidth}in`,
                      backgroundColor: backgroundColor,
                      color: controlValues.foregroundColor,
-                     padding: controlValues.showRuler ? '400px 0.5in' : '0.5in' // the 400px is a hack-must be a better way
+                     cursor: showCursor,
+                     // the 200px is a hack-must be a better way
+                     padding: controlValues.showRuler ? '200px 0.5in' : '0.5in',
                    }}/>
             </div>
           </>)
