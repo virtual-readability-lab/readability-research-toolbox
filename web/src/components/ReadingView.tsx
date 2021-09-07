@@ -29,7 +29,6 @@ const ReadingView = () => {
     backHSL.s = controlValues.backgroundSaturation;
   const backgroundColor = colord(backHSL).toHex().toUpperCase()
   const showCursor = (controlValues.showRuler && controlValues.rulerDisableMouse) ? 'none' : 'default';
-  console.log(showCursor)
   return (
     <div className={styles.ReadingView}>
       {controlValues.html ?

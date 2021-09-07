@@ -1,5 +1,5 @@
 // import styles from "./Controls.module.css"
-import {Slider, Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
+import {Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
@@ -7,6 +7,7 @@ import {clearLogRecords, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
 import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
+import SliderControl from "./SliderControl";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: boolean | number | string) => void
@@ -31,24 +32,13 @@ const Controls = (props: {
       }} labelPosition="side">
         {fontItems}
       </Picker>
-      <Slider label="Font size" value={controls.fontSize} onChange={(val) => {
-        props.updateControlValue('fontSize', val)
-      }} minValue={10} maxValue={64} labelPosition="side"/>
-      <Slider label="Line height" value={controls.lineHeight} onChange={(val) => {
-        props.updateControlValue('lineHeight', val)
-      }} minValue={1} maxValue={5} step={0.1} labelPosition="side"/>
-      <Slider label="Character spacing" value={controls.characterSpacing} onChange={(val) => {
-        props.updateControlValue('characterSpacing', val)
-      }} minValue={-1} maxValue={4} step={0.1} labelPosition="side"/>
-      <Slider label="Word spacing" value={controls.wordSpacing} onChange={(val) => {
-        props.updateControlValue('wordSpacing', val)
-      }} minValue={-1} maxValue={10} step={0.1} labelPosition="side"/>
-      <Slider label="Paragraph indent" value={controls.paragraphIndent} onChange={(val) => {
-        props.updateControlValue('paragraphIndent', val)
-      }} minValue={-0.5} maxValue={0.5} step={0.05} labelPosition="side"/>
-      <Slider label="Paragraph spacing" value={controls.paragraphSpacing} onChange={(val) => {
-        props.updateControlValue('paragraphSpacing', val)
-      }} minValue={-1} maxValue={20} step={0.5} labelPosition="side"/>
+
+      <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1} />
+      <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1} />
+      <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-1} maxValue={4} step={0.1}/>
+      <SliderControl controlName="wordSpacing" label="Word spacing" minValue={-1} maxValue={10} step={0.1}/>
+      <SliderControl controlName="paragraphIndent" label="Paragraph indent" minValue={-0.5} maxValue={0.5} step={0.05}/>
+      <SliderControl controlName="paragraphSpacing" label="Paragraph spacing" minValue={-1} maxValue={20} step={0.5}/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string}
               onSelectionChange={(key) => {
                 props.updateControlValue('textAlignment', key)
@@ -58,9 +48,7 @@ const Controls = (props: {
         <Item key="center">Center</Item>
         <Item key="justify">Justify</Item>
       </Picker>
-      <Slider label="Column width" value={controls.columnWidth} onChange={(val) => {
-        props.updateControlValue('columnWidth', val)
-      }} minValue={2} maxValue={8} step={0.2} labelPosition="side"/>
+      <SliderControl controlName="columnWidth" label="Column width" minValue={2} maxValue={8} step={0.2}/>
       <Switch isSelected={controls.darkMode} onChange={(val) => {
         props.updateControlValue('darkMode', val)
       }}>Dark mode</Switch>
@@ -69,9 +57,8 @@ const Controls = (props: {
                      props.updateControlValue('foregroundColor', newText);
                      props.updateControlValue('backgroundColor', newBack);
                    }} darkMode={controls.darkMode}/>
-      <Slider label="Contrast" value={controls.backgroundSaturation} onChange={(val) => {
-        props.updateControlValue('backgroundSaturation', val)
-      }} minValue={0} maxValue={100} step={1} labelPosition="side" isDisabled={controls.backgroundColor === '#FFFFFF'}/>
+      <SliderControl controlName="backgroundSaturation" label="Contrast" minValue={0} maxValue={100} step={1}
+                     isDisabled={controls.backgroundColor === '#FFFFFF'}/>
       <div><Switch isSelected={controls.showRuler} onChange={(val) => {
         props.updateControlValue('showRuler', val)
       }}>Show reading ruler</Switch>
@@ -85,15 +72,9 @@ const Controls = (props: {
         <Switch isSelected={controls.rulerDisableMouse} onChange={(val) => {
           props.updateControlValue('rulerDisableMouse', val)
         }}>Disable mouse</Switch>
-        <Slider label="Ruler height" value={controls.rulerHeight} onChange={(val) => {
-          props.updateControlValue('rulerHeight', val)
-        }} minValue={1} maxValue={10} step={0.1} labelPosition="side"/>
-        <Slider label="Ruler opacity" value={controls.rulerOpacity} onChange={(val) => {
-          props.updateControlValue('rulerOpacity', val)
-        }} minValue={0} maxValue={1} step={0.01} labelPosition="side"/>
-        <Slider label="Ruler fuzzy border" value={controls.rulerTransitionHeight} onChange={(val) => {
-          props.updateControlValue('rulerTransitionHeight', val)
-        }} minValue={0} maxValue={10} step={1} labelPosition="side"/>
+        <SliderControl controlName="rulerHeight" label="Ruler height" minValue={1} maxValue={10} step={0.1}/>
+        <SliderControl controlName="rulerOpacity" label="Ruler opacity"  minValue={0} maxValue={1} step={0.01}/>
+        <SliderControl controlName="rulerTransitionHeight" label="Ruler fuzzy border" minValue={0} maxValue={10} step={1}/>
 
       </View>
       <div className={styles.ButtonRow}>

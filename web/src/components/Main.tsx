@@ -28,7 +28,8 @@ interface IControls {
   rulerDisableMouse: boolean,
   rulerTransitionHeight: number,
 
-  [key: string]: boolean | number | string // so we can do state[name]
+  setControlValue: (action: ControlStateChange) => void
+  [key: string]: boolean | number | string | ((action: ControlStateChange) => void);
 }
 
 type ControlStateChange = {
@@ -42,7 +43,7 @@ const Main = (props: {
   setTheme: (dark: boolean) => void
 }) => {
   /* Controls context and state */
-  const controlsInitialState = {
+  const controlsInitialState: IControls = {
     html: '',
     fontSize: 16,
     fontName: 'Arial',
@@ -65,7 +66,8 @@ const Main = (props: {
     rulerUnderline: false,
     rulerDisableMouse: false,
     rulerTransitionHeight: 8,
-  }
+    setControlValue: undefined!,
+}
 
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
     let newState;
@@ -80,12 +82,16 @@ const Main = (props: {
       props.setTheme(false);
     } else {
       newState = {...state}
-      newState[action.name] = action.value;
+      if (action.value === -999) {
+        newState[action.name] = controlsInitialState[action.name]
+      } else {
+        newState[action.name] = action.value;
+      }
       // save it to log
       addLogRecord({
         datetime: new Date(),
         controlName: action.name,
-        oldValue: state[action.name],
+        oldValue: state[action.name] as boolean | number | string,
         newValue: action.value
       })
     }
@@ -98,8 +104,15 @@ const Main = (props: {
     }
     return newState;
   }
+  const setControlsInitialState = () => {
+    const ret = controlsInitialState;
+    ret.setControlValue = (action: ControlStateChange) => {
+      setControlDispatch(action)
+    }
+    return ret;
+  }
 
-  const [controlsState, setControlDispatch] = useReducer(changeControlReducer, controlsInitialState)
+  const [controlsState, setControlDispatch] = useReducer(changeControlReducer, setControlsInitialState())
   const updateControlValue = (name: string, value: boolean | number | string) => {
     setControlDispatch({name, value})
   }

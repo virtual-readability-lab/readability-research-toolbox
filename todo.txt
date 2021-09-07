@@ -1,7 +1,7 @@
- - justify vs. ragged right
- - paragraph indent
+ x justify vs. ragged right
+ x paragraph indent
  - adjust the position of the ruler
- - color selector widget
+ x color selector widget
  x need a separate folder for each HTML conversion, so we can keep the generated files separate
  x add the api to fetch the images from the generated folder
  x "loading..." indicator
@@ -9,3 +9,9 @@
  - readme
  x use ems (vs. px) where appropriate
  - clean temp folder
+ x reset individual control to default - maybe use spectrum undo icon
+ - variable fonts - font-stretch
+ - allow user to save/load/name combinations of control values
+ - "experimenter" panel to display/hide/preset individual controls
+ - color for ruler background
+ - randomize (and log) control order

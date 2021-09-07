@@ -27,13 +27,13 @@ export const addLogRecord = (r: LogRecord) => {
 
 const getAllLogRecords = () => {
   const ret = Array.from({length: nextRecordNumber}, (_, i) => window.sessionStorage.getItem(i.toString()))
-  return `[${ret.join(',')}]`
+  return `[${ret.join(',\n')}]`
 }
 export const downloadAllLogRecords = () => {
   const data = new Blob([getAllLogRecords()], {type: 'application/json'});
   const link = window.document.createElement('a');
   link.href = window.URL.createObjectURL(data);
-  link.download = `log-${(new Date()).toISOString()}.json`;
+  link.download = `log-${(new Date()).toISOString()}.doc`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
