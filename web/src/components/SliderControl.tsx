@@ -42,7 +42,7 @@ const SliderControl = (props: {
               minValue={props.minValue} maxValue={props.maxValue} step={props.step}
               labelPosition="side" isDisabled={props.isDisabled}/>
       <span onClick={() => {changeControlValue(-999)}}>
-        <Undo color="rgb(100, 100, 100)" isDisabled={props.isDisabled}/>
+        <Undo/>
       </span>
     </div>
   );

@@ -35,8 +35,8 @@ const Controls = (props: {
 
       <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1} />
       <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1} />
-      <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-1} maxValue={4} step={0.1}/>
-      <SliderControl controlName="wordSpacing" label="Word spacing" minValue={-1} maxValue={10} step={0.1}/>
+      <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-0.1} maxValue={4} step={0.1}/>
+      <SliderControl controlName="wordSpacing" label="Word spacing" minValue={-0.2} maxValue={10} step={0.1}/>
       <SliderControl controlName="paragraphIndent" label="Paragraph indent" minValue={-0.5} maxValue={0.5} step={0.05}/>
       <SliderControl controlName="paragraphSpacing" label="Paragraph spacing" minValue={-1} maxValue={20} step={0.5}/>
       <Picker label="Text alignment" defaultSelectedKey={controls.textAlignment as string}
