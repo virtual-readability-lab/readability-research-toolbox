@@ -41,7 +41,7 @@ const SliderControl = (props: {
       <Slider label={props.label} value={controls[props.controlName] as number} onChange={changeControlValue}
               minValue={props.minValue} maxValue={props.maxValue} step={props.step}
               labelPosition="side" isDisabled={props.isDisabled}/>
-      <span onClick={() => {changeControlValue(-999)}}>
+      <span onClick={() => {changeControlValue(-999)}} className={styles.Icon}>
         <Undo/>
       </span>
     </div>

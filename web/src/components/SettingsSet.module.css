@@ -18,17 +18,3 @@
  *
  *
  */
-
-.SliderControl {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.SliderControl label {
-    min-width: 100px;
-}
-
-.Icon {
-    color: var(--spectrum-global-color-gray-500)
-}

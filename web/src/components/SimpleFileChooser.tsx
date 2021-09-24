@@ -20,7 +20,7 @@
  */
 
 import {Picker, Item} from '@adobe/react-spectrum'
-import {addLogRecord} from "./logging";
+import {addLogRecord, ControlValue} from "./logging";
 
 const fileHTML: {[key: string]: string} = {
 Learning_from_History: `<!DOCTYPE html>
@@ -177,18 +177,14 @@ Hansel_and_Gretel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 `}
 
 const SimpleFileChooser = (props: {
-  updateControlValue: (name: string, value: boolean | number | string) => void
+  updateControlValue: (name: string, value: ControlValue) => void
 }) => {
   return (<Picker label="File name" labelPosition="side" placeholder="Select file..."
                   onSelectionChange={(key) => {
-                    props.updateControlValue('html', fileHTML[key])
-                    addLogRecord({
-                      datetime: new Date(),
-                      controlName: 'fileName',
-                      oldValue: '',
-                      newValue: key
-                    })
-                  }}>
+                    props.updateControlValue('html', fileHTML[key]);
+                    addLogRecord('fileName', '', key);
+                  }}
+                  >
     <Item key="Learning_from_History">Learning from History</Item>
     <Item key="Rapunzel">Rapunzel</Item>
     <Item key="Rumpelstiltskin">Rumpelstiltskin</Item>
@@ -196,4 +192,4 @@ const SimpleFileChooser = (props: {
   </Picker>)
 }
 
-export default SimpleFileChooser;
+export default SimpleFileChooser

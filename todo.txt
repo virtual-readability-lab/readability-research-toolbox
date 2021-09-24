@@ -15,3 +15,10 @@
  - "experimenter" panel to display/hide/preset individual controls
  - color for ruler background
  - randomize (and log) control order
+ - custom color selectors
+ - text color
+ - show font in font name drop down
+ - page border width control
+ - correlate ruler scrolling to page lines
+ - align sliders to be the same size
+ - enter slider value directly with double click

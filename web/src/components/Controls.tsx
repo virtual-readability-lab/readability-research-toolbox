@@ -3,21 +3,26 @@ import {Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
-import {clearLogRecords, downloadAllLogRecords} from "./logging";
+import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
-import {useState} from "react";
+import {ReactElement, useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
 import SliderControl from "./SliderControl";
+import SettingsSet from "./SettingsSet";
 
 const Controls = (props: {
-  updateControlValue: (name: string, value: boolean | number | string) => void
+  updateControlValue: (name: string, value: ControlValue) => void
 }) => {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
+  const [settingSets, setSettingSets] = useState<ReactElement[]>([])
   const controls = useControls();
   const fonts = [
     'Arial', 'Georgia', 'Merriweather', 'OpenSans', 'Poppins', 'Roboto', 'SourceSerifPro', 'Times'
   ]
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
+  const addSettingSet = () => {
+    setSettingSets(oldSets => [...oldSets, <SettingsSet/>]);
+  }
   return (
     <div className={styles.Controls}>
       <div onDoubleClick={() => setShowFullFileChooser(true)}>
@@ -33,8 +38,8 @@ const Controls = (props: {
         {fontItems}
       </Picker>
 
-      <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1} />
-      <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1} />
+      <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1}/>
+      <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1}/>
       <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-0.1} maxValue={4} step={0.1}/>
       <SliderControl controlName="wordSpacing" label="Word spacing" minValue={-0.2} maxValue={10} step={0.1}/>
       <SliderControl controlName="paragraphIndent" label="Paragraph indent" minValue={-0.5} maxValue={0.5} step={0.05}/>
@@ -73,14 +78,19 @@ const Controls = (props: {
           props.updateControlValue('rulerDisableMouse', val)
         }}>Disable mouse</Switch>
         <SliderControl controlName="rulerHeight" label="Ruler height" minValue={1} maxValue={10} step={0.1}/>
-        <SliderControl controlName="rulerOpacity" label="Ruler opacity"  minValue={0} maxValue={1} step={0.01}/>
-        <SliderControl controlName="rulerTransitionHeight" label="Ruler fuzzy border" minValue={0} maxValue={10} step={1}/>
+        <SliderControl controlName="rulerOpacity" label="Ruler opacity" minValue={0} maxValue={1} step={0.01}/>
+        <SliderControl controlName="rulerTransitionHeight" label="Ruler fuzzy border" minValue={0} maxValue={10}
+                       step={1}/>
 
       </View>
       <div className={styles.ButtonRow}>
         <ActionButton onPress={downloadAllLogRecords}>Download log</ActionButton>
         <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
         <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset controls</ActionButton>
+        <ActionButton onPress={addSettingSet} isHidden={true}>Save Settings</ActionButton>
+      </div>
+      <div>
+        {settingSets}
       </div>
     </div>
   )

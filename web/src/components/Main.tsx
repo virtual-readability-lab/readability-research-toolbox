@@ -2,9 +2,9 @@ import styles from "./Main.module.css"
 import Controls from "./Controls";
 import ReadingView from "./ReadingView";
 import {createContext, useContext, useEffect, useReducer} from "react";
-import {addLogRecord, clearLogRecords} from "./logging";
+import {addLogRecord, clearLogRecords, ControlValue} from "./logging";
 
-interface IControls {
+export interface IControls {
   html: string,
   fontSize: number,
   fontName: string,
@@ -29,13 +29,11 @@ interface IControls {
   rulerTransitionHeight: number,
 
   setControlValue: (action: ControlStateChange) => void
-  [key: string]: boolean | number | string | ((action: ControlStateChange) => void);
+
+  [key: string]: ControlValue | ((action: ControlStateChange) => void);
 }
 
-type ControlStateChange = {
-  name: string;
-  value: boolean | number | string;
-};
+type ControlStateChange = { name: string, value: ControlValue | { [controlName: string]: ControlValue } }
 const ControlsContext = createContext<IControls>(undefined!);
 export const useControls = () => useContext(ControlsContext);
 
@@ -67,33 +65,27 @@ const Main = (props: {
     rulerDisableMouse: false,
     rulerTransitionHeight: 8,
     setControlValue: undefined!,
-}
-
+  }
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
-    let newState;
+    let newState = {...state};
     if (action.name === 'reset') {
-      addLogRecord({
-        datetime: new Date(),
-        controlName: 'reset',
-        oldValue: 0,
-        newValue: 0
-      })
+      addLogRecord('reset', 0, 0)
       newState = {...controlsInitialState, html: state.html}  // don't reset html
       props.setTheme(false);
+    } else if (action.name === 'all') {
+      const x = action.value as { [controlName: string]: ControlValue };
+      for (const [name, value] of Object.entries(x)) {
+        newState[name] = value;
+        addLogRecord(name, state[name] as ControlValue, value as ControlValue)
+      }
     } else {
-      newState = {...state}
       if (action.value === -999) {
         newState[action.name] = controlsInitialState[action.name]
       } else {
-        newState[action.name] = action.value;
+        newState[action.name] = action.value as ControlValue;
       }
       // save it to log
-      addLogRecord({
-        datetime: new Date(),
-        controlName: action.name,
-        oldValue: state[action.name] as boolean | number | string,
-        newValue: action.value
-      })
+      addLogRecord(action.name, state[action.name] as ControlValue, action.value as ControlValue)
     }
     if (action.name === 'darkMode') {
       props.setTheme(action.value as boolean)
@@ -113,7 +105,7 @@ const Main = (props: {
   }
 
   const [controlsState, setControlDispatch] = useReducer(changeControlReducer, setControlsInitialState())
-  const updateControlValue = (name: string, value: boolean | number | string) => {
+  const updateControlValue = (name: string, value: ControlValue) => {
     setControlDispatch({name, value})
   }
   useEffect(() => {

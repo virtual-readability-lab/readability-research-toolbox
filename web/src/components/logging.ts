@@ -1,8 +1,10 @@
+export type ControlValue = boolean | number | string;
+
 export interface LogRecord {
   datetime: Date,
   controlName: string,
-  oldValue: boolean | number | string,
-  newValue: boolean | number | string
+  oldValue: ControlValue,
+  newValue: ControlValue
 }
 
 const isEqualRecord = (r1: LogRecord, r2: LogRecord) => {
@@ -14,9 +16,20 @@ const isEqualRecord = (r1: LogRecord, r2: LogRecord) => {
 let nextRecordNumber = 0;
 let lastRecord: LogRecord | null = null;
 
-export const addLogRecord = (r: LogRecord) => {
-  if (r.controlName === 'html') {
+export const addLogRecord = (
+  controlName: string,
+  oldValue: ControlValue,
+  newValue: ControlValue
+) => {
+
+  if (controlName === 'html') {
     return  // we don't want to log the html
+  }
+  const r: LogRecord = {
+    datetime: new Date(),
+    controlName: controlName,
+    oldValue: oldValue,
+    newValue: newValue,
   }
   if (!lastRecord || !isEqualRecord(r, lastRecord)) {
     const recordValue = JSON.stringify(r);
