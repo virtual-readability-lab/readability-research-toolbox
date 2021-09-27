@@ -4,33 +4,91 @@ import RulerOverlay from "./RulerOverlay";
 import {ProgressCircle} from "@adobe/react-spectrum";
 import CSS from 'csstype'
 import {colord} from "colord";
-
-/*
-Originally I just read the HTML content from the server and rendered it in an unsafe innerHTML, adjusting the
-references to css, images, etc. to have the correct host and path. But the very arrogant CSS in Liquid Mode
-messed up the rest of the page, e.g. with !important values on selectors like p. So, for example, drop down lists
-in the controls didn't line up correctly. Sigh.
-
-So I then tried referencing the content in an iframe. That constrained the influence of the LM CSS to just the document
-inside the iframe, which was good. However, it meant that we couldn't access the elements inside the iframe from
-outside, in order to have the controls do something. It's a cors violation. Sigh again. The only good news is that
-we didn't have to patch the HTML for the references, since they were all relative to the HTML url.
-
-Next attempt is to use the shadow DOM technique. This seems to work well. We can still access the styling of the
-attached HTML, but the loaded CSS does not affect the "outside" parts of the web app.
- */
+import {useEffect, useRef} from "react";
 
 const ReadingView = () => {
   const controlValues = useControls();
+  // we'd normally use state to hold the scrolling information, but we need to access these from a non-React event
+  // handler (see the comment below for useEffect). So we use useRef to hold those values across renders. This acts
+  // the same as state, but a) updates immediatley and b) doesn't cause re-rendering, which is exactly what we want.
+  const lineMiddles = useRef([0])
+  const scrollIndexRef = useRef(0)
+  // we need DOM refs for several of our <div>s
+  const contentPane = useRef<HTMLDivElement>(null)
+  const scrollContainer = useRef<HTMLDivElement>(null)
+  const readingView = useRef<HTMLDivElement>(null)
+
+  // a not great implementation of "contrast". We first convert to HSL. If we're in dark mode we adjust L; if in
+  // light mode we adjust S. It kinda works.
   const backHSL = colord(controlValues.backgroundColor).toHsl();
   controlValues.darkMode ?
     backHSL.l = 100 - controlValues.backgroundSaturation
     :
     backHSL.s = controlValues.backgroundSaturation;
   const backgroundColor = colord(backHSL).toHex().toUpperCase()
+
   const showCursor = (controlValues.showRuler && controlValues.rulerDisableMouse) ? 'none' : 'default';
+
+  // (re) compute the y coords of each line in the reading content. We need to do this whenever any control (well
+  // almost any) changes
+  useEffect(() => {
+    const contentNode = contentPane.current;
+    if (contentNode !== null && controlValues.showRuler) {
+      // the magic that lets us get the DOMRect for each line of text is to create a Range, and then use
+      // getClientRects(). These are in screen coords, To adjust to scroll positions, we first need to subtract the
+      // offset of the content pane in screen coords.
+      const contentNodeTop = contentNode!.getClientRects()[0].top;
+      // Then we need to also adjust for the ruler, which is placed at 25% from the top
+      // TODO: coordinate this percentage with the ruler overlay style
+      const rulerDisplacement = scrollContainer.current!.clientHeight * 0.25;
+      const lineOrigin = contentNodeTop + rulerDisplacement
+      const range = document.createRange(); // we want all nodes that are descended from the content pane
+      range.setStartBefore(contentNode);
+      range.setEndAfter(contentNode);
+      // the first client rect is some container - not sure which one or how to eliminate it, so we'll just skip it
+      lineMiddles.current = [...range.getClientRects()].slice(1).map((r) => ((r.top + r.bottom) / 2) - lineOrigin)
+      // since the middles may have changed, reset our current scroll position
+      setScroll(scrollIndexRef.current);
+    }
+  }, [controlValues]);
+
+  // when the scroll index has changed, clip it to the bounds of the line positions, update the scrollTop to the
+  // appropriate position, and save the index it in its ref
+  const setScroll = (newScrollIndex: number) => {
+    let mids = lineMiddles.current;
+    if (newScrollIndex < 0) {
+      newScrollIndex = 0;
+    }
+    if (newScrollIndex >= mids.length) {
+      newScrollIndex = mids.length - 1;
+    }
+    (scrollContainer.current!).scrollTop = mids[newScrollIndex];
+    scrollIndexRef.current = newScrollIndex
+  }
+
+  // only invoked when the ruler is shown. For each click of the wheel, we increment or decrement the current scroll
+  // index
+  const onWheel = (e: WheelEvent) => {
+    e.preventDefault();
+    setScroll(scrollIndexRef.current + (e.deltaY > 0 ? 1 : -1));
+  }
+
+  // when we're using the ruler, we don't want the wheel event to perform its native function, so we can control the
+  // positioning. but in order to set preventDefault(), we also need to make the handler be not passive. But React
+  // events set passive true by default, and don't provide any way to change this. Thus we need to use the native
+  // addEventListener to accomplish this
+  useEffect(() => {
+    if (controlValues.showRuler) {
+      const readingViewElement = readingView.current;
+      readingViewElement!.addEventListener('wheel', onWheel, {passive: false})
+      return () => {
+        readingViewElement!.removeEventListener('wheel', onWheel)
+      }
+    }
+  }, [controlValues.showRuler])
+
   return (
-    <div className={styles.ReadingView}>
+    <div className={styles.ReadingView} ref={readingView}>
       {controlValues.html ?
         (controlValues.html === 'loading' ?
           <div className={styles.LoadingContainer}>
@@ -40,8 +98,10 @@ const ReadingView = () => {
           :
           <>
             <RulerOverlay/>
-            <div className={styles.ScrollContainer} style={{width: `${controlValues.columnWidth + 1.2}in`}}>
+            <div className={styles.ScrollContainer} style={{width: `${controlValues.columnWidth + 1.2}in`}}
+                 ref={scrollContainer}>
               <div className={styles.ContentPane} dangerouslySetInnerHTML={{__html: controlValues.html}}
+                   ref={contentPane}
                    style={{
                      fontSize: controlValues.fontSize,
                      fontFamily: controlValues.fontName,
@@ -55,10 +115,10 @@ const ReadingView = () => {
                      backgroundColor: backgroundColor,
                      color: controlValues.foregroundColor,
                      cursor: showCursor,
-                     // the 200px is a hack-must be a better way
-                     padding: controlValues.showRuler ? '200px 0.5in' : '0.5in',
+                     padding: controlValues.showRuler ? '30% 0.5in 100% 0.5in' : '0.5in',
                    }}/>
             </div>
+
           </>)
         :
         <h2 className={styles.PleaseChoose}>&lt;= Please choose input file</h2>
