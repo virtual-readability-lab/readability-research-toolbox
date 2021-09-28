@@ -7,18 +7,20 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
-    <Provider theme={isDarkMode ? darkTheme : lightTheme}>
-      <header className={styles.Header}>
-        <div style={{flexDirection: 'column'}}>
-          <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Panel</Heading>
-        </div>
-      </header>
-      <Main setTheme={setIsDarkMode}/>
-      <footer className={styles.Footer}>
-        <span className={styles.Left}>Copyright &copy; 2021 Adobe, Inc.</span>
-        <span className={styles.Center}>Release: 2021/09/28</span>
-        <span />
-      </footer>
+    <Provider theme={isDarkMode ? darkTheme : lightTheme} height="100%">
+      <div style={{display: "flex", flexDirection: "column", height: "100%"}}>
+        <header className={styles.Header}>
+          <div style={{flexDirection: 'column'}}>
+            <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Panel</Heading>
+          </div>
+        </header>
+        <Main setTheme={setIsDarkMode}/>
+        <footer className={styles.Footer}>
+          <span className={styles.Left}>Copyright &copy; 2021 Adobe, Inc.</span>
+          <span className={styles.Center}>Release: 2021/09/28a</span>
+          <span/>
+        </footer>
+      </div>
     </Provider>
   );
 }

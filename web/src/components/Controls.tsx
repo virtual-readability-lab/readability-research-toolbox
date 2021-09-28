@@ -5,24 +5,21 @@ import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
 import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
-import {ReactElement, useState} from "react";
+import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
 import SliderControl from "./SliderControl";
-import SettingsSet from "./SettingsSet";
+import SettingSets from "./SettingSets";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: ControlValue) => void
 }) => {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
-  const [settingSets, setSettingSets] = useState<ReactElement[]>([])
   const controls = useControls();
   const fonts = [
     'Arial', 'Georgia', 'Merriweather', 'OpenSans', 'Poppins', 'Roboto', 'SourceSerifPro', 'Times'
   ]
   const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
-  const addSettingSet = () => {
-    setSettingSets(oldSets => [...oldSets, <SettingsSet/>]);
-  }
+
   return (
     <div className={styles.Controls}>
       <div onDoubleClick={() => setShowFullFileChooser(true)}>
@@ -86,12 +83,9 @@ const Controls = (props: {
       <div className={styles.ButtonRow}>
         <ActionButton onPress={downloadAllLogRecords}>Download log</ActionButton>
         <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
-        <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset controls</ActionButton>
-        <ActionButton onPress={addSettingSet} isHidden={true}>Save Settings</ActionButton>
+        <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset all controls</ActionButton>
       </div>
-      <div>
-        {settingSets}
-      </div>
+      <SettingSets/>
     </div>
   )
 }

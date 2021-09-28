@@ -22,36 +22,44 @@
 import styles from "./SettingsSet.module.css";
 import {useEffect, useState} from "react";
 import {IControls, useControls} from "./Main";
-import {TextField} from "@adobe/react-spectrum";
+import {Text, TextField, Tooltip, TooltipTrigger} from "@adobe/react-spectrum";
 import {ControlValue} from "./logging";
 
-const SettingsSet = () => {
+const SettingsSet = (props: {
+  id: number,
+  remove: (id: number) => void
+}) => {
   const [mySettings, setMySettings] = useState<IControls>(undefined!);
   const [name, setName] = useState('');
   const controls = useControls();
 
-  // set my state from the current value of the controls
-  // don't save the html
-  const save = () => {
-    setMySettings({...controls, html: ''});
-  }
   // update the active control state from my saved settings
   const setControls = () => {
-    controls.setControlValue({name: 'all', value: mySettings as {[name: string]: ControlValue}})
+    controls.setControlValue({name: 'all', value: mySettings as { [name: string]: ControlValue }})
   }
   useEffect(() => {
     // set my state when created
-    save()
+    // don't save the html
+    setMySettings({...controls, html: ''});
   }, [])
   return (
     <>
       {name ?
-        <button onClick={setControls}>{name}</button>
+        <TooltipTrigger>
+          <button onClick={setControls} className={styles.SettingsSet}>
+            <Text>{name}</Text>
+            <div className={styles.Remove} onClick={() => props.remove(props.id)}>x</div>
+          </button>
+          <Tooltip>Restore control settings</Tooltip>
+        </TooltipTrigger>
         :
         <div>
-          <TextField label="Name" labelPosition="side" onKeyDown={(e) => {
+          <TextField label="Name" labelPosition="side" autoFocus={true} onKeyDown={(e) => {
             if (e.key === "Enter") {
               setName((e.target as HTMLInputElement).value);
+            }
+            if (e.key === 'Escape') {
+              props.remove(props.id);
             }
           }}/>
         </div>

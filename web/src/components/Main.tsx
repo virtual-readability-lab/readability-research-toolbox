@@ -75,6 +75,7 @@ const Main = (props: {
     } else if (action.name === 'all') {
       const x = action.value as { [controlName: string]: ControlValue };
       for (const [name, value] of Object.entries(x)) {
+        if (name === 'html') continue;
         newState[name] = value;
         addLogRecord(name, state[name] as ControlValue, value as ControlValue)
       }

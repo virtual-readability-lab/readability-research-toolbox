@@ -19,13 +19,21 @@
  *
  */
 
-.SettingsSet {
-    display: flex;
-    gap: 15px;
-    border-radius: 5px;
-    padding: 5px 10px;
+.OuterBox {
+    border: 1px solid grey;
+    padding: 10px;
+    padding-top: 0;
 }
 
-.Remove {
-    background-color: transparent;
+.Heading {
+    display: flex;
+    justify-content: space-around;
+    align-items: center
+}
+
+.Sets {
+    display: flex;
+    gap: 10px;
+    max-width: 300px;
+    flex-wrap: wrap;
 }
