@@ -83,6 +83,7 @@ const ReadingView = () => {
       e.preventDefault();
       dontScroll = true;
       setScroll(scrollIndexRef.current + (e.deltaY > 0 ? 1 : -1));
+      console.log('wheel')
     }
     if (controlValues.showRuler) {
       const readingViewElement = readingView.current;
@@ -94,6 +95,7 @@ const ReadingView = () => {
   }, [controlValues.showRuler])
 
   const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (!controlValues.showRuler) return;
     if (dontScroll) {
       dontScroll = false;
       return;

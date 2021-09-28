@@ -67,10 +67,10 @@ const ColorPicker = (props: {
       <Label className={styles.Label} labelPosition="side">{props.label}</Label>
       <div className={styles.Picker}>
         {props.darkMode ?
-          randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000"
+          randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000" key={c}
                                                  currentColor={props.currentColor} setColor={props.setColor}/>)
           :
-          randomizedColors.map((c) => <TextColor textColor="#000000" backgroundColor={c}
+          randomizedColors.map((c) => <TextColor textColor="#000000" backgroundColor={c} key={c}
                                                  currentColor={props.currentColor} setColor={props.setColor}/>)
         }
       </div>
