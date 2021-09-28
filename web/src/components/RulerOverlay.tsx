@@ -3,6 +3,8 @@ import {useControls} from "./Main";
 import {parseColor} from '@react-stately/color';
 import {useEffect, useState} from "react";
 
+export const rulerPosition = 25; // in percent
+
 const RulerOverlay = () => {
   const [edgeColor, setEdgeColor] = useState('#0008')
   const [centerColor, setCenterColor] = useState('transparent')
@@ -22,12 +24,11 @@ const RulerOverlay = () => {
     }
   }, [controlValues.rulerBackgroundColor, controlValues.rulerOpacity, controlValues.rulerInvert])
 
-  const rulerPosition = '25%'
   const backgroundCss = `linear-gradient(to bottom, 
-  ${edgeColor} calc(${rulerPosition} - ${halfRulerOpening} - ${controlValues.rulerTransitionHeight}px), 
-  ${centerColor} calc(${rulerPosition} - ${halfRulerOpening}), 
-  ${centerColor} calc(${rulerPosition} + ${halfRulerOpening}), 
-  ${edgeColor} calc(${rulerPosition} + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`
+  ${edgeColor} calc(${rulerPosition}% - ${halfRulerOpening} - ${controlValues.rulerTransitionHeight}px), 
+  ${centerColor} calc(${rulerPosition}% - ${halfRulerOpening}), 
+  ${centerColor} calc(${rulerPosition}% + ${halfRulerOpening}), 
+  ${edgeColor} calc(${rulerPosition}% + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`
 
   const rulerWidth = `${controlValues.columnWidth + 1}in`;  // add an inch to cover the left and right padding
   return (

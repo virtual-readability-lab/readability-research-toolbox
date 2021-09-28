@@ -1,10 +1,12 @@
 import styles from "./ReadingView.module.css"
 import {useControls} from "./Main";
-import RulerOverlay from "./RulerOverlay";
+import RulerOverlay, {rulerPosition} from "./RulerOverlay";
 import {ProgressCircle} from "@adobe/react-spectrum";
 import CSS from 'csstype'
 import {colord} from "colord";
 import {useEffect, useRef} from "react";
+
+let dontScroll = false;
 
 const ReadingView = () => {
   const controlValues = useControls();
@@ -39,14 +41,18 @@ const ReadingView = () => {
       // offset of the content pane in screen coords.
       const contentNodeTop = contentNode!.getClientRects()[0].top;
       // Then we need to also adjust for the ruler, which is placed at 25% from the top
-      // TODO: coordinate this percentage with the ruler overlay style
-      const rulerDisplacement = scrollContainer.current!.clientHeight * 0.25;
-      const lineOrigin = contentNodeTop + rulerDisplacement
+      const rulerDisplacement = scrollContainer.current!.clientHeight * rulerPosition / 100;
+      const lineOrigin = contentNodeTop + rulerDisplacement;
+
       const range = document.createRange(); // we want all nodes that are descended from the content pane
       range.setStartBefore(contentNode);
       range.setEndAfter(contentNode);
       // the first client rect is some container - not sure which one or how to eliminate it, so we'll just skip it
-      lineMiddles.current = [...range.getClientRects()].slice(1).map((r) => ((r.top + r.bottom) / 2) - lineOrigin)
+      const lineRects = [...range.getClientRects()].slice(1);
+      if (controlValues.rulerUnderline)
+        lineMiddles.current = lineRects.map((r) => r.bottom - lineOrigin)
+      else
+        lineMiddles.current = lineRects.map((r) => ((r.top + r.bottom) / 2) - lineOrigin)
       // since the middles may have changed, reset our current scroll position
       setScroll(scrollIndexRef.current);
     }
@@ -66,18 +72,18 @@ const ReadingView = () => {
     scrollIndexRef.current = newScrollIndex
   }
 
-  // only invoked when the ruler is shown. For each click of the wheel, we increment or decrement the current scroll
-  // index
-  const onWheel = (e: WheelEvent) => {
-    e.preventDefault();
-    setScroll(scrollIndexRef.current + (e.deltaY > 0 ? 1 : -1));
-  }
-
   // when we're using the ruler, we don't want the wheel event to perform its native function, so we can control the
   // positioning. but in order to set preventDefault(), we also need to make the handler be not passive. But React
   // events set passive true by default, and don't provide any way to change this. Thus we need to use the native
   // addEventListener to accomplish this
   useEffect(() => {
+    // only invoked when the ruler is shown. For each click of the wheel, we increment or decrement the current scroll
+    // index
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      dontScroll = true;
+      setScroll(scrollIndexRef.current + (e.deltaY > 0 ? 1 : -1));
+    }
     if (controlValues.showRuler) {
       const readingViewElement = readingView.current;
       readingViewElement!.addEventListener('wheel', onWheel, {passive: false})
@@ -87,6 +93,15 @@ const ReadingView = () => {
     }
   }, [controlValues.showRuler])
 
+  const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (dontScroll) {
+      dontScroll = false;
+      return;
+    }
+    let nearestLineIndex = lineMiddles.current.findIndex(m => m >= e.currentTarget.scrollTop);
+    if (nearestLineIndex === -1) nearestLineIndex = lineMiddles.current.length;
+    setScroll(nearestLineIndex);
+  }
   return (
     <div className={styles.ReadingView} ref={readingView}>
       {controlValues.html ?
@@ -99,7 +114,7 @@ const ReadingView = () => {
           <>
             <RulerOverlay/>
             <div className={styles.ScrollContainer} style={{width: `${controlValues.columnWidth + 1.2}in`}}
-                 ref={scrollContainer}>
+                 ref={scrollContainer} onScroll={onScroll}>
               <div className={styles.ContentPane} dangerouslySetInnerHTML={{__html: controlValues.html}}
                    ref={contentPane}
                    style={{
@@ -115,7 +130,7 @@ const ReadingView = () => {
                      backgroundColor: backgroundColor,
                      color: controlValues.foregroundColor,
                      cursor: showCursor,
-                     padding: controlValues.showRuler ? '30% 0.5in 100% 0.5in' : '0.5in',
+                     padding: controlValues.showRuler ? `${rulerPosition + 5}% 0.5in 100% 0.5in` : '0.5in',
                    }}/>
             </div>
 

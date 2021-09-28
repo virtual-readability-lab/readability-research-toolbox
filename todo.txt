@@ -19,6 +19,8 @@
  - text color
  - show font in font name drop down
  - page border width control
- - correlate ruler scrolling to page lines
- - align sliders to be the same size
+ x correlate ruler scrolling to page lines
+ x align sliders to be the same size
  - enter slider value directly with double click
+ - adjust ruler height based on the line height
+ x when showing the ruler, when scrolling, click into the nearest line
