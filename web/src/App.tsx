@@ -16,7 +16,7 @@ function App() {
       <Main setTheme={setIsDarkMode}/>
       <footer className={styles.Footer}>
         <span className={styles.Left}>Copyright &copy; 2021 Adobe, Inc.</span>
-        <span className={styles.Center}>Release: 2021/09/07</span>
+        <span className={styles.Center}>Release: 2021/09/28</span>
         <span />
       </footer>
     </Provider>
