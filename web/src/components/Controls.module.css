@@ -10,3 +10,10 @@
     display: flex;
     justify-content: space-around;
 }
+
+.Label {
+    font-size: 12px;
+    width: 100px;
+    color: var(--spectrum-global-color-gray-700);
+    user-select: none;
+}

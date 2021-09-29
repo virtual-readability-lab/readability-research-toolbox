@@ -20,8 +20,10 @@
  */
 
 import styles from "./SliderControl.module.css";
+import controlStyles from "./Controls.module.css";
 import {Slider} from "@adobe/react-spectrum";
 import Undo from "@spectrum-icons/workflow/Undo";
+import ArrowLeftMedium from "@spectrum-icons/ui/ArrowLeftMedium";
 import {useControls} from "./Main";
 
 const SliderControl = (props: {
@@ -36,11 +38,20 @@ const SliderControl = (props: {
   const changeControlValue = (val: number) => {
     controls.setControlValue({name: props.controlName, value: val})
   }
+  const step = (up: boolean) => {
+    changeControlValue(controls[props.controlName] as number + props.step * (up ? 1 : -1))
+  }
   return (
     <div className={styles.SliderControl}>
-      <Slider label={props.label} value={controls[props.controlName] as number} onChange={changeControlValue}
+      <label className={controlStyles.Label}>{props.label}</label>
+      <span onClick={() => step(false)}><ArrowLeftMedium/></span>
+      <div style={{width: 245, display: "flex", alignItems: "center"}}>
+      <Slider value={controls[props.controlName] as number} onChange={changeControlValue}
               minValue={props.minValue} maxValue={props.maxValue} step={props.step}
-              labelPosition="side" isDisabled={props.isDisabled}/>
+              labelPosition="side" label="" isDisabled={props.isDisabled} showValueLabel={true}/>
+        </div>
+      <span style={{transform: "scaleX(-1)"}} onClick={() => step(true)}><ArrowLeftMedium /></span>
+
       <span onClick={() => {changeControlValue(-999)}} className={styles.Icon}>
         <Undo/>
       </span>
