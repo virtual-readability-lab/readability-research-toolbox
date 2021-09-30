@@ -8,7 +8,7 @@ import styles from "./Controls.module.css"
 import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
 import SliderControl from "./SliderControl";
-import SettingSets from "./SettingSets";
+import RecipeBox from "./RecipeBox";
 
 const Controls = (props: {
   updateControlValue: (name: string, value: ControlValue) => void
@@ -85,7 +85,7 @@ const Controls = (props: {
         <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
         <ActionButton onPress={() => props.updateControlValue('reset', 0)}>Reset all controls</ActionButton>
       </div>
-      <SettingSets/>
+      <RecipeBox/>
     </div>
   )
 }

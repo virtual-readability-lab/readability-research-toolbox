@@ -19,13 +19,13 @@
  *
  */
 
-import styles from "./SettingsSet.module.css";
+import styles from "./Recipe.module.css";
 import {useEffect, useState} from "react";
 import {IControls, useControls} from "./Main";
 import {Text, TextField, Tooltip, TooltipTrigger} from "@adobe/react-spectrum";
 import {ControlValue} from "./logging";
 
-const SettingsSet = (props: {
+const Recipe = (props: {
   id: number,
   remove: (id: number) => void
 }) => {
@@ -41,16 +41,17 @@ const SettingsSet = (props: {
     // set my state when created
     // don't save the html
     setMySettings({...controls, html: ''});
-  }, [])
+  }, [])  // React wants me to include a dependency on controls, but that's repcisely what I don't want here.
+                // The whole idea is to cache a set of control values at the moment of creation and not change them
   return (
     <>
       {name ?
         <TooltipTrigger>
-          <button onClick={setControls} className={styles.SettingsSet}>
+          <button onClick={setControls} className={styles.Recipe}>
             <Text>{name}</Text>
             <div className={styles.Remove} onClick={() => props.remove(props.id)}>x</div>
           </button>
-          <Tooltip>Restore control settings</Tooltip>
+          <Tooltip>Restore control settings from this Recipe</Tooltip>
         </TooltipTrigger>
         :
         <div>
@@ -68,4 +69,4 @@ const SettingsSet = (props: {
   );
 };
 
-export default SettingsSet;
+export default Recipe;

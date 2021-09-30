@@ -19,36 +19,36 @@
  *
  */
 
-import styles from "./SettingSets.module.css";
+import styles from "./RecipeBox.module.css";
 import {ActionButton, Tooltip, TooltipTrigger} from "@adobe/react-spectrum";
 import Add from "@spectrum-icons/workflow/Add";
-import SettingsSet from "./SettingsSet";
+import Recipe from "./Recipe";
 import {ReactElement, useRef, useState} from "react";
 
-const SettingSets = () => {
-  const [settingSets, setSettingSets] = useState<ReactElement[]>([])
-  const nextSettingsId = useRef(0)
-  const addSettingSet = () => {
-    const id = nextSettingsId.current++;
-    setSettingSets(oldSets => [...oldSets, <SettingsSet key={id} id={id} remove={removeSettingSet}/>]);
+const RecipeBox = () => {
+  const [recipeCollection, setRecipeCollection] = useState<ReactElement[]>([])
+  const nextRecipeId = useRef(0)
+  const addRecipe = () => {
+    const id = nextRecipeId.current++;
+    setRecipeCollection(oldSets => [...oldSets, <Recipe key={id} id={id} remove={removeRecipe}/>]);
   }
-  const removeSettingSet = (id: number) => {
-    setSettingSets(oldSets => oldSets.filter((s) => s.props.id !== id));
+  const removeRecipe = (id: number) => {
+    setRecipeCollection(oldSets => oldSets.filter((s) => s.props.id !== id));
   }
   return <div className={styles.OuterBox}>
     <div className={styles.Heading}>
-      <h3>Saved Settings</h3>
+      <h3>Recipes</h3>
       <TooltipTrigger>
-        <ActionButton onPress={addSettingSet}>
+        <ActionButton onPress={addRecipe}>
           <Add color="informative"/>
         </ActionButton>
-        <Tooltip>Save current control settings</Tooltip>
+        <Tooltip>Save current control settings as a Recipe</Tooltip>
       </TooltipTrigger>
     </div>
-    <div className={styles.Sets}>
-      {settingSets}
+    <div className={styles.Recipes}>
+      {recipeCollection}
     </div>
   </div>;
 }
 
-export default SettingSets;
+export default RecipeBox;
