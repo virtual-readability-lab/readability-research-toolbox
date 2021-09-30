@@ -39,7 +39,10 @@ const SliderControl = (props: {
     controls.setControlValue({name: props.controlName, value: val})
   }
   const step = (up: boolean) => {
-    changeControlValue(controls[props.controlName] as number + props.step * (up ? 1 : -1))
+    let newValue = controls[props.controlName] as number + props.step * (up ? 1 : -1)
+    if (newValue > props.maxValue) newValue = props.maxValue;
+    if (newValue < props.minValue) newValue = props.minValue;
+    changeControlValue(newValue)
   }
   return (
     <div className={styles.SliderControl}>
