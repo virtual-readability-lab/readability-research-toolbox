@@ -11,7 +11,7 @@ function App() {
       <div style={{display: "flex", flexDirection: "column", height: "100%"}}>
         <header className={styles.Header}>
           <div style={{flexDirection: 'column'}}>
-            <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Panel</Heading>
+            <Heading level={2} marginBottom="0" marginTop="0">Reading Controls Tester</Heading>
           </div>
         </header>
         <Main setTheme={setIsDarkMode}/>
