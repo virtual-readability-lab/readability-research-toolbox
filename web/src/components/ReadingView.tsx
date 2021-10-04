@@ -83,7 +83,6 @@ const ReadingView = () => {
       e.preventDefault();
       dontScroll = true;
       setScroll(scrollIndexRef.current + (e.deltaY > 0 ? 1 : -1));
-      console.log('wheel')
     }
     if (controlValues.showRuler) {
       const readingViewElement = readingView.current;

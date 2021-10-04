@@ -21,35 +21,58 @@
 
 import styles from "./Recipe.module.css";
 import {useEffect, useState} from "react";
-import {IControls, useControls} from "./Main";
+import {controlsInitialState, IControls, IControlsCore, useControls} from "./Main";
 import {Text, TextField, Tooltip, TooltipTrigger} from "@adobe/react-spectrum";
-import {ControlValue} from "./logging";
+import {addLogRecord, ControlValue} from "./logging";
 
 const Recipe = (props: {
   id: number,
   remove: (id: number) => void
 }) => {
-  const [mySettings, setMySettings] = useState<IControls>(undefined!);
+  const [mySettings, setMySettings] = useState<IControlsCore>(undefined!);
   const [name, setName] = useState('');
   const controls = useControls();
 
   // update the active control state from my saved settings
-  const setControls = () => {
-    controls.setControlValue({name: 'all', value: mySettings as { [name: string]: ControlValue }})
+  const restoreFromMySettings = () => {
+    for (const [controlName, value] of Object.entries(mySettings)) {
+      if (controlName === 'html') continue;
+      controls.setControlValue({
+        controlName: controlName,
+        source: 'recipeRestore: ' + name,
+        value: value as ControlValue,
+      })
+    }
   }
+
   useEffect(() => {
     // set my state when created
-    // don't save the html
-    setMySettings({...controls, html: ''});
-  }, [])  // React wants me to include a dependency on controls, but that's repcisely what I don't want here.
-                // The whole idea is to cache a set of control values at the moment of creation and not change them
+    const {setControlValue, ...myValues} = controls
+    myValues.html = ''    // don't save the html
+    setMySettings(myValues);
+  }, [])  // React wants me to include a dependency on controls, but that's precisely what I don't want here.
+  // The whole idea is to cache a set of control values at the moment of creation and not change them
+
+  useEffect(() => {
+    if (!mySettings) return;
+    for (const [controlName, value] of Object.entries(mySettings)) {
+      if (controlName === 'html') continue;
+      if (value === controlsInitialState[controlName]) continue;
+      addLogRecord(controlName, 'recipeCreate: ' + name, 'na', value as ControlValue)
+    }
+  }, [name])
+
+  const deleteRecipe = () => {
+    addLogRecord('na', 'recipeDelete: ' + name, '', 'na')
+    props.remove(props.id)
+  }
   return (
     <>
       {name ?
         <TooltipTrigger>
-          <button onClick={setControls} className={styles.Recipe}>
+          <button onClick={restoreFromMySettings} className={styles.Recipe}>
             <Text>{name}</Text>
-            <div className={styles.Remove} onClick={() => props.remove(props.id)}>x</div>
+            <div className={styles.Remove} onClick={deleteRecipe}>x</div>
           </button>
           <Tooltip>Restore control settings from this Recipe</Tooltip>
         </TooltipTrigger>

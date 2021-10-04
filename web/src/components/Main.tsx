@@ -4,7 +4,7 @@ import ReadingView from "./ReadingView";
 import {createContext, useContext, useEffect, useReducer} from "react";
 import {addLogRecord, clearLogRecords, ControlValue} from "./logging";
 
-export interface IControls {
+export interface IControlsCore {
   html: string,
   fontSize: number,
   fontName: string,
@@ -28,67 +28,62 @@ export interface IControls {
   rulerDisableMouse: boolean,
   rulerTransitionHeight: number,
 
-  setControlValue: (action: ControlStateChange) => void
-
-  [key: string]: ControlValue | ((action: ControlStateChange) => void);
+  [key: string]: ControlValue;
 }
 
-type ControlStateChange = { name: string, value: ControlValue | { [controlName: string]: ControlValue } }
-const ControlsContext = createContext<IControls>(undefined!);
+export type IControls = IControlsCore & {
+  setControlValue: (action: ControlStateChange) => void;
+}
+
+type ControlStateChange = {
+  controlName: string,
+  source: string,
+  value: ControlValue,
+};
+export const controlsInitialState: IControls = {
+  html: '',
+  fontSize: 16,
+  fontName: 'Arial',
+  lineHeight: 1.2,
+  characterSpacing: 0,
+  wordSpacing: 0,
+  paragraphIndent: 0,
+  paragraphSpacing: 0,
+  columnWidth: 6,
+  textAlignment: 'start',
+  darkMode: false,
+  foregroundColor: '#000000',
+  backgroundColor: '#FFFFFF',
+  backgroundSaturation: 90,
+  showRuler: false,
+  rulerHeight: 1,
+  rulerOpacity: 0.5,
+  rulerInvert: false,
+  rulerBackgroundColor: '#000',
+  rulerUnderline: false,
+  rulerDisableMouse: false,
+  rulerTransitionHeight: 8,
+  setControlValue: undefined!,
+}
+const ControlsContext = createContext<IControls>(controlsInitialState);
 export const useControls = () => useContext(ControlsContext);
 
 const Main = (props: {
   setTheme: (dark: boolean) => void
 }) => {
-  /* Controls context and state */
-  const controlsInitialState: IControls = {
-    html: '',
-    fontSize: 16,
-    fontName: 'Arial',
-    lineHeight: 1.2,
-    characterSpacing: 0,
-    wordSpacing: 0,
-    paragraphIndent: 0,
-    paragraphSpacing: 0,
-    columnWidth: 6,
-    textAlignment: 'start',
-    darkMode: false,
-    foregroundColor: '#000000',
-    backgroundColor: '#FFFFFF',
-    backgroundSaturation: 90,
-    showRuler: false,
-    rulerHeight: 1,
-    rulerOpacity: 0.5,
-    rulerInvert: false,
-    rulerBackgroundColor: '#000',
-    rulerUnderline: false,
-    rulerDisableMouse: false,
-    rulerTransitionHeight: 8,
-    setControlValue: undefined!,
-  }
   const changeControlReducer = (state: IControls, action: ControlStateChange) => {
     let newState = {...state};
-    if (action.name === 'reset') {
-      addLogRecord('reset', 0, 0)
-      newState = {...controlsInitialState, html: state.html}  // don't reset html
-      props.setTheme(false);
-    } else if (action.name === 'all') {
-      const x = action.value as { [controlName: string]: ControlValue };
-      for (const [name, value] of Object.entries(x)) {
-        if (name === 'html') continue;
-        newState[name] = value;
-        addLogRecord(name, state[name] as ControlValue, value as ControlValue)
-      }
-    } else {
-      if (action.value === -999) {
-        newState[action.name] = controlsInitialState[action.name]
-      } else {
-        newState[action.name] = action.value as ControlValue;
-      }
-      // save it to log
-      addLogRecord(action.name, state[action.name] as ControlValue, action.value as ControlValue)
+    let newVal = action.value as ControlValue;
+    if (action.source === 'reset') {
+      newVal = controlsInitialState[action.controlName] as ControlValue;
     }
-    if (action.name === 'darkMode') {
+    newState[action.controlName] = newVal;
+
+    // save it to log
+    addLogRecord(action.controlName, action.source, state[action.controlName] as ControlValue, newVal)
+
+    // some special processing for dark mode
+    if (action.controlName === 'darkMode') {
       props.setTheme(action.value as boolean)
       if (state.darkMode !== action.value) {
         // swap colors
@@ -106,8 +101,8 @@ const Main = (props: {
   }
 
   const [controlsState, setControlDispatch] = useReducer(changeControlReducer, setControlsInitialState())
-  const updateControlValue = (name: string, value: ControlValue) => {
-    setControlDispatch({name, value})
+  const updateControlValue = (controlName: string, source: string, value: ControlValue) => {
+    setControlDispatch({controlName, source, value})
   }
   useEffect(() => {
     clearLogRecords();

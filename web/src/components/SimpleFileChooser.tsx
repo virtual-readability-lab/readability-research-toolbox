@@ -177,12 +177,12 @@ Hansel_and_Gretel: `<html lang="EN-US" xmlns="http://www.w3.org/1999/xhtml">
 `}
 
 const SimpleFileChooser = (props: {
-  updateControlValue: (name: string, value: ControlValue) => void
+  updateControlValue: (name: string, source: string, value: ControlValue) => void
 }) => {
   return (<Picker label="File name" labelPosition="side" placeholder="Select file..."
                   onSelectionChange={(key) => {
-                    props.updateControlValue('html', fileHTML[key]);
-                    addLogRecord('fileName', '', key);
+                    props.updateControlValue('html', 'picker', fileHTML[key]);
+                    addLogRecord('fileName', 'picker', '', key);
                   }}
                   >
     <Item key="Learning_from_History">Learning from History</Item>

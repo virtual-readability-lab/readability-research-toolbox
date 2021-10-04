@@ -59,7 +59,7 @@ const ColorPicker = (props: {
     newOrder.unshift('#FFFFFF')
     setRandomizedColors(newOrder)
     setTimeout(() => {
-      addLogRecord('colors', 'na', newOrder.join(','))
+      addLogRecord('colorOrder', 'init', 'na', newOrder.join(','))
     }, 500) // HACK: this has to run after Main has cleared the records, but I don't see a good way to interlock
   }, [])
   return (

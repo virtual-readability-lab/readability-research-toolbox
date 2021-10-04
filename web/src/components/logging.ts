@@ -1,8 +1,11 @@
+import {VERSION} from "../App";
+
 export type ControlValue = boolean | number | string;
 
 export interface LogRecord {
   datetime: Date,
   controlName: string,
+  source: string,
   oldValue: ControlValue,
   newValue: ControlValue
 }
@@ -18,20 +21,22 @@ let lastRecord: LogRecord | null = null;
 
 export const addLogRecord = (
   controlName: string,
+  source: string,
   oldValue: ControlValue,
   newValue: ControlValue
 ) => {
 
-  if (controlName === 'html') {
-    return  // we don't want to log the html
+  if (['html', 'setControlValue'].includes(controlName) ) {
+    return  // we don't want to log the html or the setter function
   }
   const r: LogRecord = {
     datetime: new Date(),
     controlName: controlName,
+    source: source,
     oldValue: oldValue,
     newValue: newValue,
   }
-  if (!lastRecord || !isEqualRecord(r, lastRecord)) {
+  if ((!lastRecord || !isEqualRecord(r, lastRecord)) && (oldValue !== newValue)){
     const recordValue = JSON.stringify(r);
     window.sessionStorage.setItem((nextRecordNumber++).toString(), recordValue);
     lastRecord = r;
@@ -50,9 +55,12 @@ export const downloadAllLogRecords = () => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  addLogRecord('na', 'downloadLog', 'na', link.download);
 }
 
 export const clearLogRecords = () => {
   window.sessionStorage.clear();
   nextRecordNumber = 0;
+  addLogRecord('releaseVersion', 'init', 'na', VERSION)
+  addLogRecord('logFormat', 'init', 'na', '2.0.0')
 }

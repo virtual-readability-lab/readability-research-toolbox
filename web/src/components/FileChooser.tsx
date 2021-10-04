@@ -30,7 +30,7 @@ const API_BASE_URI =
   window.location.origin.replace('3000', '5001') + '/api/';
 
 const FileChooser = (props: {
-  updateControlValue: (name: string, value: ControlValue) => void
+  updateControlValue: (name: string, source: string, value: ControlValue) => void
 }) => {
   const {error, sendRequest} = useRest();
 
@@ -53,7 +53,7 @@ const FileChooser = (props: {
           headers: {},
           body: form,
         }, (data: string) => {
-          props.updateControlValue('html', postProcessHTML(data))
+          props.updateControlValue('html', 'server', postProcessHTML(data))
         })
     }
   }

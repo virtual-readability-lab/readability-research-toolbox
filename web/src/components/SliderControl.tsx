@@ -35,27 +35,29 @@ const SliderControl = (props: {
   isDisabled?: boolean
 }) => {
   const controls = useControls();
-  const changeControlValue = (val: number) => {
-    controls.setControlValue({name: props.controlName, value: val})
+  const changeControlValue = (val: number, source: string) => {
+    controls.setControlValue({controlName: props.controlName, source: source, value: val})
   }
   const step = (up: boolean) => {
     let newValue = controls[props.controlName] as number + props.step * (up ? 1 : -1)
     if (newValue > props.maxValue) newValue = props.maxValue;
     if (newValue < props.minValue) newValue = props.minValue;
-    changeControlValue(newValue)
+    changeControlValue(newValue, 'step')
   }
   return (
     <div className={styles.SliderControl}>
       <label className={controlStyles.Label}>{props.label}</label>
       <span onClick={() => step(false)}><ArrowLeftMedium/></span>
       <div style={{width: 245, display: "flex", alignItems: "center"}}>
-      <Slider value={controls[props.controlName] as number} onChange={changeControlValue}
+      <Slider value={controls[props.controlName] as number}
+              onChange={(val: number) => changeControlValue(val, 'slider')}
+              aria-label={props.controlName}
               minValue={props.minValue} maxValue={props.maxValue} step={props.step}
               labelPosition="side" label="" isDisabled={props.isDisabled} showValueLabel={true}/>
         </div>
       <span style={{transform: "scaleX(-1)"}} onClick={() => step(true)}><ArrowLeftMedium /></span>
 
-      <span onClick={() => {changeControlValue(-999)}} className={styles.Icon}>
+      <span onClick={() => {changeControlValue(0, 'reset')}} className={styles.Icon}>
         <Undo/>
       </span>
     </div>

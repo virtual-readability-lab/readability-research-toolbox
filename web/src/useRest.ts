@@ -43,6 +43,7 @@ const useRest = () => {
       setError(err.message || 'Unknown error');
     }
     setIsLoading(false);
+    return null;
   }, []);
 
   return {
