@@ -51,6 +51,15 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ## Release notes
 
+### 2021/10/04
+
+- Slider controls now have increase and decrease buttons. Click on the left or right arrows to increase or decrease 
+  the value of the slider by one step.
+- Renamed Settings => Recipe
+- README, DEVELOPERS, and LOGGING documentation pages
+- Switched to a reusable React hook for making REST requests
+- Reformatted and refactored the logging system. See LOGGING.md for details.
+
 ### 2021/09/28a
 
 - Saved settings: the ability to save control settings (locally and only for the session).  
