@@ -1,17 +1,15 @@
  x justify vs. ragged right
  x paragraph indent
- - adjust the position of the ruler
  x color selector widget
  x need a separate folder for each HTML conversion, so we can keep the generated files separate
  x add the api to fetch the images from the generated folder
  x "loading..." indicator
  x add backend to Makefile
- - readme
+ x readme
  x use ems (vs. px) where appropriate
- - clean temp folder
  x reset individual control to default - maybe use spectrum undo icon
  - variable fonts - font-stretch
- - allow user to save/load/name combinations of control values
+ x allow user to save/load/name combinations of control values
  - "experimenter" panel to display/hide/preset individual controls
  - color for ruler background
  - randomize (and log) control order
@@ -24,3 +22,10 @@
  - enter slider value directly with double click
  - adjust ruler height based on the line height
  x when showing the ruler, when scrolling, click into the nearest line
+ x reformat logging to indicate source
+ x increment/decrement slider values
+ - switch to enable rule line alignment
+ - ruler mode that has the ruler follow the mouse
+ - persist recipes to DB
+ - try pdf2html
+ - is there a 3rd party html converter we could use - that produces scalable html

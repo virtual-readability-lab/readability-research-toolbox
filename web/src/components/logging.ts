@@ -1,4 +1,5 @@
 import {VERSION} from "../App";
+import {downloadFile} from "../utils";
 
 export type ControlValue = boolean | number | string;
 
@@ -47,15 +48,12 @@ const getAllLogRecords = () => {
   const ret = Array.from({length: nextRecordNumber}, (_, i) => window.sessionStorage.getItem(i.toString()))
   return `[${ret.join(',\n')}]`
 }
+
 export const downloadAllLogRecords = () => {
   const data = new Blob([getAllLogRecords()], {type: 'application/json'});
-  const link = window.document.createElement('a');
-  link.href = window.URL.createObjectURL(data);
-  link.download = `log-${(new Date()).toISOString()}.doc`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  addLogRecord('na', 'downloadLog', 'na', link.download);
+  const downloadFileName = `log-${(new Date()).toISOString()}.doc`
+  downloadFile(data, downloadFileName);
+  addLogRecord('na', 'downloadLog', 'na', downloadFileName);
 }
 
 export const clearLogRecords = () => {

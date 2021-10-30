@@ -3,7 +3,7 @@ import {Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
 import {controlsInitialState, useControls} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
-import {addLogRecord, clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
+import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css"
 import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
