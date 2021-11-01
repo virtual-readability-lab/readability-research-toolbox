@@ -1,10 +1,10 @@
-import styles from "./Main.module.css"
+import styles from "./Main.module.css";
 import Controls from "./Controls";
 import ReadingView from "./ReadingView";
 import {createContext, useContext, useEffect, useReducer} from "react";
 import {addLogRecord, clearLogRecords, ControlValue} from "./logging";
 
-export interface IControlsCore {
+export interface IControls {
   html: string,
   fontSize: number,
   fontName: string,
@@ -31,15 +31,12 @@ export interface IControlsCore {
   [key: string]: ControlValue;
 }
 
-export type IControls = IControlsCore & {
-  setControlValue: (action: ControlStateChange) => void;
-}
-
 type ControlStateChange = {
   controlName: string,
   source: string,
   value: ControlValue,
 };
+
 export const controlsInitialState: IControls = {
   html: '',
   fontSize: 16,
@@ -64,9 +61,14 @@ export const controlsInitialState: IControls = {
   rulerDisableMouse: false,
   rulerTransitionHeight: 8,
   setControlValue: undefined!,
-}
+};
 const ControlsContext = createContext<IControls>(controlsInitialState);
 export const useControls = () => useContext(ControlsContext);
+
+const ControlSetterContext = createContext<(controlName: string,
+                                            source: string,
+                                            value: ControlValue) => void>(undefined!);
+export const useControlSetter = () => useContext(ControlSetterContext);
 
 const Main = (props: {
   setTheme: (dark: boolean) => void
@@ -80,41 +82,38 @@ const Main = (props: {
     newState[action.controlName] = newVal;
 
     // save it to log
-    addLogRecord(action.controlName, action.source, state[action.controlName] as ControlValue, newVal)
+    addLogRecord(action.controlName, action.source, state[action.controlName] as ControlValue, newVal);
 
     // some special processing for dark mode
     if (action.controlName === 'darkMode') {
-      props.setTheme(action.value as boolean)
+      props.setTheme(action.value as boolean);
       if (state.darkMode !== action.value) {
         // swap colors
-        [newState.backgroundColor, newState.foregroundColor] = [state.foregroundColor, state.backgroundColor]
+        [newState.backgroundColor, newState.foregroundColor] = [state.foregroundColor, state.backgroundColor];
       }
     }
     return newState;
-  }
-  const setControlsInitialState = () => {
-    const ret = controlsInitialState;
-    ret.setControlValue = (action: ControlStateChange) => {
-      setControlDispatch(action)
-    }
-    return ret;
-  }
+  };
 
-  const [controlsState, setControlDispatch] = useReducer(changeControlReducer, setControlsInitialState())
-  const updateControlValue = (controlName: string, source: string, value: ControlValue) => {
-    setControlDispatch({controlName, source, value})
-  }
+  const [controlsState, setControlDispatch] = useReducer(changeControlReducer, controlsInitialState);
+
+  const controlSetter = (controlName: string,
+                         source: string,
+                         value: ControlValue) => setControlDispatch({controlName, source, value});
   useEffect(() => {
     clearLogRecords();
-  }, [])
+  }, []);
+
   return (
     <ControlsContext.Provider value={controlsState}>
-      <div className={styles.Main}>
-        <Controls updateControlValue={updateControlValue}/>
-        <ReadingView/>
-      </div>
+      <ControlSetterContext.Provider value={controlSetter}>
+        <div className={styles.Main}>
+          <Controls/>
+          <ReadingView/>
+        </div>
+      </ControlSetterContext.Provider>
     </ControlsContext.Provider>
-  )
-}
+  );
+};
 
 export default Main;

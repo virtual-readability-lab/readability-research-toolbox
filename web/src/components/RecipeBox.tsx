@@ -23,20 +23,34 @@ import styles from "./RecipeBox.module.css";
 import {ActionButton, Tooltip, TooltipTrigger, DialogContainer} from "@adobe/react-spectrum";
 import Add from "@spectrum-icons/workflow/Add";
 import Recipe from "./Recipe";
-import {useRef, useState} from "react";
-import {controlsInitialState, IControlsCore, useControls} from "./Main";
+import {createContext, useContext, useRef, useState} from "react";
+import {controlsInitialState, IControls, useControls, useControlSetter} from "./Main";
 import {addLogRecord, ControlValue} from "./logging";
 import {downloadFile} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
 
 export type IRecipeData = {
   name: string | null;
-  controlValues: IControlsCore;
+  controlValues: IControls;
 }
+
+type IRecipeAdminContext = {
+  showAdd: boolean,
+  showDelete: boolean,
+  setShowAdd: (val: boolean) => void,
+  setShowDelete: (val: boolean) => void,
+}
+
+const RecipeAdminContext = createContext<IRecipeAdminContext>(undefined!);
+export const useRecipeAdminContext = () => useContext(RecipeAdminContext);
+
 const RecipeBox = () => {
   const [allRecipes, setAllRecipes] = useState<Map<number, IRecipeData>>(new Map());
   const [adminDialogOpen, setAdminDialogOpen] = useState(false);
+  const [showAdd, setShowAdd] = useState(true);
+  const [showDelete, setShowDelete] = useState(true);
   const controls = useControls();
+  const controlSetter = useControlSetter();
   const nextRecipeId = useRef(0);
   const addRecipe = () => {
     const id = nextRecipeId.current++;
@@ -67,7 +81,7 @@ const RecipeBox = () => {
 
   const removeRecipe = (id: number) => {
     const recipeName = allRecipes.get(id)?.name;
-    addLogRecord('na', 'recipeDelete: ' + recipeName, '', 'na')
+    addLogRecord('na', 'recipeDelete: ' + recipeName, '', 'na');
     setAllRecipes(oldCollection => {
       const newCollection = new Map(oldCollection);
       newCollection.delete(id);
@@ -80,11 +94,11 @@ const RecipeBox = () => {
     if (!data) return;
     for (const [controlName, value] of Object.entries(data.controlValues)) {
       if (controlName === 'html') continue;
-      controls.setControlValue({
-        controlName: controlName,
-        source: 'recipeRestore: ' + data.name,
-        value: value as ControlValue,
-      });
+      controlSetter(
+        controlName,
+        'recipeRestore: ' + data.name,
+        value as ControlValue,
+      );
     }
   };
   const exportRecipes = () => {
@@ -113,28 +127,40 @@ const RecipeBox = () => {
     <Recipe id={id} key={id} name={recipeData.name} onClick={loadRecipe.bind(this, id)} setName={setName.bind(this, id)}
             remove={removeRecipe.bind(this, id)}/>);
 
-  return <div className={styles.OuterBox}>
-    <div className={styles.Heading}>
-      <h3 onDoubleClick={(e) => {
-        if (e.shiftKey) setAdminDialogOpen(true);
-      }} style={{userSelect: "none"}}>Recipes</h3>
-      <TooltipTrigger>
-        <ActionButton onPress={addRecipe}>
-          <Add color="informative"/>
-        </ActionButton>
-        <Tooltip>Save current control settings as a Recipe</Tooltip>
-      </TooltipTrigger>
-    </div>
-    {
-      adminDialogOpen &&
-      <DialogContainer isDismissable={true} type="modal" onDismiss={() => setAdminDialogOpen(false)}>
-        <RecipeAdmin import={importRecipes} export={exportRecipes}/>
-      </DialogContainer>
-    }
-    <div className={styles.Recipes}>
-      {recipeButtons}
-    </div>
-  </div>;
+  return (
+    <RecipeAdminContext.Provider value={{
+      showAdd: showAdd,
+      showDelete: showDelete,
+      setShowAdd: setShowAdd,
+      setShowDelete: setShowDelete,
+    }}>
+      <div className={styles.OuterBox}>
+        <div className={styles.Heading}>
+          <h3 onDoubleClick={(e) => {
+            if (e.shiftKey) setAdminDialogOpen(true);
+          }} style={{userSelect: "none"}}>Recipes</h3>
+          {
+            showAdd &&
+            <TooltipTrigger>
+              <ActionButton onPress={addRecipe}>
+                <Add color="informative"/>
+              </ActionButton>
+              <Tooltip>Save current control settings as a Recipe</Tooltip>
+            </TooltipTrigger>
+          }
+        </div>
+        {
+          adminDialogOpen &&
+          <DialogContainer isDismissable={true} type="modal" onDismiss={() => setAdminDialogOpen(false)}>
+            <RecipeAdmin import={importRecipes} export={exportRecipes}/>
+          </DialogContainer>
+        }
+        <div className={styles.Recipes}>
+          {recipeButtons}
+        </div>
+      </div>
+      ;
+    </RecipeAdminContext.Provider>);
 };
 
 export default RecipeBox;

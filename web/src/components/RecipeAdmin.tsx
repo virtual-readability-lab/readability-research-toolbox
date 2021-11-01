@@ -23,16 +23,18 @@ import styles from "./RecipeAdmin.module.css";
 import {
   ActionButton,
   Content,
-  Dialog,
+  Dialog, Switch,
   TextField, useDialogContainer
 } from "@adobe/react-spectrum";
 import {useState} from "react";
+import {useRecipeAdminContext} from "./RecipeBox";
 
 const RecipeAdmin = (props: {
   import: (importContent: string) => void,
   export: () => void,
 }) => {
   const [fileChooserOpen, setFileChooserOpen] = useState(false);
+  const recipeAdmin = useRecipeAdminContext();
   const dialog = useDialogContainer();
   const onFileChosen = () => {
     const fr = new FileReader();
@@ -58,8 +60,12 @@ const RecipeAdmin = (props: {
             dialog.dismiss();
           }}>Export Recipes</ActionButton>
         </div>
-        {fileChooserOpen && <TextField width="350px" type="file" onChange={onFileChosen} id="importFileChooser"
-                                       aria-label="Choose file" label="File" labelPosition="side"/>}
+        <Switch isSelected={recipeAdmin.showAdd} onChange={recipeAdmin.setShowAdd}>Allow Recipe Creation</Switch>
+        <Switch isSelected={recipeAdmin.showDelete} onChange={recipeAdmin.setShowDelete}>Allow Recipe Deletion</Switch>
+        {
+          fileChooserOpen && <TextField width="350px" type="file" onChange={onFileChosen} id="importFileChooser"
+                                       aria-label="Choose file" label="File" labelPosition="side"/>
+        }
       </Content>
     </Dialog>
   );

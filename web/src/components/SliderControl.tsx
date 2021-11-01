@@ -24,7 +24,7 @@ import controlStyles from "./Controls.module.css";
 import {Slider} from "@adobe/react-spectrum";
 import Undo from "@spectrum-icons/workflow/Undo";
 import ArrowLeftMedium from "@spectrum-icons/ui/ArrowLeftMedium";
-import {useControls} from "./Main";
+import {useControls, useControlSetter} from "./Main";
 
 const SliderControl = (props: {
   controlName: string,
@@ -35,8 +35,9 @@ const SliderControl = (props: {
   isDisabled?: boolean
 }) => {
   const controls = useControls();
+  const controlSetter = useControlSetter();
   const changeControlValue = (val: number, source: string) => {
-    controls.setControlValue({controlName: props.controlName, source: source, value: val})
+    controlSetter(props.controlName, source, val)
   }
   const step = (up: boolean) => {
     let newValue = controls[props.controlName] as number + props.step * (up ? 1 : -1)

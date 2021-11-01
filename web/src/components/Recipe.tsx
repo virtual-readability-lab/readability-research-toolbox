@@ -21,6 +21,7 @@
 
 import styles from "./Recipe.module.css";
 import {Text, TextField, Tooltip, TooltipTrigger} from "@adobe/react-spectrum";
+import {useRecipeAdminContext} from "./RecipeBox";
 
 const Recipe = (props: {
   id: number,
@@ -29,6 +30,7 @@ const Recipe = (props: {
   setName: (name: string) => void,
   remove: () => void,
 }) => {
+  const recipeAdmin = useRecipeAdminContext();
 
   return (
     <>
@@ -36,10 +38,14 @@ const Recipe = (props: {
         <TooltipTrigger>
           <button onClick={props.onClick} className={styles.Recipe}>
             <Text>{props.name}</Text>
-            <div className={styles.Remove} onClick={(e) => {
-              e.stopPropagation();
-              props.remove();
-            }}>x</div>
+            {
+              recipeAdmin.showDelete &&
+              <div className={styles.Remove} onClick={(e) => {
+                e.stopPropagation();
+                props.remove();
+              }}>x
+              </div>
+            }
           </button>
           <Tooltip>Restore control settings from this Recipe</Tooltip>
         </TooltipTrigger>
