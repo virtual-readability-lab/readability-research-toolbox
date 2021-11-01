@@ -36,7 +36,10 @@ const Recipe = (props: {
         <TooltipTrigger>
           <button onClick={props.onClick} className={styles.Recipe}>
             <Text>{props.name}</Text>
-            <div className={styles.Remove} onClick={props.remove}>x</div>
+            <div className={styles.Remove} onClick={(e) => {
+              e.stopPropagation();
+              props.remove();
+            }}>x</div>
           </button>
           <Tooltip>Restore control settings from this Recipe</Tooltip>
         </TooltipTrigger>

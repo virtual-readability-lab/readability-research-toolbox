@@ -24,8 +24,8 @@ import {ActionButton, Tooltip, TooltipTrigger, DialogContainer} from "@adobe/rea
 import Add from "@spectrum-icons/workflow/Add";
 import Recipe from "./Recipe";
 import {useRef, useState} from "react";
-import {IControlsCore, useControls} from "./Main";
-import {ControlValue} from "./logging";
+import {controlsInitialState, IControlsCore, useControls} from "./Main";
+import {addLogRecord, ControlValue} from "./logging";
 import {downloadFile} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
 
@@ -48,19 +48,33 @@ const RecipeBox = () => {
     };
     setAllRecipes(oldCollection => new Map(oldCollection).set(id, newRecipeData));
   };
+
+  function logRecipeCreation(recipeData: IRecipeData) {
+    for (const [controlName, value] of Object.entries(recipeData.controlValues)) {
+      if (controlName === 'html') continue;
+      if (value === controlsInitialState[controlName]) continue;
+      addLogRecord(controlName, 'recipeCreate: ' + recipeData.name, 'na', value as ControlValue);
+    }
+  }
+
   const setName = (id: number, name: string) => {
-    const oldData = allRecipes.get(id);
-    if (!oldData) return;
-    oldData.name = name;
-    setAllRecipes(oldCollection => new Map(oldCollection).set(id, oldData));
+    const recipeData = allRecipes.get(id);
+    if (!recipeData) return;
+    recipeData.name = name;
+    setAllRecipes(oldCollection => new Map(oldCollection).set(id, recipeData));
+    logRecipeCreation(recipeData);
   };
+
   const removeRecipe = (id: number) => {
+    const recipeName = allRecipes.get(id)?.name;
+    addLogRecord('na', 'recipeDelete: ' + recipeName, '', 'na')
     setAllRecipes(oldCollection => {
       const newCollection = new Map(oldCollection);
       newCollection.delete(id);
       return newCollection;
     });
   };
+
   const loadRecipe = (id: number) => {
     const data = allRecipes.get(id);
     if (!data) return;
@@ -90,6 +104,7 @@ const RecipeBox = () => {
     const newCollection = new Map();
     for (const [name, values] of json.entries()) {
       newCollection.set(name, values);
+      logRecipeCreation(values);
     }
     setAllRecipes(newCollection);
   };
@@ -123,42 +138,3 @@ const RecipeBox = () => {
 };
 
 export default RecipeBox;
-
-/*
-// update the active control state from my saved settings
-const restoreFromMySettings = () => {
-for (const [controlName, value] of Object.entries(myData.settings)) {
-if (controlName === 'html') continue;
-controls.setControlValue({
-controlName: controlName,
-source: 'recipeRestore: ' + myData.name,
-value: value as ControlValue,
-})
-}
-}
-
-useEffect(() => {
-// set my state when created
-const {setControlValue, ...myValues} = controls
-myValues.html = ''    // don't save the html
-setMyData(new RecipeClass('', myValues));
-}, []) // React wants me to include a dependency on controls, but that's precisely what I don't want here.
-// The whole idea is to cache a set of control values at the moment of creation and not change them
-
-useEffect(() => {
-if (!myData || !myData.name) return;
-for (const [controlName, value] of Object.entries(myData.settings)) {
-if (controlName === 'html') continue;
-if (value === controlsInitialState[controlName]) continue;
-addLogRecord(controlName, 'recipeCreate: ' + myData.name, 'na', value as ControlValue)
-}
-}, [myData])
-
-
-const deleteRecipe = () => {
-addLogRecord('na', 'recipeDelete: ' + myData.name, '', 'na')
-props.remove(props.id)
-}
-*/
-;
-;
