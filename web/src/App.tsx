@@ -3,7 +3,7 @@ import {darkTheme, Heading, lightTheme, Provider} from "@adobe/react-spectrum";
 import Main from "./components/Main";
 import {useState} from "react";
 
-export const VERSION = '2021/10/04'
+export const VERSION = '2021/11/02'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -28,4 +28,3 @@ function App() {
 }
 
 export default App;
-//        <a className={styles.Right}>Help</a>

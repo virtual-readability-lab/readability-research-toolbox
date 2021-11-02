@@ -51,6 +51,12 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ## Release notes
 
+### 2021/11/02
+
+- New admin menu, accessed via Shift-DoubleClick on the word "Recipes"
+- Recipes can now be imported and exported (via controls on the admin menu)
+- Admin menu also allows disabling of recipe creation and/or deletion
+
 ### 2021/10/04
 
 - Slider controls now have increase and decrease buttons. Click on the left or right arrows to increase or decrease 
