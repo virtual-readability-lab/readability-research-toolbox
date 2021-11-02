@@ -1,0 +1,15 @@
+[
+{"name": "Tiger", "controlValues": {"characterSpacing":0,"columnWidth":7.04,"darkMode":true,"fontSize":18.2,"lineHeight":1.42,"paragraphIndent":0,"paragraphSpacing":-0.1,"wordSpacing":0.16,"fontName":"OpenSans"}},
+{"name": "Eagle", "controlValues": {"characterSpacing":-0.005555556,"columnWidth":6.488888889,"darkMode":false,"fontSize":17.61111111,"lineHeight":1.722222222,"paragraphIndent":-0.005555556,"paragraphSpacing":0.027777778,"wordSpacing":0.011111111,"fontName":"Arial"}},
+{"name": "Ostrich", "controlValues": {"characterSpacing":0.008333333,"columnWidth":7.583333333,"darkMode":true,"fontSize":18.41666667,"lineHeight":1.275,"paragraphIndent":0.008333333,"paragraphSpacing":1.25,"wordSpacing":0.058333333,"fontName":"Arial"}},
+{"name": "Kangaroo", "controlValues": {"characterSpacing":0,"columnWidth":7.142857143,"darkMode":false,"fontSize":17.14285714,"lineHeight":1.414285714,"paragraphIndent":0.071428571,"paragraphSpacing":0.571428571,"wordSpacing":-0.028571429,"fontName":"Times"}},
+{"name": "Monkey", "controlValues": {"characterSpacing":0,"columnWidth":6.55,"darkMode":false,"fontSize":19.5,"lineHeight":1.45,"paragraphIndent":0.1875,"paragraphSpacing":1,"wordSpacing":0.125,"fontName":"Poppins"}},
+{"name": "Snake", "controlValues": {"characterSpacing":0,"columnWidth":7.04,"darkMode":false,"fontSize":19.6,"lineHeight":1.52,"paragraphIndent":0.145,"paragraphSpacing":1.4,"wordSpacing":0.11,"fontName":"OpenSans"}},
+{"name": "Zebra", "controlValues": {"characterSpacing":-0.066666667,"columnWidth":7.466666667,"darkMode":false,"fontSize":15.66666667,"lineHeight":1.333333333,"paragraphIndent":0.016666667,"paragraphSpacing":1.333333333,"wordSpacing":0.533333333,"fontName":"SourceSerifPro"}},
+{"name": "Bear", "controlValues": {"characterSpacing":-0.014285714,"columnWidth":6.828571429,"darkMode":false,"fontSize":17.42857143,"lineHeight":1.685714286,"paragraphIndent":0.207142857,"paragraphSpacing":2.142857143,"wordSpacing":0.257142857,"fontName":"Merriweather"}},
+{"name": "Elephant", "controlValues": {"characterSpacing":0,"columnWidth":6.05,"darkMode":true,"fontSize":18.375,"lineHeight":1.475,"paragraphIndent":0.24375,"paragraphSpacing":0.5625,"wordSpacing":0.025,"fontName":"Times"}},
+{"name": "Lion", "controlValues": {"characterSpacing":0.0125,"columnWidth":5.9,"darkMode":false,"fontSize":18.25,"lineHeight":1.3875,"paragraphIndent":0.11875,"paragraphSpacing":0,"wordSpacing":0,"fontName":"Arial"}},
+{"name": "Deer", "controlValues": {"characterSpacing":-0.1,"columnWidth":6,"darkMode":false,"fontSize":23,"lineHeight":1.8,"paragraphIndent":-0.45,"paragraphSpacing":1,"wordSpacing":0,"fontName":"Merriweather"}},
+{"name": "Giraffe", "controlValues": {"characterSpacing":-0.025,"columnWidth":6.7,"darkMode":false,"fontSize":21,"lineHeight":1.575,"paragraphIndent":0.2875,"paragraphSpacing":2.375,"wordSpacing":0.025,"fontName":"Roboto"}},
+{"name": "Gorilla", "controlValues": {"characterSpacing":0.02,"columnWidth":6,"darkMode":true,"fontSize":20,"lineHeight":1.42,"paragraphIndent":0,"paragraphSpacing":1.3,"wordSpacing":0.16,"fontName":"Georgia"}}
+]

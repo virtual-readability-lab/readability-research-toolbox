@@ -23,11 +23,12 @@ import styles from "./RecipeBox.module.css";
 import {ActionButton, Tooltip, TooltipTrigger, DialogContainer} from "@adobe/react-spectrum";
 import Add from "@spectrum-icons/workflow/Add";
 import Recipe from "./Recipe";
-import {createContext, useContext, useRef, useState} from "react";
+import {createContext, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {controlsInitialState, IControls, useControls, useControlSetter} from "./Main";
 import {addLogRecord, ControlValue} from "./logging";
-import {downloadFile} from "../utils";
+import {downloadFile, randomizeArray} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
+import defaultClusterRecipes from "../data/defaultClusterRecipes.json";
 
 export type IRecipeData = {
   name: string | null;
@@ -113,15 +114,27 @@ const RecipeBox = () => {
     downloadFile(data, 'AllRecipes.json');
   };
 
-  const importRecipes = (content: string) => {
-    const json = JSON.parse(content);
+  const loadAllRecipes = useCallback((json: any) => {
     const newCollection = new Map();
     for (const [name, values] of json.entries()) {
       newCollection.set(name, values);
       logRecipeCreation(values);
     }
     setAllRecipes(newCollection);
+  }, []);
+
+  const importRecipes = (content: string) => {
+    const json = JSON.parse(content);
+    loadAllRecipes(json);
   };
+
+  // load the default recipes at startup
+  useEffect(() => {
+    setTimeout(() => {
+      loadAllRecipes(randomizeArray(defaultClusterRecipes));
+    }, 500); // HACK: this has to run after Main has cleared the log records, so we can log the loaded recipes,
+    // but I don't see a good way to interlock
+  }, [loadAllRecipes]);
 
   const recipeButtons = Array.from(allRecipes.entries()).map(([id, recipeData]) =>
     <Recipe id={id} key={id} name={recipeData.name} onClick={loadRecipe.bind(this, id)} setName={setName.bind(this, id)}

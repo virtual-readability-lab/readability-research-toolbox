@@ -60,12 +60,18 @@ const RecipeAdmin = (props: {
             dialog.dismiss();
           }}>Export Recipes</ActionButton>
         </div>
-        <Switch isSelected={recipeAdmin.showAdd} onChange={recipeAdmin.setShowAdd}>Allow Recipe Creation</Switch>
-        <Switch isSelected={recipeAdmin.showDelete} onChange={recipeAdmin.setShowDelete}>Allow Recipe Deletion</Switch>
-        {
-          fileChooserOpen && <TextField width="350px" type="file" onChange={onFileChosen} id="importFileChooser"
-                                       aria-label="Choose file" label="File" labelPosition="side"/>
-        }
+        <div className={styles.ButtonRow}>
+          <Switch isSelected={recipeAdmin.showAdd} onChange={recipeAdmin.setShowAdd}>Allow Recipe Creation</Switch>
+          <Switch isSelected={recipeAdmin.showDelete} onChange={recipeAdmin.setShowDelete}>Allow Recipe
+            Deletion</Switch>
+        </div>
+        <div className={styles.ButtonRow}>
+
+          {
+            fileChooserOpen && <TextField width="350px" type="file" onChange={onFileChosen} id="importFileChooser"
+                                          aria-label="Choose file" label="File" labelPosition="side"/>
+          }
+        </div>
       </Content>
     </Dialog>
   );
