@@ -1,24 +1,5 @@
 version: "3.4"
 services:
-  backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
-      args:
-        - ARTIFACTORY_USER
-        - ARTIFACTORY_API_TOKEN
-        - PDFTOOLS_BRANCH=develop
-        - PDFTOOLS_ARTIFACT=latest
-        - TAGGEDPDF_VERSION=2.4.0.dev2339+eaa24ad6
-    container_name: readingcontrols-backend
-    image: readingcontrols/backend
-    restart: unless-stopped
-    environment:
-      APP_ENV: prod
-    ports:
-      - 5001:5001
-
-
   web:
     build:
       context: web
@@ -32,9 +13,7 @@ services:
       SERVICE_NAME: web
     ports:
       - 8081:8081
-#      - 443:443
-    depends_on:
-      - backend
+
 
 
 

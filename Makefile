@@ -2,7 +2,7 @@ SHELL := /bin/bash
 SERVER := colorado-mfk3
 SERVER_DIR := /backend/readingcontrols
 # TODO: generate the IMAGE list dynamically in the save recipe
-IMAGES := readingcontrols/web readingcontrols/backend
+IMAGES := readingcontrols/web
 
 ifeq ($(OS),Windows_NT)
 	CMD_SEP := &
