@@ -51,6 +51,12 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ## Release notes
 
+### 2021/11/04
+
+- Moved backend code to a different project
+- Added Apache 2.0 license and copyrights
+- Move git origin to VRL (https://github.com/virtual-readability-lab/research-readability-toolbox)
+
 ### 2021/11/02
 
 - New admin menu, accessed via Shift-DoubleClick on the word "Recipes"
