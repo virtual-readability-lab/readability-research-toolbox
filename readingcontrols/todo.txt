@@ -20,7 +20,7 @@
  x correlate ruler scrolling to page lines
  x align sliders to be the same size
  - enter slider value directly with double click
- - adjust ruler height based on the line height
+ x adjust ruler height based on the line height
  x when showing the ruler, when scrolling, click into the nearest line
  x reformat logging to indicate source
  x increment/decrement slider values
@@ -29,3 +29,4 @@
  - persist recipes to DB
  - try pdf2html
  - is there a 3rd party html converter we could use - that produces scalable html
+ - try using styled extract and converting output json to HTML

@@ -1,6 +1,6 @@
 SHELL := /bin/bash
-SERVER := colorado-mfk3
-SERVER_DIR := /backend/readingcontrols
+#SERVER := <TBD>
+SERVER_DIR := /readingcontrols
 # TODO: generate the IMAGE list dynamically in the save recipe
 IMAGES := readingcontrols/web
 
