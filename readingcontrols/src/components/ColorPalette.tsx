@@ -42,7 +42,7 @@ const colors = ['#FFFDD0', '#96ADFC', '#DBE1F1', '#A8F29A', '#D8D3D6',
   '#EDDD6E', '#EDD1B0', '#B987DC', '#E0A6AA', '#A5F7E1', '#F8FD89']
 
 
-const ColorPicker = (props: {
+const ColorPalette = (props: {
   label: string,
   currentColor: { text: string, back: string },
   setColor: (newText: string, newBack: string) => void,
@@ -75,7 +75,7 @@ const ColorPicker = (props: {
   )
 }
 
-export default ColorPicker;
+export default ColorPalette;
 
 /*
       <CompactPicker colors={colors} color={props.currentColor}

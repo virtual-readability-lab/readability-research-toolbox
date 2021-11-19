@@ -18,7 +18,7 @@
 import {ActionButton, Item, Picker, Switch, View} from "@adobe/react-spectrum";
 import {controlsInitialState, useControls, useControlSetter} from "./Main";
 import FileChooser from "./FileChooser";
-import ColorPicker from "./ColorPicker";
+import ColorPalette from "./ColorPalette";
 import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css";
 import {useState} from "react";
@@ -70,8 +70,8 @@ const Controls = () => {
         <Switch isSelected={controls.darkMode} onChange={(val) => {
           controlSetter('darkMode', 'switch', val);
         }}>Dark mode</Switch>
-        <ColorPicker label="Color theme" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
-                     setColor={(newText: string, newBack: string) => {
+        <ColorPalette label="Color theme" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
+                      setColor={(newText: string, newBack: string) => {
                        controlSetter('foregroundColor', 'color', newText);
                        controlSetter('backgroundColor', 'color', newBack);
                      }} darkMode={controls.darkMode}/>
