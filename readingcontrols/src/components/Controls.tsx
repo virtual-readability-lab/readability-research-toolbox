@@ -15,7 +15,7 @@
  */
 
 // import styles from "./Controls.module.css"
-import {Picker, Item, Switch, View, ActionButton} from "@adobe/react-spectrum";
+import {ActionButton, Item, Picker, Switch, View} from "@adobe/react-spectrum";
 import {controlsInitialState, useControls, useControlSetter} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPicker from "./ColorPicker";
@@ -25,15 +25,13 @@ import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
 import SliderControl from "./SliderControl";
 import RecipeBox from "./RecipeBox";
+import {FontPicker} from "./FontPicker";
 
 const Controls = () => {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
   const controls = useControls();
   const controlSetter = useControlSetter();
-  const fonts = [
-    'Arial', 'Georgia', 'Merriweather', 'OpenSans', 'Poppins', 'Roboto', 'SourceSerifPro', 'Times'
-  ];
-  const fontItems = fonts.map((item) => <Item key={item}>{item}</Item>);
+
   const resetAllControls = () => {
     for (const [controlName, value] of Object.entries(controlsInitialState)) {
       if (controlName === 'html') continue;
@@ -50,12 +48,7 @@ const Controls = () => {
             <SimpleFileChooser updateControlValue={controlSetter}/>
           }
         </div>
-        <Picker label="Font name" selectedKey={controls.fontName} onSelectionChange={(val) => {
-          controlSetter('fontName', 'picker', val);
-        }} labelPosition="side">
-          {fontItems}
-        </Picker>
-
+        <FontPicker/>
         <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1}/>
         <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1}/>
         <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-0.1} maxValue={4}

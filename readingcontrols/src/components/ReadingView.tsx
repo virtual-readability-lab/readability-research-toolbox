@@ -167,7 +167,7 @@ const ReadingView = () => {
                      backgroundColor: backgroundColor,
                      color: controlValues.foregroundColor,
                      cursor: showCursor,
-                     padding: controlValues.showRuler && !controlValues.rulerFollowsMouse ? `${rulerPosition + 20}% 0.5in 130% 0.5in` : '0.5in',
+                     padding: controlValues.showRuler && !controlValues.rulerFollowsMouse ? `${rulerPosition + 20}% 0.5in 120% 0.5in` : '0.5in',
                    }}/>
             </div>
 

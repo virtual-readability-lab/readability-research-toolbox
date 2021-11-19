@@ -15,7 +15,7 @@
  - randomize (and log) control order
  - custom color selectors
  - text color
- - show font in font name drop down
+ x show font in font name drop down
  - page border width control
  x correlate ruler scrolling to page lines
  x align sliders to be the same size
@@ -30,10 +30,14 @@
  - try pdf2html
  - is there a 3rd party html converter we could use - that produces scalable html
  - try using styled extract and converting output json to HTML
+ - make it workable on a phone
+ x scrollable left panel
+ - zoom phone outlines to match perceived phone dimensions on laptop screen
 
 when moving from dark mode to reading ruler, the default reading ruler polarity should flip (else we get black on black)
 x "please add a ruler that I can move and not be glued to my screen" -- multiple people were confused about this
 implementation, not sure if there's a straightforward fixed given our prior conversations; another quote: "I thought the idea of a reading ruler was good, but the execution was very off-putting and I would not use it."; another: "Just that the reading ruler and underline ruler won't go all the way to the bottom of the document."
-"I would have loved to be able to just hover over the font names and dynamically, temporarily see how the new font would look before I select it"; other people commented on wanting to see the font rendered in the actual font style
+x "I would have loved to be able to just hover over the font names and dynamically, temporarily see how the new font
+would look before I select it"; other people commented on wanting to see the font rendered in the actual font style
 the contrast setting was disabled for some people
 some folks were unable/couldn't figure out how to change the font color but would have liked to

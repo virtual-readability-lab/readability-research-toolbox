@@ -51,6 +51,13 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ## Release notes
 
+### 2021/11/19
+- Font names show in their font
+- Left (controls) pane scrolls when it doesn't fit
+- New ruler option where ruler follows the mouse
+- Switch in ruler options to control whether the ruler aligns to the text lines
+- Changed label "Disable mouse" to "Hide mouse over text"
+
 ### 2021/11/04
 
 - Moved backend code to a different project
