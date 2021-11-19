@@ -33,3 +33,9 @@
     color: var(--spectrum-global-color-gray-700);
     user-select: none;
 }
+
+.ScrollContainer {
+    overflow: auto;
+    position: relative;
+    height: 100%;
+}

@@ -14,41 +14,48 @@
  * limitations under the License.
  */
 
-import styles from "./RulerOverlay.module.css"
+import styles from "./RulerOverlay.module.css";
 import {useControls} from "./Main";
 import {parseColor} from '@react-stately/color';
 import {useEffect, useState} from "react";
 
-export const rulerPosition = 25; // in percent
+const defaultRulerPosition = 25;
+export let rulerPosition = defaultRulerPosition; // in percent
 
-const RulerOverlay = () => {
-  const [edgeColor, setEdgeColor] = useState('#0008')
-  const [centerColor, setCenterColor] = useState('transparent')
+const RulerOverlay = (props: {
+  rulerPosition: number
+}) => {
+  const [edgeColor, setEdgeColor] = useState('#0008');
+  const [centerColor, setCenterColor] = useState('transparent');
   const controlValues = useControls();
   // we want the ruler height to be proportional to the text default size
   const rulerHeight = controlValues.fontSize * controlValues.lineHeight * controlValues.rulerHeight;
-  const halfRulerOpening = `${rulerHeight / 2}px`
+  const halfRulerOpening = `${rulerHeight / 2}px`;
+  rulerPosition = controlValues.rulerFollowsMouse ? props.rulerPosition : defaultRulerPosition;
+
   useEffect(() => {
     try {
       const parsedBackroundColor = parseColor(controlValues.rulerBackgroundColor)
         .withChannelValue('alpha', controlValues.rulerOpacity)
-        .toString('rgba')
+        .toString('rgba');
       setEdgeColor(controlValues.rulerInvert ? 'transparent' : parsedBackroundColor);
       setCenterColor(controlValues.rulerInvert ? parsedBackroundColor : 'transparent');
     } catch {
       // we ignore invalid rulerBackgroundColor settings
     }
-  }, [controlValues.rulerBackgroundColor, controlValues.rulerOpacity, controlValues.rulerInvert])
+  }, [controlValues.rulerBackgroundColor, controlValues.rulerOpacity, controlValues.rulerInvert]);
+
 
   const backgroundCss = `linear-gradient(to bottom, 
   ${edgeColor} calc(${rulerPosition}% - ${halfRulerOpening} - ${controlValues.rulerTransitionHeight}px), 
   ${centerColor} calc(${rulerPosition}% - ${halfRulerOpening}), 
   ${centerColor} calc(${rulerPosition}% + ${halfRulerOpening}), 
-  ${edgeColor} calc(${rulerPosition}% + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`
+  ${edgeColor} calc(${rulerPosition}% + ${halfRulerOpening} + ${controlValues.rulerTransitionHeight}px)`;
+
 
   const rulerWidth = `${controlValues.columnWidth + 1}in`;  // add an inch to cover the left and right padding
   return (
-    <>
+    <div>
       <div className={styles.RulerOverlay} style={{
         display: controlValues.showRuler && !controlValues.rulerUnderline ? 'block' : 'none',
         width: rulerWidth,
@@ -57,10 +64,11 @@ const RulerOverlay = () => {
       <div className={styles.UnderlineRuler} style={{
         display: controlValues.showRuler && controlValues.rulerUnderline ? 'block' : 'none',
         width: rulerWidth,
-        borderTopColor: controlValues.backgroundColor === '#000000' ? 'white' : 'black'
+        borderTopColor: controlValues.backgroundColor === '#000000' ? 'white' : 'black',
+        top: `${rulerPosition}%`
       }}/>
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default RulerOverlay;

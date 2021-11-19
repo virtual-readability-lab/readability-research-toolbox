@@ -43,6 +43,8 @@ export interface IControls {
   rulerUnderline: boolean,
   rulerDisableMouse: boolean,
   rulerTransitionHeight: number,
+  rulerSnapToLine: boolean,
+  rulerFollowsMouse: boolean,
 
   [key: string]: ControlValue;
 }
@@ -76,6 +78,9 @@ export const controlsInitialState: IControls = {
   rulerUnderline: false,
   rulerDisableMouse: false,
   rulerTransitionHeight: 8,
+  rulerSnapToLine: true,
+  rulerFollowsMouse: false,
+
   setControlValue: undefined!,
 };
 const ControlsContext = createContext<IControls>(controlsInitialState);
