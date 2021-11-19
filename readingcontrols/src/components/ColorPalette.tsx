@@ -18,7 +18,7 @@
 
 import React, {useEffect, useState} from "react";
 import {Label} from '@react-spectrum/label';
-import styles from './ColorPicker.module.css'
+import styles from './ColorPalette.module.css'
 import TextColor from "./TextColor";
 import {randomizeArray} from "../utils";
 import {addLogRecord} from "./logging";
@@ -62,7 +62,7 @@ const ColorPalette = (props: {
   return (
     <div style={{display: 'flex'}}>
       <Label className={styles.Label} labelPosition="side">{props.label}</Label>
-      <div className={styles.Picker}>
+      <div className={styles.Palette}>
         {props.darkMode ?
           randomizedColors.map((c) => <TextColor textColor={c} backgroundColor="#000000" key={c}
                                                  currentColor={props.currentColor} setColor={props.setColor}/>)
