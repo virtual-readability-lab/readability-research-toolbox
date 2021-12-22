@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-#SERVER := <TBD>
+SERVER := co2-vz2
 SERVER_DIR := /readingcontrols
 # TODO: generate the IMAGE list dynamically in the save recipe
 IMAGES := readingcontrols/web

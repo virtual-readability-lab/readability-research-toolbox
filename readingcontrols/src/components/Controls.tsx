@@ -52,7 +52,7 @@ const Controls = () => {
         <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1}/>
         <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1}/>
         <SliderControl controlName="characterSpacing" label="Character spacing" minValue={-0.1} maxValue={4}
-                       step={0.1}/>
+                       step={0.05}/>
         <SliderControl controlName="wordSpacing" label="Word spacing" minValue={-0.2} maxValue={10} step={0.1}/>
         <SliderControl controlName="paragraphIndent" label="Paragraph indent" minValue={-0.5} maxValue={0.5}
                        step={0.05}/>
@@ -86,7 +86,7 @@ const Controls = () => {
         <View paddingStart="25px" isHidden={!controls.showRuler} width="300px">
           <Switch isSelected={controls.rulerInvert} isHidden={controls.rulerUnderline} onChange={(val) => {
             controlSetter('rulerInvert', 'switch', val);
-          }}>Invert ruler (gray-box)</Switch>
+          }}>Invert ruler (gray bar)</Switch>
           <Switch isSelected={controls.rulerSnapToLine} isHidden={controls.rulerFollowsMouse} onChange={(val) => {
             controlSetter('rulerSnapToLine', 'switch', val);
           }}>Ruler aligns with text lines</Switch>
