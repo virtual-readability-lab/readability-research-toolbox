@@ -19,7 +19,7 @@ import {darkTheme, Heading, lightTheme, Provider} from "@adobe/react-spectrum";
 import Main from "./components/Main";
 import {useState} from "react";
 
-export const VERSION = '2021/12/22'
+export const VERSION = '2022/02/11'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
