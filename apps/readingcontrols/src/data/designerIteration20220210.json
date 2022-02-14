@@ -1,0 +1,128 @@
+[
+    {
+        "name": "C13766143R",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 20,
+            "lineHeight": 1.8,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 0,
+            "wordSpacing": 0,
+            "fontName": "Arial"
+        }
+    },
+    {
+        "name": "C23703015AA",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 15,
+            "lineHeight": 1.5,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 1.5,
+            "wordSpacing": 0,
+            "fontName": "Times"
+        }
+    },
+    {
+        "name": "C33748376F",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 17,
+            "lineHeight": 1.8,
+            "paragraphIndent": 0.2,
+            "paragraphSpacing": 1.5,
+            "wordSpacing": 0.2,
+            "fontName": "Merriweather"
+        }
+    },
+    {
+        "name": "C43703015A",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 20,
+            "lineHeight": 1.8,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 0,
+            "wordSpacing": 0,
+            "fontName": "Times"
+        }
+    },
+    {
+        "name": "C63766143Q",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 18,
+            "lineHeight": 1.4,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 1.5,
+            "wordSpacing": 0.1,
+            "fontName": "Arial"
+        }
+    },
+    {
+        "name": "C73766143AB",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 24,
+            "lineHeight": 1.5,
+            "paragraphIndent": 0.35,
+            "paragraphSpacing": 1.5,
+            "wordSpacing": 0,
+            "fontName": "SourceSerifPro"
+        }
+    },
+    {
+        "name": "C93748376AE",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 17,
+            "lineHeight": 1.5,
+            "paragraphIndent": 0.4,
+            "paragraphSpacing": 2,
+            "wordSpacing": 0.2,
+            "fontName": "Times"
+        }
+    },
+    {
+        "name": "C103703015AN",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 17,
+            "lineHeight": 1.5,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 0,
+            "wordSpacing": 0,
+            "fontName": "Arial"
+        }
+    },
+    {
+        "name": "C113703015AU",
+        "controlValues": {
+            "characterSpacing": 0,
+            "columnWidth": 6,
+            "darkMode": false,
+            "fontSize": 22,
+            "lineHeight": 1.5,
+            "paragraphIndent": 0,
+            "paragraphSpacing": 0,
+            "wordSpacing": 0,
+            "fontName": "Arial"
+        }
+    }
+]

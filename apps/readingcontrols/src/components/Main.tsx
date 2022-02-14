@@ -19,6 +19,8 @@ import Controls from "./Controls";
 import ReadingView from "./ReadingView";
 import {createContext, useContext, useEffect, useReducer} from "react";
 import {addLogRecord, clearLogRecords, ControlValue} from "./logging";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 export interface IControls {
   html: string,
@@ -129,8 +131,16 @@ const Main = (props: {
     <ControlsContext.Provider value={controlsState}>
       <ControlSetterContext.Provider value={controlSetter}>
         <div className={styles.Main}>
-          <Controls/>
-          <ReadingView/>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Controls useAdvancedSettings />} />
+              <Route
+                path="/user-testing"
+                element={<Controls useAdvancedSettings={false} />}
+              />
+            </Routes>
+          </BrowserRouter>
+          <ReadingView />
         </div>
       </ControlSetterContext.Provider>
     </ControlsContext.Provider>
