@@ -53,7 +53,7 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ### 2022/02/11
 - expanded logging for recipe manipulation
-- optionally turned off some controls
+- optionally turned off some controls in the app at `/user-testing`
 - option to load a different default set of recipes
 
 ### 2021/11/19

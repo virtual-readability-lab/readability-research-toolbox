@@ -27,7 +27,7 @@ import SliderControl from "./SliderControl";
 import RecipeBox from "./RecipeBox";
 import {FontPicker} from "./FontPicker";
 
-const Controls = () => {
+const Controls = (props: { useAdvancedSettings: boolean; }) => {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
   const controls = useControls();
   const controlSetter = useControlSetter();
@@ -67,49 +67,56 @@ const Controls = () => {
           <Item key="justify">Justify</Item>
         </Picker>
         <SliderControl controlName="columnWidth" label="Column width" minValue={2} maxValue={8} step={0.2}/>
-        <Switch isSelected={controls.darkMode} onChange={(val) => {
-          controlSetter('darkMode', 'switch', val);
-        }}>Dark mode</Switch>
-        <ColorPalette label="Color theme" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
-                      setColor={(newText: string, newBack: string) => {
-                       controlSetter('foregroundColor', 'color', newText);
-                       controlSetter('backgroundColor', 'color', newBack);
-                     }} darkMode={controls.darkMode}/>
-        <SliderControl controlName="backgroundSaturation" label="Contrast" minValue={0} maxValue={100} step={1}
-                       isDisabled={controls.backgroundColor === '#FFFFFF'}/>
-        <div><Switch isSelected={controls.showRuler} onChange={(val) => {
-          controlSetter('showRuler', 'switch', val);
-        }}>Show reading ruler</Switch>
-          <Switch isSelected={controls.rulerUnderline} isHidden={!controls.showRuler} onChange={(val) => {
-            controlSetter('rulerUnderline', 'switch', val);
-          }}>Underline ruler</Switch></div>
-        <View paddingStart="25px" isHidden={!controls.showRuler} width="300px">
-          <Switch isSelected={controls.rulerInvert} isHidden={controls.rulerUnderline} onChange={(val) => {
-            controlSetter('rulerInvert', 'switch', val);
-          }}>Invert ruler (gray bar)</Switch>
-          <Switch isSelected={controls.rulerSnapToLine} isHidden={controls.rulerFollowsMouse} onChange={(val) => {
-            controlSetter('rulerSnapToLine', 'switch', val);
-          }}>Ruler aligns with text lines</Switch>
-          <Switch isSelected={controls.rulerFollowsMouse} onChange={(val) => {
-            controlSetter('rulerFollowsMouse', 'switch', val);
-          }}>Ruler position follows mouse</Switch>
-          <Switch isSelected={controls.rulerDisableMouse} isHidden={controls.rulerFollowsMouse} onChange={(val) => {
-            controlSetter('rulerDisableMouse', 'switch', val);
-          }}>Hide mouse over text</Switch>
-          <View isHidden={controls.rulerUnderline}>
-            <SliderControl controlName="rulerHeight" label="Ruler height" minValue={1} maxValue={10} step={0.1}/>
-            <SliderControl controlName="rulerOpacity" label="Ruler opacity" minValue={0} maxValue={1} step={0.01}/>
-            <SliderControl controlName="rulerTransitionHeight" label="Ruler fuzzy border" minValue={0} maxValue={10}
-                           step={1}/>
+        {props.useAdvancedSettings && (
+          <div>
+          <Switch isSelected={controls.darkMode} onChange={(val) => {
+            controlSetter('darkMode', 'switch', val);
+          }}>Dark mode</Switch>
+          <ColorPalette label="Color theme" currentColor={{text: controls.foregroundColor, back: controls.backgroundColor}}
+                        setColor={(newText: string, newBack: string) => {
+                        controlSetter('foregroundColor', 'color', newText);
+                        controlSetter('backgroundColor', 'color', newBack);
+                      }} darkMode={controls.darkMode}/>
+          <SliderControl controlName="backgroundSaturation" label="Contrast" minValue={0} maxValue={100} step={1}
+                        isDisabled={controls.backgroundColor === '#FFFFFF'}/>
+          <div><Switch isSelected={controls.showRuler} onChange={(val) => {
+            controlSetter('showRuler', 'switch', val);
+          }}>Show reading ruler</Switch>
+            <Switch isSelected={controls.rulerUnderline} isHidden={!controls.showRuler} onChange={(val) => {
+              controlSetter('rulerUnderline', 'switch', val);
+            }}>Underline ruler</Switch></div>
+          <View paddingStart="25px" isHidden={!controls.showRuler} width="300px">
+            <Switch isSelected={controls.rulerInvert} isHidden={controls.rulerUnderline} onChange={(val) => {
+              controlSetter('rulerInvert', 'switch', val);
+            }}>Invert ruler (gray bar)</Switch>
+            <Switch isSelected={controls.rulerSnapToLine} isHidden={controls.rulerFollowsMouse} onChange={(val) => {
+              controlSetter('rulerSnapToLine', 'switch', val);
+            }}>Ruler aligns with text lines</Switch>
+            <Switch isSelected={controls.rulerFollowsMouse} onChange={(val) => {
+              controlSetter('rulerFollowsMouse', 'switch', val);
+            }}>Ruler position follows mouse</Switch>
+            <Switch isSelected={controls.rulerDisableMouse} isHidden={controls.rulerFollowsMouse} onChange={(val) => {
+              controlSetter('rulerDisableMouse', 'switch', val);
+            }}>Hide mouse over text</Switch>
+            <View isHidden={controls.rulerUnderline}>
+              <SliderControl controlName="rulerHeight" label="Ruler height" minValue={1} maxValue={10} step={0.1}/>
+              <SliderControl controlName="rulerOpacity" label="Ruler opacity" minValue={0} maxValue={1} step={0.01}/>
+              <SliderControl controlName="rulerTransitionHeight" label="Ruler fuzzy border" minValue={0} maxValue={10}
+                            step={1}/>
+            </View>
           </View>
-
-        </View>
+        </div>
+        )}
         <div className={styles.ButtonRow}>
           <ActionButton onPress={downloadAllLogRecords}>Download log</ActionButton>
           <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
           <ActionButton onPress={resetAllControls}>Reset all controls</ActionButton>
         </div>
-        <RecipeBox/>
+              {props.useAdvancedSettings ? (
+        <RecipeBox defaultRecipes/>
+      ):(
+        <RecipeBox defaultRecipes={false}/>
+      )}
       </div>
     </div>
   );

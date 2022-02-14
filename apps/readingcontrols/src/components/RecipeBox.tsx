@@ -26,6 +26,8 @@ import {addLogRecord, ControlValue} from "./logging";
 import {downloadFile, randomizeArray} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
 import defaultClusterRecipes from "../data/defaultClusterRecipes.json";
+import customClusterRecipes from "../data/designerIteration20220210.json";
+
 
 export type IRecipeData = {
   name: string | null;
@@ -42,7 +44,7 @@ type IRecipeAdminContext = {
 const RecipeAdminContext = createContext<IRecipeAdminContext>(undefined!);
 export const useRecipeAdminContext = () => useContext(RecipeAdminContext);
 
-const RecipeBox = () => {
+const RecipeBox = (props:{defaultRecipes: boolean}) => {
   const [allRecipes, setAllRecipes] = useState<Map<number, IRecipeData>>(new Map());
   const [adminDialogOpen, setAdminDialogOpen] = useState(false);
   const [showAdd, setShowAdd] = useState(true);
@@ -64,7 +66,7 @@ const RecipeBox = () => {
   function logRecipeCreation(recipeData: IRecipeData) {
     for (const [controlName, value] of Object.entries(recipeData.controlValues)) {
       if (controlName === 'html') continue;
-      if (value === controlsInitialState[controlName]) continue;
+      // if (value === controlsInitialState[controlName]) continue;
       addLogRecord(controlName, 'recipeCreate: ' + recipeData.name, 'na', value as ControlValue);
     }
   }
@@ -128,7 +130,11 @@ const RecipeBox = () => {
   // load the default recipes at startup
   useEffect(() => {
     setTimeout(() => {
-      loadAllRecipes(randomizeArray(defaultClusterRecipes));
+      if (props.defaultRecipes) {
+        loadAllRecipes(randomizeArray(defaultClusterRecipes));
+      } else {
+        loadAllRecipes(randomizeArray(customClusterRecipes));
+      }
     }, 500); // HACK: this has to run after Main has cleared the log records, so we can log the loaded recipes,
     // but I don't see a good way to interlock
   }, [loadAllRecipes]);
