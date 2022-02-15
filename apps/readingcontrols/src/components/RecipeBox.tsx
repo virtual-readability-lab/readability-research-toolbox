@@ -26,7 +26,7 @@ import {addLogRecord, ControlValue} from "./logging";
 import {downloadFile, randomizeArray} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
 import defaultClusterRecipes from "../data/defaultClusterRecipes.json";
-import customClusterRecipes from "../data/designerIteration20220210.json";
+import customClusterRecipes from "../data/defaultClusterRecipes.json";
 
 
 export type IRecipeData = {
