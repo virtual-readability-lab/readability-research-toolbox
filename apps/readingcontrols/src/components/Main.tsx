@@ -23,7 +23,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 export interface IControls {
-  id: string,
   html: string,
   fontSize: number,
   fontName: string,
@@ -60,7 +59,6 @@ type ControlStateChange = {
 };
 
 export const controlsInitialState: IControls = {
-  id: '',
   html: '',
   fontSize: 16,
   fontName: 'Arial',
