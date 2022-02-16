@@ -23,6 +23,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 export interface IControls {
+  id: string,
   html: string,
   fontSize: number,
   fontName: string,
@@ -34,6 +35,7 @@ export interface IControls {
   columnWidth: number,
   textAlignment: string,
   darkMode: boolean,
+  controlLock: boolean,
   backgroundColor: string,
   foregroundColor: string,
   backgroundSaturation: number,
@@ -58,6 +60,7 @@ type ControlStateChange = {
 };
 
 export const controlsInitialState: IControls = {
+  id: '',
   html: '',
   fontSize: 16,
   fontName: 'Arial',
@@ -69,6 +72,7 @@ export const controlsInitialState: IControls = {
   columnWidth: 6,
   textAlignment: 'start',
   darkMode: false,
+  controlLock: true,
   foregroundColor: '#000000',
   backgroundColor: '#FFFFFF',
   backgroundSaturation: 90,

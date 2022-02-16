@@ -27,6 +27,7 @@ import {downloadFile, randomizeArray} from "../utils";
 import RecipeAdmin from "./RecipeAdmin";
 import defaultClusterRecipes from "../data/defaultClusterRecipes.json";
 import customClusterRecipes from "../data/defaultClusterRecipes.json";
+import validationRecipes from "../data/defaultClusterRecipes.json";
 
 
 export type IRecipeData = {
@@ -133,7 +134,15 @@ const RecipeBox = (props:{defaultRecipes: boolean}) => {
       if (props.defaultRecipes) {
         loadAllRecipes(randomizeArray(defaultClusterRecipes));
       } else {
-        loadAllRecipes(randomizeArray(customClusterRecipes));
+        // randomly include a experience from the validation group
+        const customRecipes = randomizeArray(customClusterRecipes)
+        const validationExp = JSON.parse(JSON.stringify(randomizeArray(validationRecipes)[0]));
+
+        // TODO assign random value for the experience name
+        validationExp['name'] = 'validationExperience'
+
+        customRecipes.push(validationExp)
+        loadAllRecipes(randomizeArray(customRecipes));
       }
     }, 500); // HACK: this has to run after Main has cleared the log records, so we can log the loaded recipes,
     // but I don't see a good way to interlock
