@@ -61,15 +61,15 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
           <TextField label="Username" onChange={setUID}/><br/>
           <TextField label="Favorite Recipe" onChange={setRecipe}/><br/>
           {(UID !=='' && bestRecipe !=='') && (
-          <Switch isSelected={controls.controlLock} onChange={(val) => {
-            controlSetter('controlLock', 'switch', val);
+          <Switch isSelected={controls.showControls} onChange={(val) => {
+            controlSetter('showControls', 'switch', val);
             logTextInputs();
-          }}>Lock</Switch>
+          }}>Show Controls</Switch>
           )}
           </div>
         )}
 
-        {(props.useAdvancedSettings || (!controls.controlLock && UID !=='' && bestRecipe !=='')) &&
+        {(props.useAdvancedSettings || (controls.showControls && UID !=='' && bestRecipe !=='')) &&
         (
           <div>
         <FontPicker/>
