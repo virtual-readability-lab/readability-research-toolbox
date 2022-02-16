@@ -19,7 +19,7 @@ import {ActionButton, Item, Picker, Switch, View, TextField, Text} from "@adobe/
 import {controlsInitialState, useControls, useControlSetter} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPalette from "./ColorPalette";
-import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
+import {addLogRecord, clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css";
 import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
@@ -41,6 +41,11 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
     }
   };
 
+  const logTextInputs = () =>{
+    addLogRecord('userName', 'userInput', '', UID);
+    addLogRecord('userFavorite', 'userInput', '', bestRecipe);
+  }
+
   return (
     <div className={styles.ScrollContainer}>
       <div className={styles.Controls}>
@@ -58,6 +63,7 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
           {(UID !=='' && bestRecipe !=='') && (
           <Switch isSelected={controls.controlLock} onChange={(val) => {
             controlSetter('controlLock', 'switch', val);
+            logTextInputs();
           }}>Lock</Switch>
           )}
           </div>
