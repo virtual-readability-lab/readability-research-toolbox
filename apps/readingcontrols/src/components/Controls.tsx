@@ -59,6 +59,11 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
         {!props.useAdvancedSettings && (
           <div>
           <TextField label="Username" onChange={setUID}/><br/>
+          {
+            !controls.showControls && (
+            <RecipeBox defaultRecipes={false}/>
+            )
+          }
           <TextField label="Favorite Recipe" onChange={setRecipe}/><br/>
           {(UID !=='' && bestRecipe !=='') && (
           <Switch isSelected={controls.showControls} onChange={(val) => {
@@ -138,10 +143,8 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
         </div>
       </div>
         )}
-        {props.useAdvancedSettings ? (
+        {props.useAdvancedSettings && (
           <RecipeBox defaultRecipes/>
-        ):(
-          <RecipeBox defaultRecipes={false}/>
         )}
       </div>
     </div>

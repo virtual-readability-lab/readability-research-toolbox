@@ -184,7 +184,6 @@ const RecipeBox = (props:{defaultRecipes: boolean}) => {
           {recipeButtons}
         </div>
       </div>
-      ;
     </RecipeAdminContext.Provider>);
 };
 
