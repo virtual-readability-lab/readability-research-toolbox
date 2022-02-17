@@ -48,8 +48,8 @@ export const useRecipeAdminContext = () => useContext(RecipeAdminContext);
 const RecipeBox = (props:{defaultRecipes: boolean}) => {
   const [allRecipes, setAllRecipes] = useState<Map<number, IRecipeData>>(new Map());
   const [adminDialogOpen, setAdminDialogOpen] = useState(false);
-  const [showAdd, setShowAdd] = useState(true);
-  const [showDelete, setShowDelete] = useState(true);
+  const [showAdd, setShowAdd] = useState(props.defaultRecipes);
+  const [showDelete, setShowDelete] = useState(props.defaultRecipes);
   const controls = useControls();
   const controlSetter = useControlSetter();
   const nextRecipeId = useRef(0);
