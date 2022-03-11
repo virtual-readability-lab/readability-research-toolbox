@@ -51,6 +51,11 @@ See [DEVELOPERS.md](./DEVELOPERS.md)
 
 ## Release notes
 
+### 2022/02/11
+- expanded logging for recipe manipulation
+- optionally turned off some controls in the app at `/user-testing`
+- option to load a different default set of recipes
+
 ### 2021/11/19
 - Font names show in their font
 - Left (controls) pane scrolls when it doesn't fit
