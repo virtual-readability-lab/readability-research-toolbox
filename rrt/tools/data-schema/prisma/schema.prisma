@@ -13,9 +13,18 @@ datasource db {
 model User {
   id    Int    @id @default(autoincrement())
   name  String
+  created DateTime
 }
 
 model Study {
   id    Int    @id @default(autoincrement())
   name  String
+  start DateTime
+  end DateTime
+}
+
+model Design {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  design  Json
 }
