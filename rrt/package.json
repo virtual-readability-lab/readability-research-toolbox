@@ -23,6 +23,7 @@
     "@nxext/vite": "^13.2.4",
     "@sveltejs/adapter-node": "next",
     "@sveltejs/kit": "next",
+    "@types/connect-pg-simple": "^7.0.0",
     "@types/express": "4.17.13",
     "@types/express-session": "^1.17.4",
     "@types/jest": "27.0.2",

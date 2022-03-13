@@ -3,6 +3,8 @@ import { urls } from '../composer/urls/urls'
 import { design } from '../composer/design/designConditions'
 import { passages } from '../composer/passages/passages'
 
+const studyName = 'vrlFavorite';
+
 export const studySteps = [
     new StudyStep(
         [urls.instructions, urls.reading_test_one], 
@@ -19,10 +21,4 @@ export const studySteps = [
     )
 ]
 
-export const exampleStudy = new Study(
-    'vrlFavorite', studySteps
-);
-
-export function getStudy() {
-    console.log(exampleStudy);
-}
+export const exampleStudy = new Study( studyName, studySteps )

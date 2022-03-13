@@ -3,10 +3,11 @@
  * This is only a minimal backend to get started.
  */
 import * as express from 'express';
-import * as session from 'express-session';
+import { db } from './app/database'; 
+import { expSession } from './app/sessions';
 
 const app = express();
-
+app.use(expSession)
 
 ///////////////////////////////
 app.get('/api', (req, res) => {
