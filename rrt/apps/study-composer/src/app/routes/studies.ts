@@ -82,6 +82,9 @@ async function getNextSteps(nextStudyStep: number, studySteps: StudySteps) {
     return [nextUrl, conditions];
 }
 
+/*
+* Retrieves non-PII user info for client side user
+*/
 router.get(`/studies/:studyName/user`, async (req: Request, res: Response) => {
     const studyName: string = req.params.studyName;
     try {
@@ -121,7 +124,9 @@ router.get(`/studies/:studyName/next`, async (req: Request, res: Response) => {
     }
 });
 
-
+/*
+* This endpoint programatically reads the folder studies
+*/
 router.get(`/studies/:studyName`, async (req: Request, res: Response) => {
     const studyName: string = req.params.studyName;
     try {
@@ -129,6 +134,7 @@ router.get(`/studies/:studyName`, async (req: Request, res: Response) => {
         updateActiveStudy(req, studyName, study[studyName].studySteps);
         res.header("Content-Type",'application/json');
         res.send(JSON.stringify(study[studyName], null, 2));
+        // will need to redirect to appropriate URL
     } catch (error) {
         console.log(error);
         res.status(404);
