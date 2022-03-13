@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@rrt/shared/utility/helpers": [
+        "libs/shared/utility/helpers/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

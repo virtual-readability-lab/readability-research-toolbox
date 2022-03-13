@@ -2,12 +2,13 @@
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
-
 import * as express from 'express';
-
+import * as session from 'express-session';
 
 const app = express();
 
+
+///////////////////////////////
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to study-composer!' });
 });
