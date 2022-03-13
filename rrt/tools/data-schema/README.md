@@ -4,3 +4,5 @@ https://www.prisma.io/docs/concepts/components/prisma-migrate
 npx prisma migrate dev
 
 npx prisma generate client
+
+npx prisma format

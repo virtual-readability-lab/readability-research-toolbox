@@ -11,20 +11,77 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  created DateTime
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  Study     Study[]
 }
 
 model Study {
-  id    Int    @id @default(autoincrement())
-  name  String
-  start DateTime
-  end DateTime
+  id        Int         @id @default(autoincrement())
+  user      User        @relation(fields: [idUser], references: [id])
+  idUser    Int // relation scalar field  (used in the `@relation` attribute above)
+  name      String
+  start     DateTime    @default(now())
+  end       DateTime
+  StudyStep StudyStep[]
+}
+
+model StudyStep {
+  id                           Int                            @id @default(autoincrement())
+  study                        Study                          @relation(fields: [idStudy], references: [id])
+  idStudy                      Int
+  name                         String
+  start                        DateTime                       @default(now())
+  end                          DateTime
+  Speed                        Speed[]
+  Comprehension                Comprehension[]
+  PreferencePairwiseComparison PreferencePairwiseComparison[]
+  Question                     Question[]
+}
+
+model Passage {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
 }
 
 model Design {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  design  Json
+  id        Int                            @id @default(autoincrement())
+  name      String                         @unique
+  design    Json                           @unique
+  createdAt DateTime                       @default(now())
+  designA   PreferencePairwiseComparison[] @relation("designA")
+  designB   PreferencePairwiseComparison[] @relation("designB")
+}
+
+model PreferencePairwiseComparison {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  designA     Design    @relation("designA", fields: [idA], references: [id])
+  idA         Int
+  designB     Design    @relation("designB", fields: [idB], references: [id])
+  idB         Int
+  createdAt   DateTime  @default(now())
+}
+
+model Speed {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  createdAt   DateTime  @default(now())
+}
+
+model Comprehension {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  createdAt   DateTime  @default(now())
+}
+
+model Question {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  createdAt   DateTime  @default(now())
 }
