@@ -103,3 +103,10 @@ model Question {
   idStudyStep Int
   createdAt   DateTime  @default(now())
 }
+
+// for express-sessions
+model UserSessions {
+  sid    String   @id
+  sess   Json
+  expire DateTime
+}
