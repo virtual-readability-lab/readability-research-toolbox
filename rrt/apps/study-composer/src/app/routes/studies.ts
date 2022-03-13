@@ -114,9 +114,11 @@ router.get(`/studies/:studyName/next`, async (req: Request, res: Response) => {
     try {
         req.session.studies[studyName].studyStatus.currentStudyStep++;
         const currentStudyStep = req.session.studies[studyName].studyStatus.currentStudyStep;
-        const [ nextUrl, conditions ] = await getNextSteps(currentStudyStep, req.session.studies[studyName].studySteps);
+        const [ nextUrl ] = await getNextSteps(currentStudyStep, req.session.studies[studyName].studySteps);
         console.log(nextUrl)
-        res.redirect(`/studies/${studyName}/user`);
+        // TODO: replace base URL with nextUrl
+        const redirectUrl = `/studies/${studyName}/user?studyName=${studyName}`
+        res.redirect(redirectUrl);
     } catch (error) {
         console.log(error);
         res.status(404);
