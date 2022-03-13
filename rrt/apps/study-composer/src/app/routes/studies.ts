@@ -2,7 +2,6 @@ import { highPrecisionTime } from '@rrt/shared/utility/helpers';
 import { design } from '../composer/design/designConditions';
 import { Study, StudySteps } from '../composer/StudyBaseClass';
 import { Request, Response, Router } from 'express';
-import { URL } from 'url';
 const router = Router();
 
 // read from URL
