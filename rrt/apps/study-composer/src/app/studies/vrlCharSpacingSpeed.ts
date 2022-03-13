@@ -3,7 +3,9 @@ import { urls } from '../composer/urls/urls'
 import { design } from '../composer/design/designConditions'
 import { passages } from '../composer/passages/passages'
 
-export const studySteps = [
+const studyName = 'vrlCharSpacingSpeed';
+
+const studySteps = [
     new StudyStep(
         [urls.instructions, urls.reading_test_one], 
         [design.noto_sans],
@@ -19,10 +21,5 @@ export const studySteps = [
     )
 ]
 
-export const exampleStudy = new Study(
-    'vrlFavorite', studySteps
-);
-
-export function getStudy() {
-    console.log(exampleStudy);
-}
+// name must match filename
+export const vrlCharSpacingSpeed: Study = new Study( studyName, studySteps )

@@ -8,4 +8,5 @@ export const enum urls {
     preference_pairwise = '/apps/preference/pairwise',
     preference_binary = '/apps/preference/binary',
     reading_test_one = '/apps/reading-test-one/',
+    vrl_study_complete = '/apps/readability-testbed/vrl-study-complete',
 }

@@ -21,4 +21,5 @@ export const studySteps = [
     )
 ]
 
-export const exampleStudy = new Study( studyName, studySteps )
+// name must match filename
+export const vrlFontSpeed = new Study( studyName, studySteps )

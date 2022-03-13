@@ -11,6 +11,8 @@ export const design = {
     roboto: 'roboto',
     roboto_flex: 'roboto_flex',
     lato: 'lato',
+    eb_garamond: 'eb_garamond',
+    lexend_deca: 'lexend_deca',
     char_spacing_neg_1_em: 'char_spacing_neg_1_em',
     char_spacing_normal: 'char_spacing_normal',
     char_spacing_pos_p5_em: 'char_spacing_pos_p5_em',
@@ -27,12 +29,12 @@ export type design = typeof design [
     keyof typeof design
 ]
 
-function getFavoriteOverall() {
+function getFavoriteOverall(): string | Array<string> {
     /* TOOD --- should pull from Database */
     return 'noto_sans';
 }
 
-function getFavoriteStudy() {
+function getFavoriteStudy(): string | Array<string> {
     /* TOOD --- should pull from Database */
     return 'noto_sans';
 }

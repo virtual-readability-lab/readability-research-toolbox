@@ -13,3 +13,8 @@ export function shuffle<T>(array: T[]): T[] {
   }
   return array;
 }
+
+export function highPrecisionTime() {
+  //return process.hrtime(); // returns array of size 2
+  return performance.now();
+}
