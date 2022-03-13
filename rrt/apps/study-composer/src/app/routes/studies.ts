@@ -82,7 +82,7 @@ async function getNextSteps(nextStudyStep: number, studySteps: StudySteps) {
 }
 
 /*
-* Retrieves non-PII user info for client side user
+* Retrieves non-PII user info and design conditions for client side use
 */
 router.get(`/studies/:studyName/user`, async (req: Request, res: Response) => {
     const studyName: string = req.params.studyName;
