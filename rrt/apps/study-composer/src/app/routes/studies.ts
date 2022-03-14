@@ -2,6 +2,7 @@ import { highPrecisionTime } from '@rrt/shared/utility/helpers';
 import { design } from '../composer/design/designConditions';
 import { Study, StudySteps } from '../composer/StudyBaseClass';
 import { Request, Response, Router } from 'express';
+import { postNewStudy, postNewStudyStep } from '../controllers/study'
 const router = Router();
 
 // read from URL
@@ -14,6 +15,7 @@ class StudyUrl {
 // handled server-side
 interface StudyStatus {
     idStudy: string | number;
+    idStudyStep: string | number;
     userType: string | number;
     currentStudyStep: number;
     startedAt: number;
@@ -28,12 +30,13 @@ export interface StudyInfo {
 interface UserStudyStep {
     idUser: unknown,
     idStudy: string | number,
+    idStudyStep: string | number,
     currentStudyStep: string | number,
     nextUrl: string | unknown,
     conditions: design | Array<design> | unknown
 }
 
-function updateActiveStudy(req: Request, studyName: string, studySteps: StudySteps) {
+async function updateActiveStudy(req: Request, studyName: string, studySteps: StudySteps) {
     // check if session.studies exists
     if(req.session.studies) {
         req.session.studies = {};
@@ -46,18 +49,24 @@ function updateActiveStudy(req: Request, studyName: string, studySteps: StudySte
             studyUrl[key] = urlQuery[key];
         }
     });
+
     // update current status of user's study
+    const idStudy = await postNewStudy(req.session.idUser, studyName);
+    const idStudyStep = await postNewStudyStep(req.session.idUser, studyUrl.studyStep);
     const studyStatus: StudyStatus = {
-            idStudy: 0, // sw: TODO
-            userType: studyUrl.userType,
-            currentStudyStep: studyUrl.studyStep,
-            startedAt: highPrecisionTime(), 
-            lastInteraction: highPrecisionTime(),
-        };
+        idStudy: idStudy,
+        idStudyStep: idStudyStep,
+        userType: studyUrl.userType,
+        currentStudyStep: studyUrl.studyStep,
+        startedAt: highPrecisionTime(), 
+        lastInteraction: highPrecisionTime(),
+    };
+
     const studyInfo: StudyInfo = {
         studyStatus: studyStatus,
         studySteps: studySteps
     }
+
     if(!req.session.studies[studyName] || studyUrl.studyStep > defaultStudyStep) {
         console.log('study session does not exists');
         req.session.studies[studyName] = studyInfo;
@@ -90,8 +99,9 @@ router.get(`/studies/:studyName/user`, async (req: Request, res: Response) => {
         const currentStudyStep = req.session.studies[studyName].studyStatus.currentStudyStep + 1;
         const [nextUrl, conditions ] = await getNextSteps(currentStudyStep, req.session.studies[studyName].studySteps);
         const userStudyStep: UserStudyStep = {
-            idUser: req.session.user.idUser,
+            idUser: req.session.idUser,
             idStudy: req.session.studies[studyName].studyStatus.idStudy,
+            idStudyStep: req.session.studies[studyName].studyStatus.idStudyStep,
             currentStudyStep: currentStudyStep,
             nextUrl: nextUrl,
             conditions: conditions,
@@ -101,7 +111,7 @@ router.get(`/studies/:studyName/user`, async (req: Request, res: Response) => {
     } catch (error) {
         console.log(error);
         res.status(404);
-        res.send(`Sorry we could not find the user's info for study ${studyName}. :/`);
+        res.send(`Sorry we could not find the user's info for study ${studyName}. :(`);
     }
 });
 
@@ -113,15 +123,17 @@ router.get(`/studies/:studyName/next`, async (req: Request, res: Response) => {
     try {
         req.session.studies[studyName].studyStatus.currentStudyStep++;
         const currentStudyStep = req.session.studies[studyName].studyStatus.currentStudyStep;
+        const idStudyStep = await postNewStudyStep(req.session.idUser, currentStudyStep);
+        req.session.studies[studyName].studyStatus.idStudyStep = idStudyStep;
+        const userType = req.session.studies[studyName].studyStatus.userType;
         const [ nextUrl ] = await getNextSteps(currentStudyStep, req.session.studies[studyName].studySteps);
-        console.log(nextUrl)
-        // TODO: replace base URL with nextUrl
-        const redirectUrl = `/studies/${studyName}/user?studyName=${studyName}`
+        //const redirectUrlTest = `/studies/${studyName}/user?studyName=${studyName}`;
+        const redirectUrl = `${nextUrl}?studyName=${studyName}&idStudyStep=${idStudyStep}&userType=${userType}`; // we might need to test for trailing slashes /
         res.redirect(redirectUrl);
     } catch (error) {
         console.log(error);
         res.status(404);
-        res.send(`Sorry we could not find the user's info for study ${studyName}. :/`);
+        res.send(`Sorry we could not find the next step for the study ${studyName}. :(`);
     }
 });
 
@@ -139,7 +151,7 @@ router.get(`/studies/:studyName`, async (req: Request, res: Response) => {
     } catch (error) {
         console.log(error);
         res.status(404);
-        res.send(`Sorry we could not find the study ${studyName}. :/`);
+        res.send(`Sorry we could not find the study ${studyName}. :(`);
     }
 });
 

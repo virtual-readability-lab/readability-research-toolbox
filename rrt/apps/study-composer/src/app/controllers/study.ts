@@ -18,11 +18,11 @@ export async function postStudyEndedAt(idStudy: number) {
     })
 }
 
-export async function postNewStudyStep(idStudy: number, studyName: string, training = false) {
+export async function postNewStudyStep(idStudy: number, currentStudyStep: number, training = false) {
     const result = await prisma.studyStep.create({
         data: {
             idStudy: idStudy,
-            name: studyName,
+            studyStep: currentStudyStep,
             training: training
         }
     })

@@ -30,7 +30,7 @@ model StudyStep {
   id                           Int                            @id @default(autoincrement())
   study                        Study                          @relation(fields: [idStudy], references: [id])
   idStudy                      Int
-  name                         String
+  studyStep                    Int
   training                     Boolean                        @default(false)
   startedAt                    DateTime                       @default(now())
   endedAt                      DateTime?

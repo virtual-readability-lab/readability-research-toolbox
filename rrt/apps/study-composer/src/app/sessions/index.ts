@@ -25,7 +25,7 @@ const sessionOptions: session.SessionOptions = {
 
 declare module 'express-session' {
     export interface SessionData {
-      user: { [key: string]: unknown };
+      idUser: number;
       studies: { [key: string]: StudyInfo };
       views: number;
     }
