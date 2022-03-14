@@ -25,6 +25,14 @@ export interface StudyInfo {
     studySteps: StudySteps
 }
 
+interface UserStudyStep {
+    idUser: unknown,
+    idStudy: string | number,
+    currentStudyStep: string | number,
+    nextUrl: string | unknown,
+    conditions: design | Array<design> | unknown
+}
+
 function updateActiveStudy(req: Request, studyName: string, studySteps: StudySteps) {
     // check if session.studies exists
     if(req.session.studies) {
@@ -59,14 +67,6 @@ function updateActiveStudy(req: Request, studyName: string, studySteps: StudySte
         req.session.studies[studyName] = studyInfo;
     }
     //console.log(req.session.studies);
-}
-
-interface UserStudyStep {
-    idUser: unknown,
-    idStudy: string | number,
-    currentStudyStep: string | number,
-    nextUrl: string | unknown,
-    conditions: design | Array<design> | unknown
 }
 
 async function getNextSteps(nextStudyStep: number, studySteps: StudySteps) {
