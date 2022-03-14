@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-//import { db } from '../database' 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 
 async function createUser() {
-    const result = await prisma.user.create({data:{}}) 
     //const { rows } = await db.query(`INSERT INTO "User" VALUES (DEFAULT, DEFAULT);`);
+    const result = await prisma.user.create({data:{}}) 
     return result.id;
 };
 

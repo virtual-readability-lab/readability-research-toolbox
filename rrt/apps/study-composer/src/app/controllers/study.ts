@@ -10,3 +10,29 @@ export async function postNewStudy(idUser: number, studyName: string) {
     })
     return result.id;
 }
+
+export async function postStudyEndedAt(idStudy: number) {
+    prisma.study.update({
+        where: { id: idStudy },
+        data: { endedAt: 'CURRENT_TIMESTAMP' },
+    })
+}
+
+export async function postNewStudyStep(idStudy: number, studyName: string, training = false) {
+    const result = await prisma.studyStep.create({
+        data: {
+            idStudy: idStudy,
+            name: studyName,
+            training: training
+        }
+    })
+    return result.id;
+}
+
+
+export async function postStudyStepEndedAt(idStudyStep: number) {
+    prisma.studyStep.update({
+        where: { id: idStudyStep },
+        data: { endedAt: 'CURRENT_TIMESTAMP' },
+    })
+}

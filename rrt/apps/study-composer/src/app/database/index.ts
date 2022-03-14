@@ -13,7 +13,4 @@ pool.on('connect', () => {
     console.log('### database is connected ###');
 });
 
-  // exports
-  export {
-    pool as db
-  };
+export { pool as db };
