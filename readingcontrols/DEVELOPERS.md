@@ -2,24 +2,11 @@
 
 ## Running locally
 
-The repo is currently hosted at `https://git.corp.adobe.com/mkraley/readingcontrols`.
+The repo is currently hosted at `https://github.com/virtual-readability-lab/readability-research-toolbox`.
 
 Clone the repo and `cd` to `<repo root>/web`
 
 Run `npm start` and a local browser will open at `http://localhost:3000/`
-
-## Custom reading passages 
-
-***Only allowed within Adobe at this time***
-
-From the repo base directory, create a python 3.8 virtual environment at `<repo base>/venv` and activate that 
-environment
-
-`pip install -r requirements.txt`
-
-To run the backend, activate the virtual environment and run
-
-`python <repo base>/backend/api/server.py`
 
 ## Containers
 

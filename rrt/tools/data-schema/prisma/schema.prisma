@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  Study     Study[]
+}
+
+model Study {
+  id        Int         @id @default(autoincrement())
+  user      User        @relation(fields: [idUser], references: [id])
+  idUser    Int // relation scalar field  (used in the `@relation` attribute above)
+  name      String
+  startedAt DateTime    @default(now())
+  endedAt   DateTime?
+  StudyStep StudyStep[]
+}
+
+model StudyStep {
+  id                           Int                            @id @default(autoincrement())
+  study                        Study                          @relation(fields: [idStudy], references: [id])
+  idStudy                      Int
+  studyStep                    Int
+  training                     Boolean                        @default(false)
+  startedAt                    DateTime                       @default(now())
+  endedAt                      DateTime?
+  Speed                        Speed[]
+  Comprehension                Comprehension[]
+  PreferencePairwiseComparison PreferencePairwiseComparison[]
+  Question                     Question[]
+}
+
+model PassageSet {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  url       String
+  text      String
+  createdAt DateTime  @default(now())
+  Passage   Passage[]
+}
+
+model Passage {
+  id           Int        @id @default(autoincrement())
+  passageSet   PassageSet @relation(fields: [idPassageSet], references: [id])
+  idPassageSet Int
+  name         String     @unique
+  createdAt    DateTime   @default(now())
+  Speed        Speed[]
+}
+
+model Design {
+  id        Int                            @id @default(autoincrement())
+  name      String                         @unique
+  design    Json                           @unique
+  createdAt DateTime                       @default(now())
+  designA   PreferencePairwiseComparison[] @relation("designA")
+  designB   PreferencePairwiseComparison[] @relation("designB")
+}
+
+model PreferencePairwiseComparison {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  designA     Design    @relation("designA", fields: [idA], references: [id])
+  idA         Int
+  designB     Design    @relation("designB", fields: [idB], references: [id])
+  idB         Int
+  createdAt   DateTime  @default(now())
+}
+
+model Speed {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  passage     Passage   @relation(fields: [idPassage], references: [id])
+  idPassage   Int
+  screen      Int
+  wpm         Float
+  seconds     Float
+  createdAt   DateTime  @default(now())
+}
+
+model Comprehension {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  createdAt   DateTime  @default(now())
+}
+
+model Question {
+  id          Int       @id @default(autoincrement())
+  studyStep   StudyStep @relation(fields: [idStudyStep], references: [id])
+  idStudyStep Int
+  createdAt   DateTime  @default(now())
+}
+
+// for express-sessions
+model UserSessions {
+  sid    String   @id
+  sess   Json
+  expire DateTime
+}
