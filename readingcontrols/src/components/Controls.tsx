@@ -15,11 +15,11 @@
  */
 
 // import styles from "./Controls.module.css"
-import {ActionButton, Item, Picker, Switch, View} from "@adobe/react-spectrum";
+import {ActionButton, Item, Picker, Switch, View, TextField, Text} from "@adobe/react-spectrum";
 import {controlsInitialState, useControls, useControlSetter} from "./Main";
 import FileChooser from "./FileChooser";
 import ColorPalette from "./ColorPalette";
-import {clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
+import {addLogRecord, clearLogRecords, ControlValue, downloadAllLogRecords} from "./logging";
 import styles from "./Controls.module.css";
 import {useState} from "react";
 import SimpleFileChooser from "./SimpleFileChooser";
@@ -29,6 +29,8 @@ import {FontPicker} from "./FontPicker";
 
 const Controls = (props: { useAdvancedSettings: boolean; }) => {
   const [showFullFileChooser, setShowFullFileChooser] = useState(false);
+  const [UID, setUID] = useState('');
+  const [bestRecipe, setRecipe] = useState('');
   const controls = useControls();
   const controlSetter = useControlSetter();
 
@@ -38,6 +40,12 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
       controlSetter(controlName, 'resetAll', value as ControlValue);
     }
   };
+
+  const logTextInputs = () =>{
+    addLogRecord('userName', 'userInput', '', UID);
+    addLogRecord('userFavorite', 'userInput', '', bestRecipe);
+  }
+
   return (
     <div className={styles.ScrollContainer}>
       <div className={styles.Controls}>
@@ -48,6 +56,27 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
             <SimpleFileChooser updateControlValue={controlSetter}/>
           }
         </div>
+        {!props.useAdvancedSettings && (
+          <div>
+          <TextField label="Username" onChange={setUID}/><br/>
+          {
+            !controls.showControls && (
+            <RecipeBox defaultRecipes={false}/>
+            )
+          }
+          <TextField label="Favorite Recipe" onChange={setRecipe}/><br/>
+          {(UID !=='' && bestRecipe !=='') && (
+          <Switch isSelected={controls.showControls} onChange={(val) => {
+            controlSetter('showControls', 'switch', val);
+            logTextInputs();
+          }}>Show Controls</Switch>
+          )}
+          </div>
+        )}
+
+        {(props.useAdvancedSettings || (controls.showControls && UID !=='' && bestRecipe !=='')) &&
+        (
+          <div>
         <FontPicker/>
         <SliderControl controlName="fontSize" label={"Font size"} minValue={10} maxValue={64} step={1}/>
         <SliderControl controlName="lineHeight" label="Line height" minValue={1} maxValue={5} step={0.1}/>
@@ -112,11 +141,11 @@ const Controls = (props: { useAdvancedSettings: boolean; }) => {
           <ActionButton onPress={clearLogRecords} isHidden={true}>Clear log</ActionButton>
           <ActionButton onPress={resetAllControls}>Reset all controls</ActionButton>
         </div>
-              {props.useAdvancedSettings ? (
-        <RecipeBox defaultRecipes/>
-      ):(
-        <RecipeBox defaultRecipes={false}/>
-      )}
+      </div>
+        )}
+        {props.useAdvancedSettings && (
+          <RecipeBox defaultRecipes/>
+        )}
       </div>
     </div>
   );

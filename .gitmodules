@@ -1,3 +1,0 @@
-[submodule "backend/database/supabase"]
-	path = backend/database/supabase
-	url = https://github.com/supabase/supabase
