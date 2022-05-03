@@ -3,17 +3,17 @@ import { urls } from '../composer/urls/urls'
 import { design } from '../composer/design/designConditions'
 import { passages } from '../composer/passages/passages'
 
-const studyName = 'vrlCharSpacingSpeed';
+const studyName = 'vrlReadingRuler';
 
-const studySteps = [
+export const studySteps = [
     new StudyStep(
-        [urls.instructions], 
-        [],
+        [urls.instructions, urls.reading_test_one], 
+        [design.noto_sans],
         passages.eigth_grade_speed
     ),
     new StudyStep(
         [urls.instructions, urls.preference_pairwise, urls.preference_binary], 
-        [design.char_spacing_neg_1_em, design.char_spacing_normal,  design.char_spacing_pos_1_em, design.char_spacing_pos_3_em],
+        [design.lato, design.times],
         passages.eigth_grade_speed
     ),
     new StudyStep(
@@ -22,4 +22,4 @@ const studySteps = [
 ]
 
 // name must match filename
-export const vrlCharSpacingSpeed: Study = new Study( studyName, studySteps )
+export const vrlFontSpeed = new Study( studyName, studySteps )

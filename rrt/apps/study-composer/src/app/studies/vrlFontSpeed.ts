@@ -7,6 +7,9 @@ const studyName = 'vrlFavorite';
 
 export const studySteps = [
     new StudyStep(
+        [urls.reading_ruler_designer]
+    ),
+    new StudyStep(
         [urls.instructions, urls.reading_test_one], 
         [design.noto_sans],
         passages.eigth_grade_speed

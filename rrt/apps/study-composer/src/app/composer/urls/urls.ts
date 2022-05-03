@@ -4,6 +4,7 @@
 *
 */
 export const urls = {
+    reading_ruler_designer: '/apps/aleena/readingruler',
     instructions: '/apps/instructions',
     preference_pairwise: '/apps/preference/pairwise',
     preference_binary: '/apps/preference/binary',
